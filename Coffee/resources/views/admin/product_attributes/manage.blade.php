@@ -49,8 +49,10 @@
 
                             <td>{{ $attribute->attribute_value }}</td>
                             {{-- <td><a href="#" target="_blank">2</a></td> --}}
-                            <td>
-                                <div class="list-icon-function">
+                            <td
+                                style="align-items: center;text-align: center; justify-items: center;justify-content: center">
+                                <div class="list-icon-function"
+                                    style="align-items: center;text-align: center; justify-items: center;justify-content: center">
                                     <a href="{{ route('show.attribute', $attribute->id) }}">
                                         <div class="item edit">
                                             <i class="icon-edit-3"></i>

@@ -23,7 +23,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Img</th>
+                        <th style="width: 100px;">Img</th>
                         <th>Store name</th>
                         <th>Slug</th>
                         <th>Deitails</th>
@@ -34,14 +34,14 @@
                     @foreach ($stores as $store)
                         <tr>
                             <td>{{ $store->id }}</td>
-                            <td class="pname" style="text-align: center; vertical-align: middle;">
+                            <td style="width: 50px;">
                                 <div class="image"
-                                    style="display: flex; justify-content: center; align-items: center;  margin: 0 auto; overflow: hidden;">
+                                    style="display: flex; justify-content: center; align-items: center; margin: 0 auto; overflow: hidden;">
                                     @if ($store->img)
                                         <img src="{{ asset('storage/' . $store->img) }}" alt="Store Image"
                                             style="width: 100%; height: 100%; object-fit: contain;">
                                     @else
-                                        <span style="text-align: center;">No Image</span>
+                                        <span>No Image</span>
                                     @endif
                                 </div>
                             </td>
@@ -52,7 +52,8 @@
                             <td>{{ $store->details }}</td>
 
                             <td>
-                                <div class="list-icon-function">
+                                <div class="list-icon-function"
+                                    style="align-items: center;text-align: center; justify-items: center;justify-content: center">
                                     <a href="{{ route('show.store', $store->id) }}">
                                         <div class="item edit">
                                             <i class="icon-edit-3"></i>

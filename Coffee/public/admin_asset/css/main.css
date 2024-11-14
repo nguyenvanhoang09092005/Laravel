@@ -1,5 +1,60 @@
+td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    align-items: center;
+    text-align: center;
+}
+
+th {
+    text-align: center;
+}
+
 #previewImage {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* user */
+.container h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-check-inline {
+    margin-right: 2rem; /* Điều chỉnh khoảng cách giữa các nút radio */
+}
+
+.d-flex .form-check {
+    justify-content: center;
+}
+
+.wg-box {
+    /* Tăng chiều rộng */
+    height: 72em;
+    /* Tăng chiều cao */
+}
+
+.image-container {
+    width: 150px;
+    height: 200px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+#previewImage {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.btn-sm {
+    width: 150px;
+    margin-top: 10px;
 }

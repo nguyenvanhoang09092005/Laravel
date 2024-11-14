@@ -14,11 +14,15 @@ use Exception;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('attribute')->get();
-        return view('admin.product.manage', compact('products'));
+        $perPage = $request->get('per_page', 10);
+
+        $products = Product::with('attribute')->paginate($perPage);
+
+        return view('admin.product.manage', compact('products', 'perPage'));
     }
+
 
     public function create()
     {

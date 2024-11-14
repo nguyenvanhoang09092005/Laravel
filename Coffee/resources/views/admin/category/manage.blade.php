@@ -23,7 +23,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Img</th>
+                        <th style="width: 100px;">Img</th>
                         <th>Name</th>
                         <th>Products</th>
                         <th>Action</th>
@@ -33,14 +33,14 @@
                     @foreach ($categories as $cate)
                         <tr>
                             <td>{{ $cate->id }}</td>
-                            <td class="pname" style="text-align: center; vertical-align: middle;">
+                            <td style="width: 50px;">
                                 <div class="image"
-                                    style="display: flex; justify-content: center; align-items: center;  margin: 0 auto; overflow: hidden;">
-                                    @if ($cate->catagory_img)
-                                        <img src="{{ asset('storage/' . $cate->catagory_img) }}" alt="Category Image"
+                                    style="display: flex; justify-content: center; align-items: center; margin: 0 auto; overflow: hidden;">
+                                    @if ($cate->category_img)
+                                        <img src="{{ asset('storage/' . $cate->category_img) }}" alt="Category Image"
                                             style="width: 100%; height: 100%; object-fit: contain;">
                                     @else
-                                        <span style="text-align: center;">No Image</span>
+                                        <span>No Image</span>
                                     @endif
                                 </div>
                             </td>
@@ -49,7 +49,8 @@
                             <td>{{ $cate->category_name }}</td>
                             <td><a href="#" target="_blank">2</a></td>
                             <td>
-                                <div class="list-icon-function">
+                                <div class="list-icon-function"
+                                    style="align-items: center;text-align: center; justify-items: center;justify-content: center">
                                     <a href="{{ route('show.cate', $cate->id) }}">
                                         <div class="item edit">
                                             <i class="icon-edit-3"></i>

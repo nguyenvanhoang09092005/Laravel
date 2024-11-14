@@ -23,7 +23,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Img</th>
+                        <th style="width: 100px;">Img</th>
                         <th>Name</th>
                         <th>Describe</th>
                         <th>Action</th>
@@ -33,14 +33,14 @@
                     @foreach ($brands as $brand)
                         <tr>
                             <td>{{ $brand->id }}</td>
-                            <td class="pname" style="text-align: center; vertical-align: middle;">
+                            <td style="width: 50px;">
                                 <div class="image"
-                                    style="display: flex; justify-content: center; align-items: center;  margin: 0 auto; overflow: hidden;">
+                                    style="display: flex; justify-content: center; align-items: center; margin: 0 auto; overflow: hidden;">
                                     @if ($brand->brand_logo)
                                         <img src="{{ asset('storage/' . $brand->brand_logo) }}" alt="Brand Image"
                                             style="width: 100%; height: 100%; object-fit: contain;">
                                     @else
-                                        <span style="text-align: center;">No Image</span>
+                                        <span>No Image</span>
                                     @endif
                                 </div>
                             </td>
@@ -49,7 +49,8 @@
                             <td>{{ $brand->brand_name }}</td>
                             <td>{{ $brand->describe }}</td>
                             <td>
-                                <div class="list-icon-function">
+                                <div class="list-icon-function"
+                                    style="align-items: center;text-align: center; justify-items: center;justify-content: center">
                                     <a href="{{ route('show.brand', $brand->id) }}">
                                         <div class="item edit">
                                             <i class="icon-edit-3"></i>

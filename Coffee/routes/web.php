@@ -78,9 +78,11 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
 
         //manager
         Route::controller(UserController::class)->group(function () {
-            Route::get('/user/create', 'index')->name('user.create');
-            Route::get('/manage/user', 'manageuser')->name('admin.manage.user');
+            Route::get('/manage/user', 'index')->name('admin.manage.user');
+            Route::get('/manage/create', 'create')->name('admin.manage.create');
         });
+
+
 
         //product
         Route::controller(ProductController::class)->group(function () {
@@ -150,12 +152,17 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
         });
         //Master User Controller
         Route::controller(MasterUserController::class)->group(function () {
-            Route::get('/store/user', 'storeuser')->name('store.user');
-            Route::post('/store/user', 'storeuser')->name('store.user.post');
+            Route::get('/admin/store/manage', 'storemanage')->name('admin.manage'); // Adjusted route name
+            Route::post('/admin/store/manage', 'storemanage')->name('admin.manage.post');
 
-            Route::get('/user/{id}', 'showuser')->name('show.user');
-            Route::put('/user/update/{id}', [MasterCategoryController::class, 'updateuser'])->name('update.user');
-            Route::delete('/user/{id}', 'destroy')->name('user.destroy');
+            Route::get('/product/{id}', [MasterUserController::class, 'show'])->name('user.show');
+            Route::get('/admin/manage/{id}', 'showmanage')->name('manage.show');
+
+            Route::get('/admin/manage/{id}/edit', 'edit')->name('admin.manage.edit');
+
+
+            Route::put('/admin/manage/update/{id}', 'updatemanage')->name('update.manage');
+            Route::delete('/admin/manage/{id}', 'destroy')->name('manage.destroy');
         });
     });
 });
