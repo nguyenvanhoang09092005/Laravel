@@ -5,9 +5,7 @@
 @section('admin_layout')
     <div class="container mt-4">
         <h3 class="mb-4">{{ $product->product_name }}</h3>
-
         <div class="row">
-            <!-- Product Image -->
             <div class="col-md-4">
                 <div class="product-image mb-3 text-center">
                     @if ($product->product_img)
@@ -18,8 +16,6 @@
                     @endif
                 </div>
             </div>
-
-            <!-- Product Info -->
             <div class="col-md-8">
                 <div class="product-info">
                     <p><strong>ID:</strong> {{ $product->id }}</p>
@@ -40,8 +36,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Back Button -->
         <div class="mt-4">
             <a href="{{ route('product.manage') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Back to
                 Product List</a>

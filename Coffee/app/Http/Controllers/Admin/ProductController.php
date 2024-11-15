@@ -64,12 +64,12 @@ class ProductController extends Controller
     {
         try {
             $product = Product::with('attribute')->findOrFail($id);
+            return view('admin.product.show', compact('product'));
         } catch (Exception $e) {
             return redirect()->route('product.manage')->withErrors('Product not found.');
         }
-
-        return view('admin.product.show', compact('product'));
     }
+
 
     public function edit($id)
     {

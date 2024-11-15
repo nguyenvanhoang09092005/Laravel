@@ -2,10 +2,13 @@
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
 
     <head>
-        <title>SurfsideMedia</title>
         <meta charset="utf-8">
         <meta name="author" content="themesflat.com">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
+
         <link rel="stylesheet" type="text/css" href="{{ asset('admin_asset/css/animate.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('admin_asset/css/animation.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('admin_asset/css/bootstrap.css') }}">
@@ -13,11 +16,26 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('admin_asset/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('admin_asset/font/fonts.css') }}">
         <link rel="stylesheet" href="{{ asset('admin_asset/icon/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('admin_asset/css/bootstrap-icons.min.css') }}">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&display=swap"
+            rel="stylesheet">
+
         <link rel="shortcut icon" href="{{ asset('admin_asset/images/favicon.ico') }}">
         <link rel="apple-touch-icon-precomposed" href="{{ asset('admin_asset/images/favicon.ico') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('admin_asset/css/sweetalert.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('admin_asset/css/custom.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('admin_asset/css/main.css') }}">
+
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
+            integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLR7jc/2Ji8c5i8Gxs7iI6Vtb2j6bP1g5c4pNTF1+7R9"
+            crossorigin="anonymous">
+
+
         @livewireStyles
         <title>@yield('admin_page_title')</title>
     </head>
@@ -35,17 +53,18 @@
 
                     <div class="section-menu-left">
                         <div class="box-logo">
-                            <a href="index.html" id="site-logo-inner">
-                                <img class="" id="logo_header" alt="" src="images/logo/logo.png"
-                                    data-light="images/logo/logo.png" data-dark="images/logo/logo.png">
+                            <a href="#" id="site-logo-inner">
+                                <p class="logo">Da Cuoi</p>
                             </a>
                             <div class="button-show-hide">
                                 <i class="icon-menu-left"></i>
                             </div>
                         </div>
+
+
                         <div class="center">
                             <div class="center-item">
-                                <div class="center-heading">Page Admin Da Cuoi</div>
+                                <div class="center-heading">Page Admin </div>
                                 <ul class="menu-list">
                                     <li class="menu-item {{ request()->routeIs('admin') ? 'active' : '' }}">
                                         <a href="{{ route('admin') }}" class="">
@@ -100,7 +119,7 @@
 
                                     <li class="menu-item has-children">
                                         <a href="javascript:void(0);" class="menu-item-button">
-                                            <div class="icon"><i class="icon-layers"></i></div>
+                                            <div class="icon"><i class="bi bi-shop"></i></div>
                                             <div class="text"> Store</div>
                                         </a>
                                         <ul class="sub-menu">
@@ -170,7 +189,7 @@
 
                                     <li class="menu-item has-children">
                                         <a href="javascript:void(0);" class="menu-item-button">
-                                            <div class="icon"><i class="icon-file-plus"></i></div>
+                                            <div class="icon"><i class="icon-shopping-cart"></i></div>
                                             <div class="text">Order</div>
                                         </a>
                                         <ul class="sub-menu">
@@ -187,13 +206,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li class="menu-item"
-                                        {{ request()->routeIs('admin.cart.history') ? 'active' : '' }}>
-                                        <a href="{{ route('admin.cart.history') }}" class="">
-                                            <div class="icon"><i class="icon-shopping-cart"></i></div>
-                                            <div class="text">Cart</div>
-                                        </a>
-                                    </li>
+
                                     <li class="menu-item"
                                         {{ request()->routeIs('admin.manage.user') ? 'active' : '' }}>
                                         <a href="{{ route('admin.manage.user') }}" class="">
@@ -203,7 +216,7 @@
                                     </li>
                                     <li class="menu-item has-children">
                                         <a href="javascript:void(0);" class="menu-item-button">
-                                            <div class="icon"><i class="icon-file-plus"></i></div>
+                                            <div class="icon"><i class="bi bi-credit-card"></i></div>
                                             <div class="text">Payment</div>
                                         </a>
                                         <ul class="sub-menu">
@@ -420,7 +433,7 @@
                                 </div>
                                 <div class="header-grid">
 
-                                    <div class="popup-wrap message type-header">
+                                    {{-- <div class="popup-wrap message type-header">
                                         <div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button"
                                                 id="dropdownMenuButton2" data-bs-toggle="dropdown"
@@ -491,7 +504,7 @@
                                                 <li><a href="#" class="tf-button w-full">View all</a></li>
                                             </ul>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
 
 
@@ -501,12 +514,15 @@
                                             <button class="btn btn-secondary dropdown-toggle" type="button"
                                                 id="dropdownMenuButton3" data-bs-toggle="dropdown"
                                                 aria-expanded="false">
-                                                <span class="header-user wg-user">
+                                                <span class="header-user wg-user" style="margin-right: 2em">
                                                     <span class="image">
-                                                        <img src="images/avatar/user-1.png" alt="">
+                                                        <img src="{{ asset('storage/users/' . Auth::user()->profile_image) }}"
+                                                            alt="User Profile Image">
+
+
                                                     </span>
                                                     <span class="flex flex-column">
-                                                        <span class="body-title mb-2">Kristin Watson</span>
+                                                        <span class="body-title mb-2">{{ Auth::user()->name }}</span>
                                                         <span class="text-tiny">Admin</span>
                                                     </span>
                                                 </span>
@@ -514,11 +530,13 @@
                                             <ul class="dropdown-menu dropdown-menu-end has-content"
                                                 aria-labelledby="dropdownMenuButton3">
                                                 <li>
-                                                    <a href="#" class="user-item">
+                                                    <a href="{{ route('admin.user') }}" class="user-item">
                                                         <div class="icon">
                                                             <i class="icon-user"></i>
                                                         </div>
-                                                        <div class="body-title-2">Account</div>
+                                                        <div class="body-title-2"
+                                                            {{ request()->routeIs('admin.user') ? 'active' : '' }}>
+                                                            Account</div>
                                                     </a>
                                                 </li>
                                                 <li>
@@ -952,6 +970,9 @@
                 jQuery(window).on("resize", function() {});
             })(jQuery);
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         @livewireScripts
     </body>
 

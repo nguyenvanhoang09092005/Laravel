@@ -16,10 +16,11 @@ class AdminController extends Controller
     }
 
 
-    public function setting()
+    public function settings()
     {
         return view('admin/settings');
     }
+
 
     public function manage_user()
     {

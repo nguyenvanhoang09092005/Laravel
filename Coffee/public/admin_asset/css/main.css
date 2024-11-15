@@ -58,3 +58,60 @@ th {
     width: 150px;
     margin-top: 10px;
 }
+
+/* Định dạng chung cho logo */
+.logo {
+    font-family: "Rock Salt", sans-serif; /* Thay đổi font theo lựa chọn của bạn */
+    font-size: 48px; /* Kích thước chữ cho logo */
+    color: #4a4a4a; /* Màu sắc chữ gợi tông màu đá cuội */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Đổ bóng nhẹ để tạo chiều sâu */
+    letter-spacing: 1.5px; /* Khoảng cách giữa các chữ */
+    display: inline-block;
+    position: relative;
+}
+
+/* Hiệu ứng gồ ghề và thêm kết cấu */
+.logo:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: url("path/to/texture.png") repeat; /* Đường dẫn đến file kết cấu đá */
+    opacity: 0.1; /* Độ mờ của kết cấu để tạo cảm giác tự nhiên */
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+/* Tạo hiệu ứng đá cuội cho từng chữ cái */
+/* Định dạng cho logo */
+.logo {
+    font-family: "Dancing Script", cursive; /* Sử dụng font chữ mềm mại từ Google Fonts */
+    font-size: 48px; /* Kích thước chữ lớn cho logo */
+    color: #4a90e2; /* Màu chữ cho logo */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Đổ bóng để tạo chiều sâu */
+    letter-spacing: 1px; /* Khoảng cách giữa các chữ */
+    display: inline-block;
+    position: relative;
+    transition: all 0.3s ease-in-out; /* Hiệu ứng chuyển động mượt khi hover */
+    cursor: pointer;
+    margin: 12px 15px;
+}
+
+/* Hiệu ứng phóng to và thay đổi màu khi hover */
+.logo:hover {
+    color: #2f4f4f; /* Đổi màu khi hover */
+    transform: scale(1.05) rotate(-2deg); /* Phóng to nhẹ và xoay một chút */
+}
+
+/* Phong cách cho nền logo nếu cần */
+.box-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.button-show-hide {
+    cursor: pointer;
+}

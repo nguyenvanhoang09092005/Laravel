@@ -3,266 +3,275 @@
     Dashboard-Admin
 @endsection
 @section('admin_layout')
-    <div class="row">
-        <div class="col-xl-6 col-xxl-5 d-flex">
-            <div class="w-100">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col mt-0">
-                                        <h5 class="card-title">Revenue</h5>
-                                    </div>
+    <div class="main-content-inner">
 
-                                    <div class="col-auto">
-                                        <div class="stat text-primary">
-                                            <i class="align-middle" data-feather="dollar-sign"></i>
+        <div class="main-content-wrap">
+            <div class="tf-section-2 mb-30">
+                <div class="flex gap20 flex-wrap-mobile">
+                    <div class="w-half">
+
+                        <div class="wg-chart-default mb-20">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap14">
+                                    <div class="image ic-bg">
+                                        <i class="icon-shopping-bag"></i>
+                                    </div>
+                                    <div>
+                                        <div class="body-text mb-2">Total Orders</div>
+                                        <h4>3</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="wg-chart-default mb-20">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap14">
+                                    <div class="image ic-bg">
+                                        <i class="icon-shopping-bag"></i>
+                                    </div>
+                                    <div>
+                                        <div class="body-text mb-2">Pending Orders</div>
+                                        <h4>3</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="wg-chart-default mb-20">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap14">
+                                    <div class="image ic-bg">
+                                        <i class="icon-user"></i>
+                                    </div>
+                                    <div>
+                                        <div class="body-text mb-2">Users</div>
+                                        <h4></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wg-chart-default">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap14">
+                                    <div class="image ic-bg">
+                                        <i class="icon-dollar-sign"></i>
+                                    </div>
+                                    <div>
+                                        <div class="body-text mb-2">Revenue</div>
+                                        <h4>481.34</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="w-half">
+
+                        <div class="wg-chart-default mb-20">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap14">
+                                    <div class="image ic-bg">
+                                        <i class="bi bi-truck"></i>
+                                    </div>
+                                    <div>
+                                        <div class="body-text mb-2">Delivered Orders</div>
+                                        <h4>0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="wg-chart-default mb-20">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap14">
+                                    <div class="image ic-bg">
+                                        <i class="bi bi-x-diamond"></i>
+                                    </div>
+                                    <div>
+                                        <div class="body-text mb-2">Canceled Orders</div>
+                                        <h4>0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wg-chart-default mb-20">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap14">
+                                    <div class="image ic-bg">
+                                        <i class="icon-layers"></i>
+                                    </div>
+                                    <div>
+                                        <div class="body-text mb-2">Product</div>
+                                        <h4>0.00</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="wg-chart-default">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap14">
+                                    <div class="image ic-bg">
+                                        <i class="icon-dollar-sign"></i>
+                                    </div>
+                                    <div>
+                                        <div class="body-text mb-2">Expense</div>
+                                        <h4>0.00</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="wg-box" style="height: auto">
+
+                </div>
+
+
+            </div>
+
+            <div class="tf-section mb-30">
+                <div class="row g-3">
+                    <!-- Calendar Card -->
+                    <div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
+                        <div class="card flex-fill">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Calendar</h5>
+                            </div>
+                            <div class="card-body d-flex">
+                                <div class="align-self-center w-100">
+                                    <div class="chart">
+                                        <div id="datetimepicker-dashboard" class="flatpickr-input w-100"
+                                            readonly="readonly"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Browser Usage Card -->
+                    <div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
+                        <div class="card flex-fill w-100">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Browser Usage</h5>
+                            </div>
+                            <div class="card-body d-flex">
+                                <div class="align-self-center w-100">
+                                    <div class="py-3">
+                                        <div class="chart chart-xs">
+                                            <canvas id="chartjs-dashboard-pie"></canvas>
                                         </div>
                                     </div>
-                                </div>
-                                <h1 class="mt-1 mb-3">2.382</h1>
-                                <div class="mb-0">
-                                    <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
-                                    <span class="text-muted">Since last week</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col mt-0">
-                                        <h5 class="card-title">Customers </h5>
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <div class="stat text-primary">
-                                            <i class="align-middle" data-feather="users"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h1 class="mt-1 mb-3">14.212</h1>
-                                <div class="mb-0">
-                                    <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span>
-                                    <span class="text-muted">Since last week</span>
+                                    <table class="table mb-0">
+                                        <tbody>
+                                            <tr>
+                                                <td>Chrome</td>
+                                                <td class="text-end">4306</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Firefox</td>
+                                                <td class="text-end">3801</td>
+                                            </tr>
+                                            <tr>
+                                                <td>IE</td>
+                                                <td class="text-end">1689</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col mt-0">
-                                        <h5 class="card-title">Expense</h5>
-                                    </div>
 
-                                    <div class="col-auto">
-                                        <div class="stat text-primary">
-                                            <i class="align-middle" data-feather="dollar-sign"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h1 class="mt-1 mb-3">$21.300</h1>
-                                <div class="mb-0">
-                                    <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 6.65% </span>
-                                    <span class="text-muted">Since last week</span>
-                                </div>
+                    <!-- Real-Time Map Card -->
+                    <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+                        <div class="card flex-fill w-100">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Map</h5>
                             </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col mt-0">
-                                        <h5 class="card-title">Orders</h5>
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <div class="stat text-primary">
-                                            <i class="align-middle" data-feather="shopping-cart"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h1 class="mt-1 mb-3">64</h1>
-                                <div class="mb-0">
-                                    <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span>
-                                    <span class="text-muted">Since last week</span>
-                                </div>
+                            <div class="card-body px-4">
+                                <div id="world_map" style="height:350px;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-xl-6 col-xxl-7">
-            <div class="card flex-fill w-100">
-                <div class="card-header">
 
-                    <h5 class="card-title mb-0">Recent Movement</h5>
-                </div>
-                <div class="card-body py-3">
-                    <div class="chart chart-sm">
-                        <canvas id="chartjs-dashboard-line"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
-            <div class="card flex-fill w-100">
-                <div class="card-header">
 
-                    <h5 class="card-title mb-0">Browser Usage</h5>
-                </div>
-                <div class="card-body d-flex">
-                    <div class="align-self-center w-100">
-                        <div class="py-3">
-                            <div class="chart chart-xs">
-                                <canvas id="chartjs-dashboard-pie"></canvas>
-                            </div>
+            <div class="tf-section mb-30">
+
+                <div class="wg-box">
+                    <div class="flex items-center justify-between">
+                        <h5>Recent orders</h5>
+                        <div class="dropdown default">
+                            <a class="btn btn-secondary dropdown-toggle" href="#">
+                                <span class="view-all">View all</span>
+                            </a>
                         </div>
-
-                        <table class="table mb-0">
-                            <tbody>
-                                <tr>
-                                    <td>Chrome</td>
-                                    <td class="text-end">4306</td>
-                                </tr>
-                                <tr>
-                                    <td>Firefox</td>
-                                    <td class="text-end">3801</td>
-                                </tr>
-                                <tr>
-                                    <td>IE</td>
-                                    <td class="text-end">1689</td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
-            <div class="card flex-fill w-100">
-                <div class="card-header">
+                    <div class="wg-table table-all-user">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 80px">OrderNo</th>
+                                        <th>Name</th>
+                                        <th class="text-center">Phone</th>
+                                        <th class="text-center">Subtotal</th>
+                                        <th class="text-center">Tax</th>
+                                        <th class="text-center">Total</th>
 
-                    <h5 class="card-title mb-0">Real-Time</h5>
-                </div>
-                <div class="card-body px-4">
-                    <div id="world_map" style="height:350px;"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
-            <div class="card flex-fill">
-                <div class="card-header">
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">Order Date</th>
+                                        <th class="text-center">Total Items</th>
+                                        <th class="text-center">Delivered On</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td class="text-center">Divyansh Kumar</td>
+                                        <td class="text-center">1234567891</td>
+                                        <td class="text-center">$172.00</td>
+                                        <td class="text-center">$36.12</td>
+                                        <td class="text-center">$208.12</td>
 
-                    <h5 class="card-title mb-0">Calendar</h5>
-                </div>
-                <div class="card-body d-flex">
-                    <div class="align-self-center w-100">
-                        <div class="chart">
-                            <div id="datetimepicker-dashboard"></div>
+                                        <td class="text-center">ordered</td>
+                                        <td class="text-center">2024-07-11 00:54:14</td>
+                                        <td class="text-center">2</td>
+                                        <td></td>
+                                        <td class="text-center">
+                                            <a href="#">
+                                                <div class="list-icon-function view-icon">
+                                                    <div class="item eye">
+                                                        <i class="icon-eye"></i>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-12 col-lg-8 col-xxl-9 d-flex">
-            <div class="card flex-fill">
-                <div class="card-header">
-
-                    <h5 class="card-title mb-0">Latest Projects</h5>
-                </div>
-                <table class="table table-hover my-0">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th class="d-none d-xl-table-cell">Start Date</th>
-                            <th class="d-none d-xl-table-cell">End Date</th>
-                            <th>Status</th>
-                            <th class="d-none d-md-table-cell">Assignee</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Project Apollo</td>
-                            <td class="d-none d-xl-table-cell">01/01/2023</td>
-                            <td class="d-none d-xl-table-cell">31/06/2023</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">Vanessa Tucker</td>
-                        </tr>
-                        <tr>
-                            <td>Project Fireball</td>
-                            <td class="d-none d-xl-table-cell">01/01/2023</td>
-                            <td class="d-none d-xl-table-cell">31/06/2023</td>
-                            <td><span class="badge bg-danger">Cancelled</span></td>
-                            <td class="d-none d-md-table-cell">William Harris</td>
-                        </tr>
-                        <tr>
-                            <td>Project Hades</td>
-                            <td class="d-none d-xl-table-cell">01/01/2023</td>
-                            <td class="d-none d-xl-table-cell">31/06/2023</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">Sharon Lessman</td>
-                        </tr>
-                        <tr>
-                            <td>Project Nitro</td>
-                            <td class="d-none d-xl-table-cell">01/01/2023</td>
-                            <td class="d-none d-xl-table-cell">31/06/2023</td>
-                            <td><span class="badge bg-warning">In progress</span></td>
-                            <td class="d-none d-md-table-cell">Vanessa Tucker</td>
-                        </tr>
-                        <tr>
-                            <td>Project Phoenix</td>
-                            <td class="d-none d-xl-table-cell">01/01/2023</td>
-                            <td class="d-none d-xl-table-cell">31/06/2023</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">William Harris</td>
-                        </tr>
-                        <tr>
-                            <td>Project X</td>
-                            <td class="d-none d-xl-table-cell">01/01/2023</td>
-                            <td class="d-none d-xl-table-cell">31/06/2023</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">Sharon Lessman</td>
-                        </tr>
-                        <tr>
-                            <td>Project Romeo</td>
-                            <td class="d-none d-xl-table-cell">01/01/2023</td>
-                            <td class="d-none d-xl-table-cell">31/06/2023</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">Christina Mason</td>
-                        </tr>
-                        <tr>
-                            <td>Project Wombat</td>
-                            <td class="d-none d-xl-table-cell">01/01/2023</td>
-                            <td class="d-none d-xl-table-cell">31/06/2023</td>
-                            <td><span class="badge bg-warning">In progress</span></td>
-                            <td class="d-none d-md-table-cell">William Harris</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-12 col-lg-4 col-xxl-3 d-flex">
-            <div class="card flex-fill w-100">
-                <div class="card-header">
-
-                    <h5 class="card-title mb-0">Monthly Sales</h5>
-                </div>
-                <div class="card-body d-flex w-100">
-                    <div class="align-self-center chart chart-lg">
-                        <canvas id="chartjs-dashboard-bar"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection

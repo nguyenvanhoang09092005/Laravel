@@ -108,3 +108,88 @@ function previewImage(event) {
     };
     reader.readAsDataURL(event.target.files[0]);
 }
+
+//dashboard
+document.addEventListener("DOMContentLoaded", function () {
+    // Lấy thời gian hiện tại
+    const now = new Date();
+
+    // Khởi tạo Flatpickr
+    const flatpickrInstance = flatpickr("#datetimepicker-dashboard", {
+        inline: true,
+        enableTime: true,
+        noCalendar: false,
+        dateFormat: "Y-m-d H:i:S",
+        defaultDate: now,
+        time_24hr: true,
+    });
+
+    // Cập nhật thời gian liên tục mỗi giây
+    setInterval(function () {
+        flatpickrInstance.setDate(new Date(), true);
+    }, 1000); // Cập nhật mỗi giây
+
+    document
+        .getElementById("calendar-title")
+        .addEventListener("click", function () {
+            flatpickrInstance.setDate(new Date(), true);
+        });
+});
+//map
+document.addEventListener("DOMContentLoaded", function () {
+    var map = L.map("world_map", {
+        center: [16.0953254, 108.2468343],
+        zoom: 15,
+    });
+
+    //  OpenStreetMap
+    var osm = L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom: 19,
+            attribution: "© OpenStreetMap contributors",
+        }
+    );
+
+    //  vệ tinh từ ESRI
+    var esriSatellite = L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        {
+            maxZoom: 19,
+            attribution:
+                "© Esri, Maxar, Earthstar Geographics, and the GIS User Community",
+        }
+    );
+
+    // p OpenStreetMap
+    osm.addTo(map);
+
+    // marker tại vị trí cụ thể
+    var marker = L.marker([16.0953254, 108.2468343])
+        .addTo(map)
+        .bindPopup("144 Lê Tấn Trung, Thọ Quang, Sơn Trà, Đà Nẵng")
+        .openPopup();
+
+    // Điều khiển chọn loại bản đồ
+    var baseMaps = {
+        "Bản đồ thực tế": osm,
+        "Bản đồ vệ tinh": esriSatellite,
+    };
+    L.control.layers(baseMaps).addTo(map);
+
+    // quay lại vị trí
+    var homeButton = L.control({ position: "topright" });
+    homeButton.onAdd = function () {
+        var div = L.DomUtil.create("button", "home-button");
+        div.innerHTML = "Quay lại vị trí";
+        div.style.backgroundColor = "white";
+        div.style.border = "2px solid #ccc";
+        div.style.padding = "5px";
+        div.style.cursor = "pointer";
+        div.onclick = function () {
+            map.setView([16.0953254, 108.2468343], 18);
+        };
+        return div;
+    };
+    homeButton.addTo(map);
+});

@@ -76,6 +76,7 @@
                                             <i class="icon-eye"></i>
                                         </div>
                                     </a>
+
                                     <a href="{{ route('product.edit', $product->id) }}">
                                         <div class="item edit">
                                             <i class="icon-edit-3"></i>
@@ -91,6 +92,7 @@
                                     </form>
                                 </div>
                             </td>
+
                             <script>
                                 function confirmDeleteProduct() {
                                     return confirm('Are you sure you want to delete this Product? This action cannot be undone.');

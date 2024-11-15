@@ -45,6 +45,8 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
             Route::get('/users', [MainUserController::class, 'index'])->name('admin.user');
             Route::put('/users/update', [MainUserController::class, 'update'])->name('user.update');
             Route::put('/users/change-password', [MainUserController::class, 'changePassword'])->name('user.change_password');
+
+
             // //payment
             // Route::get('/payment.add', 'payment_add')->name('admin.payment.add');
             // Route::get('/payment.manage', 'payment_manage')->name('admin.payment.manage');
@@ -82,13 +84,14 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
             Route::get('/manage/create', 'create')->name('admin.manage.create');
         });
 
-
-
         //product
         Route::controller(ProductController::class)->group(function () {
             Route::get('/product/manage', 'index')->name('product.manage');
             Route::get('/product/create', 'create')->name('product.create');
+
             Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+
+
 
             Route::post('/product/store', 'store')->name('product.store');
             Route::get('/product/{id}/edit', 'edit')->name('product.edit');

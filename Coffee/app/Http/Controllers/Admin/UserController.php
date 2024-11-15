@@ -15,6 +15,8 @@ class UserController extends Controller
         // Retrieve users with pagination
         $users = User::paginate($perPage);
 
+
+
         return view('admin.manage.user', compact('users', 'perPage'));
     }
 
