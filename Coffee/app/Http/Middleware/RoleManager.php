@@ -16,9 +16,23 @@ class RoleManager
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
+
+
         if (!Auth::check()) {
             return redirect()->route('login');
         }
+
+        if (Auth::user()->code) {
+            return redirect()->route('verify.index');
+        }
+
+
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+
+
 
         $authUserRole = Auth::user()->role;
 

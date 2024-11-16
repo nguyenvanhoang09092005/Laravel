@@ -1,33 +1,42 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MainUserController;
+use App\Http\Controllers\MainBrandController;
+use App\Http\Controllers\TwoFactorController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\MasterUserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\PaymentController;
-use App\Http\Controllers\Admin\ProductAttributesController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\PromotionsController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-
-use App\Http\Controllers\MainUserController;
-use App\Http\Controllers\Seller\SellerController;
-use App\Http\Controllers\Seller\SellerProductController;
 use App\Http\Controllers\Admin\StoreController;
-use App\Http\Controllers\Admin\UserController;
+
+use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Seller\SellerController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\MasterCategoryController;
-use App\Http\Controllers\MainBrandController;
-use App\Http\Controllers\MasterUserController;
+use App\Http\Controllers\Admin\PromotionsController;
+use App\Http\Controllers\Seller\SellerProductController;
+use App\Http\Controllers\Admin\ProductAttributesController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Route để hiển thị giao diện nhập OTP
+Route::get('/verify', [TwoFactorController::class, 'index'])->name('verify.index');
+
+// Route để xử lý xác minh mã OTP
+Route::post('/verify', [TwoFactorController::class, 'store'])->name('verify.store');
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified', 'rolemanager:customer'])->name('dashboard');
+})->middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->name('dashboard');
+
 
 //admin routes
 Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () {

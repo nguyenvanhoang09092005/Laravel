@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -26,6 +26,8 @@ class User extends Authenticatable
         'gender',
         'role',
         'password',
+        'code',
+        'expice_at',
     ];
 
     /**
@@ -49,5 +51,22 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function generateCode()
+    {
+        $this->timestamps = false;
+        $this->code = rand(100000, 999999);
+        $this->expice_at = now()->addMinute(30);
+        $this->save();
+    }
+
+
+    public function restCode()
+    {
+        $this->timestamps = false;
+        $this->code = null;
+        $this->expice_at = null;
+        $this->save();
     }
 }
