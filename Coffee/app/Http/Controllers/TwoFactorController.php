@@ -14,12 +14,14 @@ class TwoFactorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'otp' => 'required|numeric', // OTP phải là số
+            'otp' => 'required|array', // OTP gửi dưới dạng mảng
+            'otp.*' => 'numeric', // Mỗi ký tự OTP phải là số
         ]);
 
+        $otp = implode('', $request->input('otp')); // Gộp mảng OTP thành chuỗi
         $user = auth()->user();
 
-        if ($request->otp == $user->code) {
+        if ($otp == $user->code) {
             // OTP chính xác => Xóa mã OTP
             $user->update(['code' => null]);
 

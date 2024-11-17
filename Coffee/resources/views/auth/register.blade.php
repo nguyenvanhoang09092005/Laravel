@@ -38,7 +38,8 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+        <div class="g-recaptcha mt-4" data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+
         @if ($errors->has('captcha'))
             <span class="text-danger">{{ $errors->first('captcha') }}</span>
         @endif
