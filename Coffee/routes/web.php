@@ -251,6 +251,7 @@ Route::middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->g
 
         Route::controller(ShopController::class)->group(function () {
             Route::get('/customer/shop', 'index')->name('Customer.Shop');
+            Route::get('/customer/product/{product_slug}', 'product_details')->name('Customer.Details');
         });
     });
 })->name('dashboard');

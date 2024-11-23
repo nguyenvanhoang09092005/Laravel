@@ -18,7 +18,7 @@
     <link href="{{ asset('admin_asset/css/cart.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="{{ asset('admin_asset/css/bootstrap-icons.min.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('admin_asset/css/plugins/swiper.min.css') }}" type="text/css" />
 
 
 </head>
@@ -48,6 +48,12 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="{{ asset('admin_asset/js/script.js') }}"></script>
 
+    <script src="{{ asset('admin_asset/js/plugins/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin_asset/js/plugins/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/bootstrap-slider.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/swiper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/countdown.js') }}"></script>
+    <script src="{{ asset('assets/js/theme.js') }}"></script>
 
 
 

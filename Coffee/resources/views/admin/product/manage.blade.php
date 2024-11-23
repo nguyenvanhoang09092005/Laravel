@@ -75,11 +75,11 @@
                             <td>
                                 <div class="list-icon-function"
                                     style="align-items: center;text-align: center; justify-items: center;justify-content: center">
-                                    {{-- <a href="{{ route('product.show', $product->id) }}">
+                                    <a href="{{ route('product.show', $product->id) }}">
                                         <div class="item view">
                                             <i class="icon-eye"></i>
                                         </div>
-                                    </a> --}}
+                                    </a>
 
                                     <a href="{{ route('product.edit', $product->id) }}">
                                         <div class="item edit">

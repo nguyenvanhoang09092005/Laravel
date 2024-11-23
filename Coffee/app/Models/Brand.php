@@ -14,4 +14,9 @@ class Brand extends Model
         'brand_logo',
         'describe',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
