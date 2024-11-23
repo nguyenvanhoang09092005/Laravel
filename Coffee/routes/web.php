@@ -17,15 +17,25 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Seller\SellerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\MasterCategoryController;
+use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\PromotionsController;
+use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Seller\SellerProductController;
 use App\Http\Controllers\Admin\ProductAttributesController;
+use App\Http\Controllers\Admin\ProductReviewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Customer\CheckoutController;
+use App\Http\Controllers\Customer\ConfirmationController;
+use App\Http\Controllers\Customer\CustomerPayController;
+use App\Http\Controllers\Customer\CustomerPromotionController;
+use App\Http\Controllers\Customer\ShopController;
+use App\Models\Promotions;
 
+// Định nghĩa route với tên 'welcome'
 Route::get('/', function () {
+
     return view('welcome');
 });
-
 // Route để hiển thị giao diện nhập OTP
 Route::get('/verify', [TwoFactorController::class, 'index'])->name('verify.index');
 
@@ -33,9 +43,9 @@ Route::get('/verify', [TwoFactorController::class, 'index'])->name('verify.index
 Route::post('/verify', [TwoFactorController::class, 'store'])->name('verify.store');
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->name('dashboard');
 
 
 //admin routes
@@ -106,8 +116,16 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
             Route::get('/product/{id}/edit', 'edit')->name('product.edit');
             Route::put('/product/{id}', 'update')->name('product.update');
             Route::delete('/product/{id}', 'destroy')->name('product.destroy');
-            Route::get('/product/manage_product_review', 'manageProductReview')->name('product.manage_product_review');
         });
+
+
+        //Product review
+
+        Route::controller(ProductReviewController::class)->group(function () {
+            Route::get('/product/reviews/manage_product_review', 'index')->name('product.review.manage_product_review');
+        });
+
+
         //product_attributes
         Route::controller(ProductAttributesController::class)->group(function () {
 
@@ -156,25 +174,34 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
             Route::get('/store/create', 'index')->name('admin.store');
             Route::get('/store/manage', 'manage')->name('admin.store.manage');
             Route::post('/store/publish', 'store')->name('create.store');
-
             Route::get('/store/{id}', 'showstore')->name('show.store');
-
             Route::put('/store/update/{id}', [StoreController::class, 'updatestore'])->name('update.store');
             Route::delete('/store/{id}', 'destroy')->name('store.destroy');
         });
+
+
         //Master User Controller
         Route::controller(MasterUserController::class)->group(function () {
             Route::get('/admin/store/manage', 'storemanage')->name('admin.manage'); // Adjusted route name
             Route::post('/admin/store/manage', 'storemanage')->name('admin.manage.post');
-
-            Route::get('/product/{id}', [MasterUserController::class, 'show'])->name('user.show');
+            Route::get('/admin/{id}', [MasterUserController::class, 'show'])->name('user.show');
             Route::get('/admin/manage/{id}', 'showmanage')->name('manage.show');
-
             Route::get('/admin/manage/{id}/edit', 'edit')->name('admin.manage.edit');
-
-
             Route::put('/admin/manage/update/{id}', 'updatemanage')->name('update.manage');
             Route::delete('/admin/manage/{id}', 'destroy')->name('manage.destroy');
+        });
+
+        //Promotions
+        Route::controller(PromotionController::class)->group(function () {
+            Route::get('/promotions/manage', 'index')->name('promotions.manage');
+            Route::get('/promotions/create', 'create')->name('promotions.create');
+
+            Route::get('/promotions/{id}', [PromotionController::class, 'showPromotions'])->name('promotions.show');
+            Route::post('/promotions/store', 'storePromotions')->name('promotions.store');
+            Route::get('/promotions/{id}/edit', 'editPromotions')->name('promotions.edit');
+            Route::put('/promotions/{id}', 'updatePromotions')->name('promotions.update');
+            Route::delete('/promotions/{id}', 'destroyPromotions')->name('promotions.destroy');
+            Route::get('/promotions/sku-list', 'skuListPromotions')->name('promotions.skuList');
         });
     });
 });
@@ -194,6 +221,49 @@ Route::middleware(['auth', 'verified', 'rolemanager:personnel'])->group(function
     });
 });
 
+//Customer route
+Route::middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->group(function () {
+
+    Route::prefix('customer')->group(function () {
+        Route::controller(CustomerController::class)->group(function () {
+            Route::get('/customer/dashboard', [CustomerController::class, 'dashboard'])->name('dashboard');
+            Route::get('/customer/about', 'about')->name('Customer.About');
+
+            Route::get('/customer/product', 'showProduct')->name('Customer.Product');
+            Route::post('/add-to-cart', [CustomerController::class, 'addToCart'])->name('cart.add');
+        });
+
+        Route::controller(CustomerPromotionController::class)->group(function () {
+            Route::get('/customer/promotion', 'index')->name('Customer.Promotions');
+        });
+
+        Route::controller(CustomerPayController::class)->group(function () {
+            Route::get('/customer/pay', 'index')->name('Customer.Payment');
+        });
+
+        Route::controller(CheckoutController::class)->group(function () {
+            Route::get('/customer/checkout', 'index')->name('Customer.Checkout');
+        });
+
+        Route::controller(ConfirmationController::class)->group(function () {
+            Route::get('/customer/confirmation', 'index')->name('Customer.Confirmation');
+        });
+
+        Route::controller(ShopController::class)->group(function () {
+            Route::get('/customer/shop', 'index')->name('Customer.Shop');
+        });
+    });
+})->name('dashboard');
+
+
+
+// Tìm kiếm toàn bộ dữ liệu
+// Route::post('/search-all', [SearchController::class, 'searchAll'])->name('search.all');
+
+// Tìm kiếm cụ thể cho từng bảng
+Route::post('/search/products', [ProductController::class, 'search'])->name('search.products');
+Route::post('/search/brands', [BrandController::class, 'search'])->name('search.brands');
+Route::post('/search/users', [MasterUserController::class, 'search'])->name('search.user');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

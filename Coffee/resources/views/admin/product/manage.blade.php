@@ -6,16 +6,20 @@
     <div class="wg-box">
         <div class="flex items-center justify-between gap10 flex-wrap">
             <div class="wg-filter flex-grow">
-                <form class="form-search">
+                <form class="form-search" id="search-form" action="{{ route('product.manage') }}" method="GET">
                     <fieldset class="name">
-                        <input type="text" placeholder="Search here..." class="" name="name" tabindex="2"
-                            value="" aria-required="true" required="">
+                        <input type="text" id="search-products" placeholder="Search here..." class="" name="name"
+                            value="{{ request('name') }}" aria-required="true" required="">
+
                     </fieldset>
-                    <div class="button-submit">
-                        <button class="" type="submit"><i class="icon-search"></i></button>
-                    </div>
                 </form>
+
             </div>
+
+            <div id="product-results"
+                style="position: absolute; max-height: 200px; overflow-y: auto; background-color: white; border: 1px solid #ccc; display: none;">
+            </div>
+
             <a class="tf-button style-1 w208" href="{{ route('product.create') }}"><i class="icon-plus"></i>Add new</a>
         </div>
 
@@ -71,11 +75,11 @@
                             <td>
                                 <div class="list-icon-function"
                                     style="align-items: center;text-align: center; justify-items: center;justify-content: center">
-                                    <a href="{{ route('product.show', $product->id) }}">
+                                    {{-- <a href="{{ route('product.show', $product->id) }}">
                                         <div class="item view">
                                             <i class="icon-eye"></i>
                                         </div>
-                                    </a>
+                                    </a> --}}
 
                                     <a href="{{ route('product.edit', $product->id) }}">
                                         <div class="item edit">
@@ -116,3 +120,48 @@
         </div>
     </div>
 @endsection
+<script>
+    document.getElementById('search-products').addEventListener('keyup', function(event) {
+        let query = this.value;
+
+        if (query.length > 2) { // Trigger search after 3 characters
+            fetch("{{ route('search.products') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        query: query
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    let results = '';
+
+                    // Show suggestions
+                    if (data.length > 0) {
+                        data.forEach(product => {
+                            results += `
+                        <div class="suggestion-item">
+                            <p>
+                                <strong>${product.product_name}</strong> - ${product.regular_price} USD
+                            </p>
+                        </div>
+                    `;
+                        });
+                    } else {
+                        results = '<p>No products found.</p>';
+                    }
+
+                    // Display the suggestions in the container
+                    document.getElementById('product-results').innerHTML = results;
+                    document.getElementById('product-results').style.display = 'block'; // Show results
+                });
+        } else {
+            document.getElementById('product-results').innerHTML =
+                ''; // Clear suggestions if less than 3 characters
+            document.getElementById('product-results').style.display = 'none'; // Hide results
+        }
+    });
+</script>

@@ -15,7 +15,9 @@ class CategoryController extends Controller
 
     public function manage()
     {
+        $categories = Category::with('products')->get();
         $categories = Category::all();
+
         return view('admin/category/manage', compact('categories'));
     }
 }

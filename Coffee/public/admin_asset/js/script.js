@@ -1,3 +1,51 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const adminCount = parseInt(
+        document.getElementById("adminCount").textContent,
+        10
+    );
+    const customerCount = parseInt(
+        document.getElementById("customerCount").textContent,
+        10
+    );
+    const personnelCount = parseInt(
+        document.getElementById("personnelCount").textContent,
+        10
+    );
+
+    var ctx = document.getElementById("userChart").getContext("2d");
+    var userChart = new Chart(ctx, {
+        type: "pie", // Loại biểu đồ là 'pie'
+        data: {
+            labels: ["Admin", "Customer", "Personnel"],
+            datasets: [
+                {
+                    label: "User Distribution",
+                    data: [adminCount, customerCount, personnelCount],
+                    backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+                    hoverOffset: 4,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: "top",
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return tooltipItem.label + ": " + tooltipItem.raw;
+                        },
+                    },
+                },
+            },
+            aspectRatio: 1,
+            cutout: "70%", // Chỉnh phần trống giữa hình tròn, giá trị này có thể điều chỉnh tùy ý
+        },
+    });
+});
+
 // hiện thị ảnh
 
 function previewFile() {
@@ -509,4 +557,93 @@ document.addEventListener("scroll", function () {
     } else {
         header.classList.remove("sticky");
     }
+});
+
+//promotions_admin
+$(document).ready(function () {
+    $(document).ready(function () {
+        $("#product_sku").on("input", function () {
+            const query = $(this).val();
+            if (query.length > 2) {
+                $.ajax({
+                    url: "{{ route('promotions.skuList') }}",
+                    type: "GET",
+                    data: { q: query },
+                    success: function (response) {
+                        let suggestions = response.map(
+                            (item) =>
+                                `<option value="${item.sku}">${item.sku} - ${item.name}</option>`
+                        );
+                        $("#sku-suggestions").html(suggestions.join(""));
+                    },
+                    error: function () {
+                        console.error("Error fetching SKU suggestions.");
+                    },
+                });
+            }
+        });
+    });
+});
+
+//promotions
+document.querySelectorAll("#promotions-filters li").forEach((filter) => {
+    filter.addEventListener("click", function () {
+        // Remove the 'filter-active' class from all filters
+        document
+            .querySelectorAll("#promotions-filters li")
+            .forEach((f) => f.classList.remove("filter-active"));
+
+        // Add 'filter-active' to the clicked filter
+        this.classList.add("filter-active");
+
+        // Filter promotions based on the selected category
+        const filterValue = this.getAttribute("data-filter");
+        const promotions = document.querySelectorAll(".promotions-item");
+        promotions.forEach((promotion) => {
+            if (
+                filterValue === "*" ||
+                promotion.classList.contains(filterValue.substring(1))
+            ) {
+                promotion.style.display = "block";
+            } else {
+                promotion.style.display = "none";
+            }
+        });
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    document
+        .querySelectorAll(".increment-qty, .decrement-qty")
+        .forEach((button) => {
+            button.addEventListener("click", (e) => {
+                const input = e.target
+                    .closest("tr")
+                    .querySelector(".qty-input");
+                const currentValue = parseInt(input.value, 10) || 1;
+                if (e.target.classList.contains("increment-qty"))
+                    input.value = currentValue + 1;
+                else if (currentValue > 1) input.value = currentValue - 1;
+
+                // Update subtotal (mock example)
+                const price = parseFloat(
+                    e.target
+                        .closest("tr")
+                        .querySelector("td:nth-child(3)")
+                        .innerText.slice(1)
+                );
+                e.target
+                    .closest("tr")
+                    .querySelector("td:nth-child(5)").innerText = `$${(
+                    price * input.value
+                ).toFixed(2)}`;
+            });
+        });
+
+    document.querySelectorAll(".remove-item").forEach((button) => {
+        button.addEventListener("click", (e) => {
+            e.target.closest("tr").remove();
+            // Update totals (mock example)
+        });
+    });
 });

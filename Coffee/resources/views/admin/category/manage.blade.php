@@ -47,7 +47,8 @@
 
 
                             <td>{{ $cate->category_name }}</td>
-                            <td><a href="#" target="_blank">2</a></td>
+                            <td>{{ $cate->products->count() }}</td>
+
                             <td>
                                 <div class="list-icon-function"
                                     style="align-items: center;text-align: center; justify-items: center;justify-content: center">

@@ -3,5 +3,4 @@
     Create Product
 @endsection
 @section('seller_layout')
-    <livewire:category-brand />
 @endsection

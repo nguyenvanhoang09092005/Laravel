@@ -63,7 +63,7 @@ th {
 .logo {
     font-family: "Rock Salt", sans-serif; /* Thay đổi font theo lựa chọn của bạn */
     font-size: 48px; /* Kích thước chữ cho logo */
-    color: #4a4a4a; /* Màu sắc chữ gợi tông màu đá cuội */
+    color: #4a90e2; /* Màu sắc chữ gợi tông màu đá cuội */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Đổ bóng nhẹ để tạo chiều sâu */
     letter-spacing: 1.5px; /* Khoảng cách giữa các chữ */
     display: inline-block;
@@ -101,7 +101,7 @@ th {
 
 /* Hiệu ứng phóng to và thay đổi màu khi hover */
 .logo:hover {
-    color: #2f4f4f; /* Đổi màu khi hover */
+    color: #14f8f8; /* Đổi màu khi hover */
     transform: scale(1.05) rotate(-2deg); /* Phóng to nhẹ và xoay một chút */
 }
 
@@ -586,6 +586,77 @@ header.sticky {
     display: block;
 }
 
+.custom-center {
+    left: 50%;
+
+    transform: translateX(-50%);
+    right: auto;
+}
+
+/* Cart container */
+.cart-items-header {
+    width: 36px;
+    height: 36px;
+    background-size: 45px 45px;
+    background-position: center;
+    /* border: 1px solid #555555; */
+    /* border-radius: 50%; */
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart-items-header svg {
+    margin-left: 0;
+    color: #555555;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.cart-items-header:hover svg {
+    color: #106eea;
+    transform: scale(1.2);
+}
+
+/*search*/
+.search {
+    width: 36px;
+    height: 37px;
+    background-size: 45px 45px;
+    background-position: center;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    border: 1px solid #555555;
+    box-shadow: none;
+    background: transparent url(../../images/search-icon.png) no-repeat 10px
+        10px;
+    box-sizing: border-box;
+    padding: 0 5px 0 30px;
+    color: #fff;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    cursor: pointer;
+}
+.search:focus {
+    width: 200px;
+    border: 1px solid #1a1818;
+    box-shadow: none;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    color: #fdfdfd;
+    font-weight: 300;
+    font-size: 16px;
+}
+.todo-search:focus {
+    width: 100% !important;
+}
+
 /* banner */
 #banner {
     background: url("../../images/Top-10-quan-ca-phe-tai-quan-Binh-Tan.jpg") top
@@ -598,7 +669,7 @@ header.sticky {
 
 #banner:before {
     content: "";
-    background: rgba(255, 255, 255, 0);
+    background: rgba(255, 255, 255, 0.2);
     position: absolute;
     bottom: 0;
     top: 0;
@@ -700,6 +771,243 @@ header.sticky {
 
 .about .content p:last-child {
     margin-bottom: 0;
+}
+/* menu */
+.menu-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.swiper-container {
+    padding: 20px 0;
+}
+
+.swiper-wrapper {
+    display: flex;
+}
+
+/* Card styling */
+.card {
+    width: 300px;
+    height: auto;
+    background: #fff;
+    border: 2px solid #323232;
+    box-shadow: 4px 4px #323232;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px;
+    gap: 10px;
+}
+
+.card-img {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+    color: #323232;
+    margin-bottom: 10px;
+}
+
+.card-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.card-divider {
+    width: 100%;
+    border: 1px solid #323232;
+    border-radius: 50px;
+}
+
+.card-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-price {
+    font-size: 20px;
+    font-weight: 500;
+    color: #323232;
+}
+
+.card-btn {
+    height: 35px;
+    background: #fff;
+    border: 2px solid #323232;
+    border-radius: 5px;
+    padding: 0 15px;
+    transition: all 0.3s;
+}
+
+.card-btn:hover {
+    border: 2px solid #106eea;
+}
+
+.card-img:hover {
+    transform: translateY(-3px);
+}
+
+.card-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--main-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.card-btn:hover svg {
+    fill: var(--main-color);
+    transform: scale(1.1);
+}
+
+.card-btn:active {
+    transform: translateY(3px);
+}
+
+.swiper-pagination {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.swiper-pagination .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.swiper-pagination .swiper-pagination-bullet-active {
+    background-color: #106eea;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: #fff;
+    font-size: 24px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+/*--------------------------------------------------------------
+# Promotions Styles
+--------------------------------------------------------------*/
+
+#promotions-flters {
+    padding: 0;
+    margin: 0 auto 15px auto;
+    list-style: none;
+    text-align: center;
+    border-radius: 50px;
+    padding: 2px 15px;
+    position: relative;
+    z-index: 10;
+}
+
+#promotions-flters li {
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 15px 8px 15px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #444444;
+    margin-bottom: 5px;
+    transition: all 0.3s ease-in-out;
+    display: inline-block;
+}
+
+#promotions-flters li:hover,
+#promotions-flters li.filter-active {
+    color: #106eea;
+}
+
+#promotions-flters li:last-child {
+    margin-right: 0;
+}
+
+.promotions-item {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.promotions-item img {
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+.promotions-item .promotions-info {
+    opacity: 0;
+    position: absolute;
+    left: 30px;
+    right: 30px;
+    bottom: 0;
+    z-index: 3;
+    transition: all ease-in-out 0.3s;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+}
+
+.promotions-item .promotions-info h4 {
+    font-size: 18px;
+    color: #222222;
+    font-weight: 600;
+}
+
+.promotions-item .promotions-info p {
+    color: #555555;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.promotions-item .promotions-info .preview-link,
+.promotions-item .promotions-info .details-link {
+    position: absolute;
+    right: 40px;
+    font-size: 24px;
+    top: calc(50% - 18px);
+    color: #3c3c3c;
+}
+
+.promotions-item .promotions-info .preview-link:hover,
+.promotions-item .promotions-info .details-link:hover {
+    color: #106eea;
+}
+
+.promotions-item .promotions-info .details-link {
+    right: 10px;
+}
+
+.promotions-item:hover .promotions-info {
+    opacity: 1;
+    bottom: 20px;
+}
+#promotions-flters li {
+    cursor: pointer;
 }
 
 /*--------------------------------------------------------------
@@ -881,3 +1189,4 @@ header.sticky {
         padding: 2px 0;
     }
 }
+/* style/cart */

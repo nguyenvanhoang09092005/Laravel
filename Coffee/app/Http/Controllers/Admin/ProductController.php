@@ -17,11 +17,19 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->get('per_page', 10);
+        $searchQuery = $request->get('name');
 
-        $products = Product::with('attribute')->paginate($perPage);
+        if ($searchQuery) {
+            $products = Product::where('product_name', 'like', '%' . $searchQuery . '%')
+                ->orWhere('description', 'like', '%' . $searchQuery . '%')
+                ->paginate($perPage);
+        } else {
+            $products = Product::with('attribute')->paginate($perPage);
+        }
 
-        return view('admin.product.manage', compact('products', 'perPage'));
+        return view('admin.product.manage', compact('products', 'perPage', 'searchQuery'));
     }
+
 
 
     public function create()
@@ -142,5 +150,19 @@ class ProductController extends Controller
     public function manageProductReview()
     {
         return view('admin.product.manage_product_review');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Search for products based on product_name or description
+        $products = Product::where('product_name', 'like', '%' . $query . '%')
+            ->orWhere('description', 'like', '%' . $query . '%')
+            ->limit(5) // Limit the number of suggestions
+            ->get();
+
+        // Return the products as a JSON response
+        return response()->json($products);
     }
 }

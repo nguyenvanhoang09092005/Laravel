@@ -69,4 +69,9 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->expice_at = null;
         $this->save();
     }
+
+    public function product_reviews()
+    {
+        return $this->hasMany(Product_review::class);
+    }
 }

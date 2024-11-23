@@ -6,7 +6,7 @@ body {
     max-width: 190px;
 }
 
-.wg-table.table-all-user>* {
+.wg-table.table-all-user > * {
     min-width: 1260px;
 }
 
@@ -34,7 +34,7 @@ body {
 
 .swal-button--confirm.active,
 .swal-button--confirm:active,
-.show>.swal-button--confirm.dropdown-toggle,
+.show > .swal-button--confirm.dropdown-toggle,
 .swal-button--confirm:hover {
     background-color: #b02a37 !important;
     border-color: #a52834 !important;
@@ -45,7 +45,7 @@ body {
     text-align: center;
 }
 
-.table-bordered>:not(caption)>*>* {
+.table-bordered > :not(caption) > * > * {
     border-width: inherit;
     line-height: 32px;
     font-size: 14px;
@@ -83,7 +83,7 @@ body {
     width: 20px;
     margin: 0 auto;
 }
-.wg-table.table-all-user>* {
+.wg-table.table-all-user > * {
     min-width: 1260px;
 }
 
@@ -112,7 +112,7 @@ body {
 
 .swal-button--confirm.active,
 .swal-button--confirm:active,
-.show>.swal-button--confirm.dropdown-toggle,
+.show > .swal-button--confirm.dropdown-toggle,
 .swal-button--confirm:hover {
     background-color: #b02a37 !important;
     border-color: #a52834 !important;
@@ -123,7 +123,7 @@ body {
     text-align: center;
 }
 
-.table-bordered>:not(caption)>*>* {
+.table-bordered > :not(caption) > * > * {
     border-width: inherit;
     line-height: 32px;
     font-size: 14px;
@@ -160,4 +160,24 @@ body {
 .view-icon {
     width: 20px;
     margin: 0 auto;
+}
+
+.footer-middle {
+    padding-top: 2.25rem;
+    padding-bottom: 2.25rem;
+}
+.text-right {
+    text-align: right;
+}
+.pt-90 {
+    padding-top: 90px !important;
+}
+.my-account__address-list {
+    display: flex;
+    gap: 1.625rem;
+}
+
+.form-floating > .form-control,
+.form-floating > .form-select {
+    height: 48px;
 }
