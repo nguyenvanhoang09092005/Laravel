@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreign('promotion_id')->references('id')->on('promotions')->onDelete('set null');
+            $table->unsignedBigInteger('promotion_id')->nullable();
             $table->string('status')->default('pending');
             $table->decimal('total_price', 10, 2);
             $table->string('shipping_address');

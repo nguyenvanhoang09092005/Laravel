@@ -242,6 +242,7 @@ Route::middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->g
             Route::delete('/customer/cart/remove/{id}', 'remove')->name('Customer.Cart.Remove');
             Route::get('/customer/cart', 'index')->name('Customer.Cart.View');
             Route::put('/customer/cart/update/{id}', 'updateQuantity')->name('Customer.Cart.Update');
+            Route::post('/apply-coupon', 'applyCoupon')->name('applyCoupon');
         });
 
 

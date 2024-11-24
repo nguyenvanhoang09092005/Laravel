@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Coffee Da Cuoi</title>
 
     <!-- Vendor CSS Files -->
@@ -47,6 +49,9 @@
     <script src="https://cdn.jsdelivr.net/npm/isotope-layout@3.0.6/dist/isotope.pkgd.min.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="{{ asset('admin_asset/js/script.js') }}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
     <script src="{{ asset('admin_asset/js/plugins/jquery.min.js') }}"></script>
     <script src="{{ asset('admin_asset/js/plugins/bootstrap.bundle.min.js') }}"></script>

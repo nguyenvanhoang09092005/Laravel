@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Promotions;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Cart extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'product_id', 'name', 'quantity', 'price', 'image'];
+    protected $fillable = ['user_id', 'product_id', 'name', 'quantity', 'price', 'image', 'promotion_id'];
 
 
     public function product()
@@ -21,5 +22,10 @@ class Cart extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function promotion()
+    {
+        return $this->belongsTo(Promotions::class, 'promotion_id');
     }
 }

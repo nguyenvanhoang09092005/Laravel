@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('promotions', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique(); // Mã khuyến mãi
+            $table->string('code')->unique();
             $table->enum('type', ['percentage', 'fixed'])->default('percentage');
             $table->string('promotion_img')->nullable();
 
-            $table->decimal('discount', 8, 2); // Giá trị chiết khấu
-            $table->string('sku', 50)->nullable(); //sku từ bảng prodcut
-            $table->unsignedBigInteger('category_id')->nullable(); // ID danh mục
+            $table->decimal('discount', 8, 2);
+            $table->string('sku', 50)->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->enum('status', ['In Stock', 'Out of Stock'])->default('In Stock');
             $table->timestamps();
 
