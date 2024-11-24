@@ -25,7 +25,15 @@
                     <p><strong>Attribute:</strong>
                         {{ $product->attribute ? $product->attribute->attribute_value : 'No Attribute' }}</p>
                     <p><strong>Regular Price:</strong> ${{ number_format($product->regular_price, 2) }}</p>
-                    <p><strong>Discounted Price:</strong> ${{ number_format($product->discounted_price, 2) }}</p>
+                    <p><strong>Discounted Price:</strong>
+                        @if ($product->discounted_price)
+                            ${{ number_format($product->discounted_price, 2) }}
+                        @else
+                            N/A
+                        @endif
+                    </p>
+
+
                     <p><strong>Stock Quantity:</strong> {{ $product->stock_quantity }}</p>
                     <p><strong>Stock Status:</strong>
                         <span class="badge {{ $product->stock_status == 'In Stock' ? 'bg-success' : 'bg-danger' }}">

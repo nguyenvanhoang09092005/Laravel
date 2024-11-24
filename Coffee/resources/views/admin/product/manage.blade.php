@@ -69,7 +69,14 @@
                             <td>{{ $product->product_name }}</td>
                             <td>{{ $product->attribute ? $product->attribute->attribute_value : 'No Attribute' }}</td>
                             <td>{{ $product->regular_price }}</td>
-                            <td>{{ $product->discounted_price }}</td>
+                            <td>
+                                @if ($product->discounted_price)
+                                    {{ number_format($product->discounted_price, 0, ',', '.') }} đ
+                                @else
+                                    N/A
+                                @endif
+                            </td>
+
                             <td>{{ $product->stock_quantity }}</td>
                             <td>{{ $product->stock_status }}</td>
                             <td>

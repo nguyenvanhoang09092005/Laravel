@@ -95,12 +95,14 @@
                             <input class="mb-10" type="text" placeholder="Enter regular price" name="regular_price"
                                 value="{{ old('regular_price', $product->regular_price) }}" required>
                         </fieldset>
+
                         <fieldset class="name">
-                            <div class="body-title mb-10">Sale Price <span class="tf-color-1">*</span></div>
+                            <div class="body-title mb-10">Sale Price</div>
                             <input class="mb-10" type="text" placeholder="Enter sale price" name="discounted_price"
-                                value="{{ old('discounted_price', $product->discounted_price) }}" required>
+                                value="{{ old('discounted_price', $product->discounted_price) }}">
                         </fieldset>
                     </div>
+
 
                     <div class="cols gap22">
                         <fieldset class="name">

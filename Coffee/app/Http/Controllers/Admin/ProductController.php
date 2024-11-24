@@ -47,7 +47,7 @@ class ProductController extends Controller
             'slug' => 'required|string|max:100|unique:products,slug',
             'description' => 'required|string',
             'regular_price' => 'required|numeric',
-            'discounted_price' => 'required|numeric',
+            'discounted_price' => 'nullable|numeric',
             'sku' => 'required|string|unique:products,sku',
             'stock_quantity' => 'required|integer',
             'stock_status' => 'required|in:In Stock,Out of Stock',
@@ -106,7 +106,7 @@ class ProductController extends Controller
             'slug' => 'required|string|max:100|unique:products,slug,' . $id,
             'description' => 'required|string',
             'regular_price' => 'required|numeric',
-            'discounted_price' => 'required|numeric',
+            'discounted_price' => 'nullable|numeric',
             'sku' => 'required|string|unique:products,sku,' . $id,
             'stock_quantity' => 'required|integer',
             'stock_status' => 'required|in:In Stock,Out of Stock',
@@ -124,6 +124,10 @@ class ProductController extends Controller
         }
 
         $validatedData['admin_id'] = Auth::id();
+
+        if (is_null($request->discounted_price)) {
+            $validatedData['discounted_price'] = null;
+        }
 
         $product->update($validatedData);
 

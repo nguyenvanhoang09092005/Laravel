@@ -26,7 +26,7 @@ use App\Http\Controllers\Admin\ProductReviewController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Customer\CheckoutController;
 use App\Http\Controllers\Customer\ConfirmationController;
-use App\Http\Controllers\Customer\CustomerPayController;
+use App\Http\Controllers\Customer\CustomerCartController;
 use App\Http\Controllers\Customer\CustomerPromotionController;
 use App\Http\Controllers\Customer\ShopController;
 use App\Models\Promotions;
@@ -237,12 +237,18 @@ Route::middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->g
             Route::get('/customer/promotion', 'index')->name('Customer.Promotions');
         });
 
-        Route::controller(CustomerPayController::class)->group(function () {
-            Route::get('/customer/pay', 'index')->name('Customer.Payment');
+        Route::controller(CustomerCartController::class)->group(function () {
+            Route::post('/customer/cart/add/{product}', 'addToCart')->name('Customer.Cart');
+            Route::delete('/customer/cart/remove/{id}', 'remove')->name('Customer.Cart.Remove');
+            Route::get('/customer/cart', 'index')->name('Customer.Cart.View');
+            Route::put('/customer/cart/update/{id}', 'updateQuantity')->name('Customer.Cart.Update');
         });
+
+
 
         Route::controller(CheckoutController::class)->group(function () {
             Route::get('/customer/checkout', 'index')->name('Customer.Checkout');
+            Route::post('/checkout', 'store')->name('Customer.Checkout.store');
         });
 
         Route::controller(ConfirmationController::class)->group(function () {

@@ -62,29 +62,35 @@
                 <div class="product-single__price">
                     <span class="current-price">
                         @if ($product->discounted_price)
-                            <s>{{ $product->regular_price }} <sup>đ</sup></s>
-                            {{ $product->discounted_price }}<sup>đ</sup>
+                            <span class="text-muted"><s>{{ number_format($product->regular_price, 0, ',', '.') }}
+                                    <sup>đ</sup></s></span>
+                            <span class="text-danger">{{ number_format($product->discounted_price, 0, ',', '.') }}
+                                <sup>đ</sup></span>
                         @else
-                            {{ $product->regular_price }} <sup>đ</sup>
+                            <span>{{ number_format($product->regular_price, 0, ',', '.') }} <sup>đ</sup></span>
                         @endif
+
                     </span>
                 </div>
                 <div class="product-single__short-desc">
                     <p>{{ $product->description }}</p>
                 </div>
-                <form name="addtocart-form" method="post">
+                <form name="addtocart-form" method="POST" action="{{ route('Customer.Cart', $product->id) }}">
+                    @csrf
                     <div class="product-single__addtocart">
                         <div class="qty-control position-relative">
                             <input type="number" name="quantity" value="1" min="1"
                                 class="qty-control__number text-center">
                             <div class="qty-control__reduce">-</div>
                             <div class="qty-control__increase">+</div>
-                        </div><!-- .qty-control -->
-                        <button type="submit" class="btn btn-primary btn-addtocart js-open-aside"
-                            data-aside="cartDrawer">Add to
-                            Cart</button>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-addtocart" data-aside="cartDrawer">
+                            Thêm vào giỏ hàng
+                        </button>
                     </div>
                 </form>
+
+
                 <div class="product-single__addtolinks">
                     <a href="#" class="menu-link menu-link_us-s add-to-wishlist"><svg width="16" height="16"
                             viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -386,7 +392,15 @@
                                     <hr class="card-divider">
                                     <div class="card-footer">
                                         <div class="card-price">
-                                            {{ $product->discounted_price }} <sup>đ</sup>
+                                            @if ($product->discounted_price)
+                                                <span
+                                                    class="">{{ number_format($product->discounted_price, 0, ',', '.') }}
+                                                    <sup>đ</sup></span>
+                                            @else
+                                                <span>{{ number_format($product->regular_price, 0, ',', '.') }}
+                                                    <sup>đ</sup></span>
+                                            @endif
+
                                         </div>
                                         <!-- Add to Cart Button -->
                                         <button class="card-btn">

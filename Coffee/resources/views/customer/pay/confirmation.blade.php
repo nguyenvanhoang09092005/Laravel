@@ -4,7 +4,7 @@
     <section class="shop-checkout container">
         <h2 class="page-title">Order Received</h2>
         <div class="checkout-steps d-flex justify-content-between my-4">
-            <a href="{{ route('Customer.Payment') }}" class="checkout-steps__item active">
+            <a href="{{ route('Customer.Cart.View') }}" class="checkout-steps__item active">
                 <span class="checkout-steps__item-number">01</span>
                 <span class="checkout-steps__item-title">
                     <span>Túi mua sắm</span>

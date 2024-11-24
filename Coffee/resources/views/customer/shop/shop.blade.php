@@ -270,13 +270,15 @@
                         <div class="card-footer">
 
                             <div class="card-price">
-                                {{-- @if ($product->discounted_price)
-                                    <s><span>{{ $product->regular_price }}</span> đ</s>
-                                    <span class="text-danger">{{ $product->discounted_price }}</span> đ
+                                @if ($product->discounted_price)
+                                    <span>{{ number_format($product->discounted_price, 0, ',', '.') }}
+                                        <sup>đ</sup></span>
                                 @else
-                                    {{ $product->regular_price }} đ
-                                @endif --}}
-                                {{ $product->discounted_price }} <sup>đ</sup>
+                                    <span>{{ number_format($product->regular_price, 0, ',', '.') }} <sup>đ</sup></span>
+                                @endif
+
+
+
                             </div>
                             <!-- Add to Cart Button -->
                             <button class="card-btn">
