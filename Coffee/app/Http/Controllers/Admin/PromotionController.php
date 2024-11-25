@@ -58,6 +58,7 @@ class PromotionController extends Controller
             'sku' => 'nullable|string|exists:products,sku',
             'category_id' => 'nullable|exists:categories,id',
             'status' => 'required|in:In Stock,Out of Stock',
+            'expiry_date' => 'nullable|date',
         ], [
             'sku.exists' => 'SKU bạn nhập không tồn tại trong hệ thống.',
         ]);
@@ -117,6 +118,7 @@ class PromotionController extends Controller
             'sku' => 'nullable|string|exists:products,sku',
             'category_id' => 'nullable|exists:categories,id',
             'status' => 'required|in:In Stock,Out of Stock',
+            'expiry_date' => 'nullable|date',
         ]);
 
 

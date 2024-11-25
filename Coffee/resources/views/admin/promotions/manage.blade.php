@@ -27,7 +27,7 @@
                 </form>
             </div>
 
-            <a class="tf-button style-1 w208" href="{{ route('admin.manage.create') }}">
+            <a class="tf-button style-1 w208" href="{{ route('promotions.create') }}">
                 <i class="icon-plus"></i>Add new
             </a>
         </div>
@@ -59,9 +59,10 @@
                         <th style="width: 100px;">Img</th>
                         <th>Code</th>
                         <th>Discount</th>
-                        <th>SKU</th>
-                        <th>Category</th>
+                        {{-- <th>SKU</th>
+                        <th>Category</th> --}}
                         <th>Status</th>
+                        <th>Expiry Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -90,9 +91,10 @@
                                 @endif
                             </td>
 
-                            <td>{{ $promotion->sku }}</td>
-                            <td>{{ $promotion->category_id ?? 'N/A' }}</td>
+                            {{-- <td>{{ $promotion->sku }}</td>
+                            <td>{{ $promotion->category_id ?? 'N/A' }}</td> --}}
                             <td>{{ $promotion->status }}</td>
+                            <td>{{ $promotion->expiry_date }}</td>
 
 
                             <td>

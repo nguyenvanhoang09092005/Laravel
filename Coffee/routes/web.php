@@ -245,16 +245,15 @@ Route::middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->g
             Route::post('/apply-coupon', 'applyCoupon')->name('applyCoupon');
         });
 
-
-
         Route::controller(CheckoutController::class)->group(function () {
-            Route::get('/customer/checkout', 'index')->name('Customer.Checkout');
-            Route::post('/checkout', 'store')->name('Customer.Checkout.store');
+            Route::get('/customer/customer/checkout', 'index')->name('Customer.Checkout');
+            Route::post('/customer/customer/checkout/store', 'store')->name('Customer.Checkout.store');
         });
 
         Route::controller(ConfirmationController::class)->group(function () {
-            Route::get('/customer/confirmation', 'index')->name('Customer.Confirmation');
+            Route::get('/customer/customer/confirmation', 'index')->name('Customer.Confirmation');
         });
+
 
         Route::controller(ShopController::class)->group(function () {
             Route::get('/customer/shop', 'index')->name('Customer.Shop');

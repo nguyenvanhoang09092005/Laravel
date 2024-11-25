@@ -20,6 +20,7 @@ class Promotions extends Model
         'sku',
         'category_id',
         'status',
+        'expiry_date'
     ];
 
     /**

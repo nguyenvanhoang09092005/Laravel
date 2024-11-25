@@ -103,13 +103,23 @@
 
                     <div class="cols gap22">
                         <fieldset class="name">
-                            <div class="body-title mb-10">Stock</div>
+                            <div class="body-title mb-10">Stock<span class="tf-color-1">*</span></div>
                             <div class="select mb-10">
                                 <select class="" name="status">
                                     <option value="In Stock">In Stock</option>
                                     <option value="Out of Stock">Out of Stock</option>
                                 </select>
                             </div>
+                        </fieldset>
+
+                        <fieldset class="name">
+
+                            <div class="body-title mb-10">Expiry Date<span class="tf-color-1">*</span></div>
+                            <div class="select mb-10">
+                                <input type="date" name="expiry_date" id="expiry_date" class="form-control"
+                                    value="{{ old('expiry_date', $promotion->expiry_date ?? '') }}">
+                            </div>
+
                         </fieldset>
 
                     </div>

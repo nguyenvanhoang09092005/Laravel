@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->enum('type', ['percentage', 'fixed'])->default('percentage');
             $table->string('promotion_img')->nullable();
-
             $table->decimal('discount', 8, 2);
             $table->string('sku', 50)->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->enum('status', ['In Stock', 'Out of Stock'])->default('In Stock');
+            $table->date('expiry_date')->nullable();
             $table->timestamps();
 
 

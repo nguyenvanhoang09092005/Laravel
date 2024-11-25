@@ -111,6 +111,14 @@
                                 </select>
                             </div>
                         </fieldset>
+                        <fieldset class="name">
+                            <div class="body-title mb-10">Expiry Date<span class="tf-color-1">*</span></div>
+                            <div class="select mb-10">
+                                <input type="date" name="expiry_date" id="expiry_date" class="form-control"
+                                    value="{{ old('expiry_date', $promotion->expiry_date ? \Carbon\Carbon::parse($promotion->expiry_date)->format('Y-m-d') : '') }}">
+                            </div>
+                        </fieldset>
+
                     </div>
 
                     <div class="cols gap10">

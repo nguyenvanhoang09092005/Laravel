@@ -130,7 +130,8 @@
                                     <tr>
                                         <th>Tạm tính</th>
                                         <td id="total-price">{{ number_format($totalPrice + $totalDiscount, 0, ',', '.') }}
-                                            <sup>đ</sup></td>
+                                            <sup>đ</sup>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>Phí vận chuyển</th>
@@ -161,11 +162,11 @@
                                     </tr>
                                     <tr>
                                         <th>MÃ GIẢM GIÁ</th>
-                                        <td>{{ number_format($totalDiscount, 0, ',', '.') }} đ</td>
+                                        <td>{{ number_format($totalDiscount, 0, ',', '.') }} <sup>đ</sup></td>
                                     </tr>
                                     <tr>
                                         <th>Tổng cộng</th>
-                                        <td>{{ number_format($totalPrice, 0, ',', '.') }} đ</td>
+                                        <td>{{ number_format($totalPrice, 0, ',', '.') }} <sup>đ</sup></td>
                                     </tr>
                                 </tbody>
                             </table>

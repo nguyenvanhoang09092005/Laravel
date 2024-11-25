@@ -33,6 +33,7 @@
                     <p><strong>SKU:</strong> {{ $promotion->sku ?? 'N/A' }}</p>
                     <p><strong>Category:</strong> {{ $promotion->category->name ?? 'N/A' }}</p>
                     <p><strong>Status:</strong> {{ $promotion->status }}</p>
+                    <p><strong>Expiry Date:</strong>{{ $promotion->expiry_date }}</p>
 
                     @if ($promotion->promotion_img)
                         <p><strong>Promotion Image:</strong></p>
