@@ -16,8 +16,8 @@ class Order extends Model
         'shipping_address_id',
         'promotion_id',
         'order_code',
+        'total_price_without_discount',
         'total_price',
-        'discount',
         'payment_method',
         'status',
     ];

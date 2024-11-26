@@ -20,7 +20,6 @@ class AdminController extends Controller
         $personnelCount = (int) User::where('role', 3)->count();
 
 
-        // Truyền dữ liệu sang view
         return view('admin.admin', compact('usersCount', 'productsCount', 'adminCount', 'customerCount', 'personnelCount'));
     }
 

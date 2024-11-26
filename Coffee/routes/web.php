@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Promotions;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MainUserController;
@@ -8,28 +9,29 @@ use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\MasterUserController;
 use App\Http\Controllers\Admin\AdminController;
+
 use App\Http\Controllers\Admin\BrandController;
 
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\StoreController;
-
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Customer\ShopController;
 use App\Http\Controllers\Seller\SellerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\MasterCategoryController;
+use App\Http\Controllers\Admin\OrderMainController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\PromotionsController;
-use App\Http\Controllers\Customer\CustomerController;
-use App\Http\Controllers\Seller\SellerProductController;
-use App\Http\Controllers\Admin\ProductAttributesController;
-use App\Http\Controllers\Admin\ProductReviewController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Customer\CheckoutController;
+use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\Admin\ProductReviewController;
+use App\Http\Controllers\Seller\SellerProductController;
 use App\Http\Controllers\Customer\ConfirmationController;
 use App\Http\Controllers\Customer\CustomerCartController;
+use App\Http\Controllers\Admin\ProductAttributesController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Customer\CustomerPromotionController;
-use App\Http\Controllers\Customer\ShopController;
-use App\Models\Promotions;
 
 // Định nghĩa route với tên 'welcome'
 Route::get('/', function () {
@@ -58,8 +60,6 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
             //cart
             Route::get('/cart/history', 'cart_history')->name('admin.cart.history');
 
-            //order
-            Route::get('/order/history', 'order_history')->name('admin.order.history');
             //User
             Route::get('/users', [MainUserController::class, 'index'])->name('admin.user');
             Route::put('/users/update', [MainUserController::class, 'update'])->name('user.update');
@@ -140,6 +140,13 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
 
             Route::delete('/defaultattribute/{id}', 'destroy')->name('defaultattribute.destroy');
         });
+
+        //Order
+        Route::controller(OrderMainController::class)->group(function () {
+            Route::get('/admin/order/history/', 'index')->name('Admin.Order.History');
+            Route::get('/admin/order/detail/', 'detail')->name('Admin.Order.Detail');
+        });
+
         //promotions
         Route::controller(PromotionsController::class)->group(function () {
             Route::get('/promotions/create', 'index')->name('promotions.create');

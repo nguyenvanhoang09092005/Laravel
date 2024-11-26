@@ -10,6 +10,7 @@ class ConfirmationController extends Controller
     public function index(Request $request)
     {
         $order = $request->session()->get('order');
+        $couponCode = $request->session()->get('coupon_code');
 
         if (!$order) {
             return redirect()->route('Customer.Cart.View')->with('error', 'Không tìm thấy đơn hàng.');
@@ -25,6 +26,6 @@ class ConfirmationController extends Controller
 
         $totalAfterDiscount = $totalProductPrice - $totalDiscount;
 
-        return view('customer.pay.confirmation', compact('order', 'orderItems', 'totalDiscount', 'totalProductPrice', 'totalAfterDiscount'));
+        return view('customer.pay.confirmation', compact('order', 'orderItems', 'totalDiscount', 'totalProductPrice', 'totalAfterDiscount', 'couponCode'));
     }
 }

@@ -82,18 +82,28 @@ class CustomerCartController extends Controller
         $couponCode = $request->input('coupon_code');
         $user = Auth::user();
 
+        // Kiểm tra xem người dùng đã nhập mã giảm giá hay chưa
+        if (!$couponCode) {
+            session()->forget('applied_coupon');
+            return redirect()->route('Customer.Cart.View')->with('error', 'Bạn chưa nhập mã giảm giá.');
+        }
+
         $promotion = Promotions::where('code', $couponCode)->first();
 
+        // Kiểm tra mã giảm giá hợp lệ
         if (!$promotion) {
+            session()->forget('applied_coupon');
             return redirect()->route('Customer.Cart.View')->with('error', 'Mã giảm giá không hợp lệ.');
         }
 
+        // Kiểm tra xem mã giảm giá đã hết hạn chưa
         if ($promotion->expiry_date && $promotion->expiry_date < now()) {
+            session()->forget('applied_coupon');
             return redirect()->route('Customer.Cart.View')->with('error', 'Mã giảm giá đã hết hạn.');
         }
 
+        // Kiểm tra xem mã giảm giá có thể áp dụng cho sản phẩm trong giỏ hàng
         $cartItems = Cart::where('user_id', $user->id)->get();
-
         $isValidCoupon = false;
 
         foreach ($cartItems as $item) {
@@ -108,15 +118,20 @@ class CustomerCartController extends Controller
         }
 
         if (!$isValidCoupon) {
+            session()->forget('applied_coupon');
             return redirect()->route('Customer.Cart.View')->with('error', 'Mã giảm giá không áp dụng cho sản phẩm trong giỏ hàng.');
         }
 
+        // Kiểm tra nếu đã có mã giảm giá đang áp dụng
         if (session()->has('applied_coupon')) {
+            session()->forget('applied_coupon');
             return redirect()->route('Customer.Cart.View')->with('error', 'Bạn chỉ có thể áp dụng một mã giảm giá duy nhất.');
         }
 
+        // Lưu mã giảm giá vào session
         session(['applied_coupon' => $couponCode]);
 
+        // Tính toán tổng giá trị giỏ hàng sau khi áp dụng mã giảm giá
         $totalPrice = 0;
         $totalDiscount = 0;
 
@@ -133,10 +148,8 @@ class CustomerCartController extends Controller
             $item->save();
         }
 
-        return redirect()->route('Customer.Cart.View')->with('success', 'Mã giảm giá đã được áp dụng!');
+        return redirect()->route('Customer.Cart.View')->with('success', 'Mã giảm giá đã được áp dụng.');
     }
-
-
 
     public function index()
     {

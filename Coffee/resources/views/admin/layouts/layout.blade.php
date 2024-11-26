@@ -195,14 +195,15 @@
                                         </a>
                                         <ul class="sub-menu">
                                             <li
-                                                class="sub-menu-item {{ request()->routeIs('admin.order.history') ? 'active' : '' }}">
-                                                <a href="{{ route('admin.order.history') }}" class="">
+                                                class="sub-menu-item {{ request()->routeIs('Admin.Order.History') ? 'active' : '' }}">
+                                                <a href="{{ route('Admin.Order.History') }}" class="">
                                                     <div class="text">History</div>
                                                 </a>
                                             </li>
-                                            <li class="sub-menu-item">
-                                                <a href="order-tracking.html" class="">
-                                                    <div class="text">Order tracking</div>
+                                            <li class="sub-menu-item"
+                                                {{ request()->routeIs('Admin.Order.Detail') ? 'active' : '' }}>
+                                                <a href="{{ Route('Admin.Order.Detail') }}" class="">
+                                                    <div class="text">Order Detail</div>
                                                 </a>
                                             </li>
                                         </ul>

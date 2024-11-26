@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreign('promotion_id')->references('id')->on('promotions')->onDelete('set null');
             $table->foreignId('shipping_address_id')->constrained('shipping_addresses')->onDelete('cascade');
             $table->string('order_code')->unique()->nullable();
+            $table->decimal('total_price_without_discount', 10, 2);
             $table->decimal('total_price', 10, 2);
             $table->string('payment_method')->nullable();
             $table->string('status')->default('pending');

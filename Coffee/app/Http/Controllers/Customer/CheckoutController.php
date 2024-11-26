@@ -13,18 +13,27 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
-
     public function index()
     {
         $cartItems = Cart::where('user_id', Auth::id())->get();
         $totalPrice = 0;
         $totalDiscount = 0;
 
+        // Kiểm tra mã giảm giá từ session
+        $couponCode = session('applied_coupon');
+        $promotion = null;
+
+        // Tìm mã giảm giá trong CSDL nếu có
+        if ($couponCode) {
+            $promotion = Promotions::where('code', $couponCode)->first();
+        }
+
         foreach ($cartItems as $item) {
             $productPrice = $item->price * $item->quantity;
 
-            if ($item->promotion) {
-                $discountAmount = ($item->promotion->discount / 100) * $productPrice;
+            if ($promotion) {
+                // Áp dụng mã giảm giá nếu có
+                $discountAmount = ($promotion->discount / 100) * $productPrice;
                 $productPrice -= $discountAmount;
                 $totalDiscount += $discountAmount;
             }
@@ -67,11 +76,13 @@ class CheckoutController extends Controller
         $cartItems = Cart::where('user_id', Auth::id())->get();
         $totalPrice = 0;
         $totalDiscount = 0;
+        $totalPriceWithoutDiscount = 0;
 
-        // Kiểm tra mã giảm giá nếu có
+        // Kiểm tra mã giảm giá từ session
         $couponCode = session('applied_coupon');
         $promotion = null;
 
+        // Nếu có mã giảm giá
         if ($couponCode) {
             $promotion = Promotions::where('code', $couponCode)->first();
         }
@@ -80,7 +91,10 @@ class CheckoutController extends Controller
         foreach ($cartItems as $item) {
             $productPrice = $item->price * $item->quantity;
 
+            $totalPriceWithoutDiscount += $productPrice;
+
             if ($promotion) {
+                // Áp dụng giảm giá nếu có
                 $discountAmount = ($promotion->discount / 100) * $productPrice;
                 $productPrice -= $discountAmount;
                 $totalDiscount += $discountAmount;
@@ -96,7 +110,9 @@ class CheckoutController extends Controller
             'user_id' => Auth::id(),
             'shipping_address_id' => $shippingAddress->id,
             'promotion_id' => $promotion ? $promotion->id : null,
+            'total_price_without_discount' => $totalPriceWithoutDiscount,
             'total_price' => $totalPrice,
+
             'payment_method' => $validated['payment_method'],
             'status' => 'pending',
         ]);
@@ -115,6 +131,7 @@ class CheckoutController extends Controller
         Cart::where('user_id', Auth::id())->delete();
 
         $request->session()->put('order', $order);
+        $request->session()->put('coupon_code', $couponCode);
 
         return redirect()->route('Customer.Confirmation')->with('success', 'Đơn hàng của bạn đã được đặt thành công!');
     }

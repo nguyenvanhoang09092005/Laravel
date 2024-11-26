@@ -84,7 +84,7 @@
                         <tbody>
                             <tr>
                                 <th>TỔNG CỘNG</th>
-                                <td>{{ number_format($totalProductPrice, 0, ',', '.') }} <sup>đ</sup></td>
+                                <td>{{ number_format($totalAfterDiscount, 0, ',', '.') }} <sup>đ</sup></td>-
                             </tr>
                             <tr>
                                 <th>VẬN CHUYỂN</th>
@@ -94,12 +94,13 @@
                                 <th>MÃ GIẢM GIÁ</th>
                                 <td>{{ number_format($totalDiscount, 0, ',', '.') }} <sup>đ</sup></td>
                             </tr>
-
                             <tr>
                                 <th>TỔNG CỘNG</th>
-                                <td>{{ number_format($totalAfterDiscount, 0, ',', '.') }} <sup>đ</sup></td>
+                                <td>{{ number_format($order->total_price, 0, ',', '.') }} <sup>đ</sup></td>
                             </tr>
                         </tbody>
+
+
                     </table>
                 </div>
             </div>
