@@ -32,9 +32,7 @@ th {
 }
 
 .wg-box {
-    /* Tăng chiều rộng */
-    height: 72em;
-    /* Tăng chiều cao */
+    height: auto;
 }
 
 .image-container {
@@ -122,6 +120,7 @@ th {
 
 body {
     font-family: "Open Sans", sans-serif;
+    font-size: 16px;
     color: #444444;
 }
 

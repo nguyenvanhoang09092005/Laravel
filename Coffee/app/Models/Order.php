@@ -18,6 +18,8 @@ class Order extends Model
         'order_code',
         'total_price_without_discount',
         'total_price',
+        'total_discount',
+        'items_count',
         'payment_method',
         'status',
     ];

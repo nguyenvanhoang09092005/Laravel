@@ -32,6 +32,7 @@ use App\Http\Controllers\Customer\CustomerCartController;
 use App\Http\Controllers\Admin\ProductAttributesController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Customer\CustomerPromotionController;
+use App\Http\Controllers\Customer\CustomerUserController;
 
 // Định nghĩa route với tên 'welcome'
 Route::get('/', function () {
@@ -143,8 +144,8 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
 
         //Order
         Route::controller(OrderMainController::class)->group(function () {
-            Route::get('/admin/order/history/', 'index')->name('Admin.Order.History');
-            Route::get('/admin/order/detail/', 'detail')->name('Admin.Order.Detail');
+            Route::get('/admin/order/history', 'index')->name('Admin.Order.History');
+            Route::get('/admin/orders/{order_id}/detail', 'detail')->name('Admin.Order.Detail');
         });
 
         //promotions
@@ -265,6 +266,16 @@ Route::middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->g
         Route::controller(ShopController::class)->group(function () {
             Route::get('/customer/shop', 'index')->name('Customer.Shop');
             Route::get('/customer/product/{product_slug}', 'product_details')->name('Customer.Details');
+        });
+
+        Route::controller(CustomerUserController::class)->group(function () {
+            Route::get('/customer/account/detail', 'index')->name('Customer.Account.Detail');
+            Route::get('/customer/account/address/create', 'createAddress')->name('Customer.Account.Address.Create');
+            Route::get('/customer/account/address', 'manageAddress')->name('Customer.Account.Address.Manage');
+            Route::get('/customer/account/order/', 'order')->name('Customer.Account.Order');
+            Route::get('/customer/account/order/{order}',  'orderDetail')->name('account.orders.details');
+            Route::put('/orders/{order}/cancel', 'cancel')->name('account.orders.cancel');
+            Route::get('/customer/account/review', 'review')->name('Customer.Account.Review');
         });
     });
 })->name('dashboard');

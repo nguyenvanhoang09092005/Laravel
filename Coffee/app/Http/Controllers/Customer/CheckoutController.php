@@ -77,6 +77,7 @@ class CheckoutController extends Controller
         $totalPrice = 0;
         $totalDiscount = 0;
         $totalPriceWithoutDiscount = 0;
+        $itemsCount = 0;
 
         // Kiểm tra mã giảm giá từ session
         $couponCode = session('applied_coupon');
@@ -92,6 +93,7 @@ class CheckoutController extends Controller
             $productPrice = $item->price * $item->quantity;
 
             $totalPriceWithoutDiscount += $productPrice;
+            $itemsCount += $item->quantity;
 
             if ($promotion) {
                 // Áp dụng giảm giá nếu có
@@ -112,7 +114,8 @@ class CheckoutController extends Controller
             'promotion_id' => $promotion ? $promotion->id : null,
             'total_price_without_discount' => $totalPriceWithoutDiscount,
             'total_price' => $totalPrice,
-
+            'total_discount' => $totalDiscount,
+            'items_count' => $itemsCount,
             'payment_method' => $validated['payment_method'],
             'status' => 'pending',
         ]);
@@ -122,8 +125,11 @@ class CheckoutController extends Controller
             OrderItem::create([
                 'order_id' => $order->id,
                 'product_id' => $item->product_id,
+                'name' => $item->name,
+                'img' => $item->image,
                 'quantity' => $item->quantity,
                 'price' => $item->price,
+
             ]);
         }
 

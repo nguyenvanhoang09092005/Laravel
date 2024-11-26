@@ -72,7 +72,8 @@
 
 
                             <li><a class="dropdown-item px-4 py-2 hover:bg-gray-100"
-                                    href="{{ route('dashboard') }}">Dashboard</a></li>
+                                    href="{{ route('Customer.Account.Order') }}">Trang
+                                    cá nhân</a></li>
 
 
                             <li>

@@ -3,24 +3,55 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
     public function index()
     {
         $usersCount = User::count();
-
         $productsCount = Product::count();
+        $orderCount = Order::count();
+
+        $pendingOrdersCount = Order::where('status', 'pending')->count();
 
         $adminCount = (int) User::where('role', 1)->count();
         $customerCount = (int) User::where('role', 2)->count();
         $personnelCount = (int) User::where('role', 3)->count();
 
 
-        return view('admin.admin', compact('usersCount', 'productsCount', 'adminCount', 'customerCount', 'personnelCount'));
+        $trafficData = [
+            'dates' => [],
+            'traffic' => [],
+            'users' => [],
+            'revenue' => [],
+            'orders' => [],
+        ];
+
+        for ($day = 1; $day <= 31; $day++) {
+            $date = Carbon::now()->month(Carbon::now()->month)->day($day)->format('Y-m-d');
+
+            $traffic = Order::whereDate('created_at', $date)->count();
+
+            $users = User::whereDate('created_at', $date)->count();
+
+            $revenue = Order::whereDate('created_at', $date)->sum('total_price');
+
+            $orders = Order::whereDate('created_at', $date)->count();
+
+            $trafficData['dates'][] = $day;
+            $trafficData['traffic'][] = $traffic;
+            $trafficData['users'][] = $users;
+            $trafficData['revenue'][] = $revenue;
+            $trafficData['orders'][] = $orders;
+        }
+
+
+        return view('admin.admin', compact('usersCount', 'productsCount', 'orderCount', 'adminCount', 'customerCount', 'personnelCount', 'trafficData', 'pendingOrdersCount'));
     }
 
     public function settings()

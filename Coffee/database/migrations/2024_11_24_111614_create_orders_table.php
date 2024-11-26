@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('order_code')->unique()->nullable();
             $table->decimal('total_price_without_discount', 10, 2);
             $table->decimal('total_price', 10, 2);
+            $table->decimal('total_discount', 10, 2)->nullable();
+            $table->integer('items_count')->default(0);
             $table->string('payment_method')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();

@@ -22,9 +22,9 @@ class ConfirmationController extends Controller
             return $item->price * $item->quantity;
         });
 
-        $totalDiscount = $order->discount_amount ?? 0;
+        $totalDiscount = $order->total_discount ?? 0;
 
-        $totalAfterDiscount = $totalProductPrice - $totalDiscount;
+        $totalAfterDiscount = $order->total_price_without_discount ?? 0;
 
         return view('customer.pay.confirmation', compact('order', 'orderItems', 'totalDiscount', 'totalProductPrice', 'totalAfterDiscount', 'couponCode'));
     }

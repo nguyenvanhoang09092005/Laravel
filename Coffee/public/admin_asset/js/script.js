@@ -41,8 +41,95 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
             },
             aspectRatio: 1,
-            cutout: "70%", // Chỉnh phần trống giữa hình tròn, giá trị này có thể điều chỉnh tùy ý
+            cutout: "70%",
+            maintainAspectRatio: false,
         },
+    });
+});
+
+// biểu đồ trafficChart
+document.addEventListener("DOMContentLoaded", function () {
+    const ctx = document.getElementById("trafficChart").getContext("2d");
+    const trafficChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: JSON.parse(
+                document.getElementById("chart-dates").textContent
+            ),
+            datasets: [
+                {
+                    label: "Traffic",
+                    data: JSON.parse(
+                        document.getElementById("chart-traffic").textContent
+                    ),
+                    backgroundColor: "rgba(54, 162, 235, 0.2)",
+                    borderColor: "rgba(54, 162, 235, 1)",
+                    borderWidth: 1,
+                    fill: true,
+                    tension: 0.4,
+                },
+                {
+                    label: "Users",
+                    data: JSON.parse(
+                        document.getElementById("chart-users").textContent
+                    ),
+                    backgroundColor: "rgba(255, 99, 132, 0.2)",
+                    borderColor: "rgba(255, 99, 132, 1)",
+                    borderWidth: 1,
+                    fill: true,
+                    tension: 0.4,
+                },
+                {
+                    label: "Revenue",
+                    data: JSON.parse(
+                        document.getElementById("chart-revenue").textContent
+                    ),
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1,
+                    fill: true,
+                    tension: 0.4,
+                },
+                {
+                    label: "Orders",
+                    data: JSON.parse(
+                        document.getElementById("chart-orders").textContent
+                    ),
+                    backgroundColor: "rgba(153, 102, 255, 0.2)",
+                    borderColor: "rgba(153, 102, 255, 1)",
+                    borderWidth: 1,
+                    fill: true,
+                    tension: 0.4,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // Đảm bảo tỷ lệ khung hình không bị cố định
+            scales: {
+                x: { beginAtZero: true },
+                y: { beginAtZero: true },
+            },
+            plugins: {
+                legend: { position: "top" },
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            return (
+                                tooltipItem.dataset.label +
+                                ": " +
+                                tooltipItem.raw
+                            );
+                        },
+                    },
+                },
+            },
+        },
+    });
+
+    // Tự động cập nhật lại kích thước biểu đồ khi cửa sổ thay đổi
+    window.addEventListener("resize", function () {
+        trafficChart.update(); // Sử dụng update thay vì resize
     });
 });
 

@@ -50,7 +50,7 @@
                 </div>
                 <div class="order-info__item">
                     <label>Tổng tiền</label>
-                    <span>{{ number_format($order->total_price, 2) ?? 'Không có tổng tiền' }}</span>
+                    <span>{{ number_format($order->total_price, 0, ',', '.') ?? 'Không có tổng tiền' }}</span>
                 </div>
                 <div class="order-info__item">
                     <label>Phương thức thanh toán</label>

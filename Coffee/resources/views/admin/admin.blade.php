@@ -1,4 +1,5 @@
 @extends('admin.layouts.layout')
+
 @section('admin_page_title')
     Dashboard-Admin
 @endsection
@@ -16,7 +17,7 @@
                                 </div>
                                 <div>
                                     <div class="body-text mb-2">Total Orders</div>
-                                    <h4>3</h4>
+                                    <h4>{{ $orderCount }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -27,11 +28,11 @@
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap14">
                                 <div class="image ic-bg">
-                                    <i class="icon-shopping-bag"></i>
+                                    <i class="bi bi-truck"></i>
                                 </div>
                                 <div>
-                                    <div class="body-text mb-2">Pending Orders</div>
-                                    <h4>3</h4>
+                                    <div class="body-text mb-2">Delivered Orders</div>
+                                    <h4>0</h4>
                                 </div>
                             </div>
                         </div>
@@ -75,11 +76,11 @@
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap14">
                                 <div class="image ic-bg">
-                                    <i class="bi bi-truck"></i>
+                                    <i class="icon-shopping-bag"></i>
                                 </div>
                                 <div>
-                                    <div class="body-text mb-2">Delivered Orders</div>
-                                    <h4>0</h4>
+                                    <div class="body-text mb-2">Pending Orders</div>
+                                    <h4>{{ $pendingOrdersCount }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +94,7 @@
                                     <i class="bi bi-x-diamond"></i>
                                 </div>
                                 <div>
-                                    <div class="body-text mb-2">Canceled Orders</div>
+                                    <div class="body-text mb-2">Completed Orders</div>
                                     <h4>0</h4>
                                 </div>
                             </div>
@@ -132,8 +133,13 @@
 
             </div>
 
-            <div class="wg-box" style="height: auto">
-
+            <div class="wg-box d-flex justify-content-center align-items-center" style="height: auto;">
+                <canvas id="userChart"
+                    style="max-width: 550px !important; max-height: 500px !important; width: 100%; height: 100%;">
+                    <span id="adminCount" style="display:none">{{ $adminCount }}</span>
+                    <span id="customerCount" style="display:none">{{ $customerCount }}</span>
+                    <span id="personnelCount" style="display:none">{{ $personnelCount }}</span>
+                </canvas>
             </div>
 
 
@@ -141,75 +147,48 @@
         <div class="tf-section mb-30">
             <div class="row g-3">
                 <div class="wg-box">
-                    <canvas id="userChart" width="250">
-                        <span id="adminCount" style="display:none">{{ $adminCount }}</span>
-                        <span id="customerCount" style="display:none">{{ $customerCount }}</span>
-                        <span id="personnelCount" style="display:none">{{ $personnelCount }}</span>
+                    <div style="width: 100%;height: 100%;">
+                        <canvas id="trafficChart" style=" width: 100%; 
+                         height: 100%;"></canvas>
+                        <span id="chart-dates" style="display: none;">{{ json_encode($trafficData['dates']) }}</span>
+                        <span id="chart-traffic" style="display: none;">{{ json_encode($trafficData['traffic']) }}</span>
+                        <span id="chart-users" style="display: none;">{{ json_encode($trafficData['users']) }}</span>
+                        <span id="chart-revenue" style="display: none;">{{ json_encode($trafficData['revenue']) }}</span>
+                        <span id="chart-orders" style="display: none;">{{ json_encode($trafficData['orders']) }}</span>
+                    </div>
 
-                    </canvas>
                 </div>
             </div>
         </div>
-        <div class="tf-section mb-30">
-            <div class="row g-3">
-                <!-- Calendar Card -->
-                <div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
-                    <div class="card flex-fill">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">Calendar</h5>
-                        </div>
-                        <div class="card-body d-flex">
-                            <div class="align-self-center w-100">
-                                <div class="chart">
-                                    <div id="datetimepicker-dashboard" class="flatpickr-input w-100" readonly="readonly">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Browser Usage Card -->
-                <div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
-                    <div class="card flex-fill w-100">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">Browser Usage</h5>
+
+
+        <div class="tf-section mb-30">
+            <div class="row g-4"> <!-- g-3 đã tạo khoảng cách giữa các thẻ con -->
+
+                {{-- <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2 mb-2">
+                    <div class="wg-box flex-fill">
+                        <div class="wg-box-header">
+                            <h5 class="wg-box-title mb-0">Nhân Viên</h5>
                         </div>
-                        <div class="card-body d-flex">
-                            <div class="align-self-center w-100">
-                                <div class="py-3">
-                                    <div class="chart chart-xs">
-                                        <canvas id="chartjs-dashboard-pie"></canvas>
-                                    </div>
-                                </div>
-                                <table class="table mb-0">
-                                    <tbody>
-                                        <tr>
-                                            <td>Chrome</td>
-                                            <td class="text-end">4306</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Firefox</td>
-                                            <td class="text-end">3801</td>
-                                        </tr>
-                                        <tr>
-                                            <td>IE</td>
-                                            <td class="text-end">1689</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        <div class="wg-box-body">
+                            <div class="d-flex justify-content-between">
+                                <span>Số Nhân Viên Đang Làm Việc</span>
+                                <h3>5</h3>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
+
 
                 <!-- Real-Time Map Card -->
-                <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
-                    <div class="card flex-fill w-100">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">Map</h5>
+                <div class="col-12 ">
+                    <!-- mb-3 thêm khoảng cách dưới -->
+                    <div class="wg-box flex-fill w-100">
+                        <div class="wg-box-header">
+                            <h5 class="wg-box-title text-center mb-0">Map</h5>
                         </div>
-                        <div class="card-body px-4">
+                        <div class="wg-box-body px-4">
                             <div id="world_map" style="height:350px;"></div>
                         </div>
                     </div>
@@ -219,8 +198,7 @@
 
 
 
-
-        <div class="tf-section mb-30">
+        {{-- <div class="tf-section mb-30">
 
             <div class="wg-box">
                 <div class="flex items-center justify-between">
@@ -279,7 +257,7 @@
                 </div>
             </div>
 
-        </div>
+        </div> --}}
 
     </div>
 @endsection

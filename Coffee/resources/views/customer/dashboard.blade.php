@@ -18,6 +18,7 @@
     <link href="{{ asset('admin_asset/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin_asset/css/main.css') }}" rel="stylesheet">
     <link href="{{ asset('admin_asset/css/cart.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('admin_asset/icon/style.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="{{ asset('admin_asset/css/bootstrap-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_asset/css/plugins/swiper.min.css') }}" type="text/css" />
