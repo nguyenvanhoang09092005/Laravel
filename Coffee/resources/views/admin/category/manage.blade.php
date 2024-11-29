@@ -36,15 +36,14 @@
                             <td style="width: 50px;">
                                 <div class="image"
                                     style="display: flex; justify-content: center; align-items: center; margin: 0 auto; overflow: hidden;">
-                                    @if ($cate->category_img)
-                                        <img src="{{ asset('storage/' . $cate->category_img) }}" alt="Category Image"
+                                    @if ($cate->catagory_img)
+                                        <img src="{{ asset('storage/' . $cate->catagory_img) }}" alt="User Image"
                                             style="width: 100%; height: 100%; object-fit: contain;">
                                     @else
                                         <span>No Image</span>
                                     @endif
                                 </div>
                             </td>
-
 
                             <td>{{ $cate->category_name }}</td>
                             <td>{{ $cate->products->count() }}</td>

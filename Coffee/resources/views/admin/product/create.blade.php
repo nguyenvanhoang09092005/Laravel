@@ -97,13 +97,15 @@
                     </fieldset>
 
                     <div>
-                        <label>Attributes:</label>
-                        @foreach ($attributes as $attribute)
-                            <label>
-                                <input type="radio" name="attribute_id" value="{{ $attribute->id }}">
-                                {{ $attribute->attribute_value }}
-                            </label>
-                        @endforeach
+                        <div class="body-title mb-10">Attributes <span class="tf-color-1">*</span>
+                            @foreach ($attributes as $attribute)
+                                <label>
+                                    <input type="radio" name="attribute_id" value="{{ $attribute->id }}">
+                                    {{ $attribute->attribute_value }}
+                                </label>
+                            @endforeach
+                        </div>
+
                     </div>
 
 

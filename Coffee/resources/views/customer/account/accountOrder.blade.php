@@ -74,8 +74,10 @@
                                             <td class="text-center">
                                                 @if ($order->status == 'canceled')
                                                     <span class="badge bg-danger">Đã Hủy</span>
-                                                @elseif($order->status == 'completed')
-                                                    <span class="badge bg-success">Hoàn Thành</span>
+                                                @elseif($order->status == 'delivered')
+                                                    <span class="badge bg-success">Đã giao hàng</span>
+                                                @elseif($order->status == 'shipping')
+                                                    <span class="badge bg-success">Đang giao hàng</span>
                                                 @else
                                                     <span class="badge bg-warning">Đang Xử Lý</span>
                                                 @endif

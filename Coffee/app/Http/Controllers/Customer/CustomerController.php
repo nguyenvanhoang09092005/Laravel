@@ -16,4 +16,10 @@ class CustomerController extends Controller
 
         return view('customer.banner');
     }
+
+    public function contact()
+    {
+
+        return view('customer.contact');
+    }
 }

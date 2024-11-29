@@ -371,7 +371,7 @@
                                                 aria-expanded="false">
                                                 <span class="header-user wg-user" style="margin-right: 2em">
                                                     <span class="image">
-                                                        <img src="{{ asset('storage/users/' . Auth::user()->profile_image) }}"
+                                                        <img src="{{ asset('storage/' . Auth::user()->profile_image) }}"
                                                             alt="User Profile Image">
 
 

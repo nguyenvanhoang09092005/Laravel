@@ -5,120 +5,169 @@
 @endsection
 
 @section('admin_layout')
+    <style>
+        #myFile {
+            display: none;
+        }
+
+        .select-file-btn {
+            display: inline-block;
+            padding: 10px 30px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
     <div class="wg-box">
-        <h3 class="text-center">Account Information</h3>
-
-        <!-- Radio Buttons Centered -->
-        <div class="d-flex justify-content-center mt-3">
-            <div class="form-check form-check-inline mx-4">
-                <input class="form-check-input" type="radio" name="accountOption" id="infoOption" value="info" checked>
-                <label class="form-check-label" for="infoOption">Personal Information</label>
+        <h3>Personal information</h3>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                {{-- alert alert-warning alert-dismissible fade show --}}
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
-            <div class="form-check form-check-inline mx-4">
-                <input class="form-check-input" type="radio" name="accountOption" id="passwordOption" value="password">
-                <label class="form-check-label" for="passwordOption">Change Password</label>
+        @endif
+
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
             </div>
-        </div>
+        @endif
+        <form class="form-edit-profile" method="POST" enctype="multipart/form-data" action="{{ route('user.update') }}">
+            @csrf
+            @method('PUT')
+            <div class="wg-box">
+
+                <div class="row">
+                    <!-- Thẻ div chứa ảnh đại diện nằm bên phải -->
+                    <div class="col-md-2" style="padding-right:20px ">
+                        <fieldset class="profile-image">
+                            <div class="upload-image">
+                                <div class="item profile-img-preview-container" id="imgpreview"
+                                    style="border: 2px dashed #1865e1; padding: 10px; display: inline-block;width: 200px;height: 250px;">
+                                    <img id="previewImage"
+                                        src="{{ $user->profile_image ? Storage::url($user->profile_image) : 'default-image.jpg' }}"
+                                        class="effect8 full-image" alt="Preview Image"
+                                        style="width: 100%; height: 100%; object-fit: cover;" />
+
+                                </div>
+                            </div>
 
 
-        <!-- Personal Information Form -->
-        <div id="personalInfoForm" class="mt-4">
-            <div class="row">
-                <div class="col-md-4 text-center">
-                    <!-- Image Preview Container -->
-                    <div class="image-container">
-                        <img id="previewImage"
-                            src="{{ asset('storage/' . ($user->profile_image ?? 'path_to_default_image.jpg')) }}"
-                            alt="Profile Image">
+                            <div class="download-photos tf-button style-1" style="margin-top: 10px">
+                                <label for="myFile" class="select-file-btn">Select File</label>
+
+                                <input type="file" id="myFile" name="image" accept="image/*"
+                                    onchange="previewFile()">
+                            </div>
+                        </fieldset>
 
                     </div>
 
-                    <!-- Image Upload Button (Initially hidden) -->
-                    <input type="file" id="imageUpload" accept="image/*" style="display: none;"
-                        onchange="previewImage(event)">
-                    <button class="btn btn-secondary btn-sm mt-2 d-none" id="chooseImageButton"
-                        onclick="document.getElementById('imageUpload').click();">Choose Image</button>
-                </div>
-                <div class="col-md-8">
-                    <form action="{{ route('user.update') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                value="{{ $user->name }}" placeholder="Full Name" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email"
-                                value="{{ $user->email }}" placeholder="Email" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="text" class="form-control" id="phone" name="phone_number"
-                                value="{{ $user->phone_number }}" placeholder="Phone Number" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Address</label>
-                            <input type="text" class="form-control" id="address" name="address"
-                                value="{{ $user->address }}" placeholder="Address" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label>Gender</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gender" id="male" value="Male"
-                                    {{ $user->gender == 'Male' ? 'checked' : '' }} disabled>
-                                <label class="form-check-label" for="male">Male</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gender" id="female" value="Female"
-                                    {{ $user->gender == 'Female' ? 'checked' : '' }} disabled>
-                                <label class="form-check-label" for="female">Female</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gender" id="other" value="Other"
-                                    {{ $user->gender == 'Other' ? 'checked' : '' }} disabled>
-                                <label class="form-check-label" for="other">Other</label>
-                            </div>
-                        </div>
+                    <div class="col-md-10">
+                        <fieldset class="name">
+                            <div class="body-title mb-10">Full Name <span class="tf-color-1">*</span></div>
+                            <input class="mb-10" type="text" name="name" value="{{ auth()->user()->name }}" required>
+                        </fieldset>
 
-                        <!-- Edit and Save buttons -->
-                        <button type="button" class="btn btn-primary mt-2" id="editButton"
-                            onclick="enableEditMode()">Edit</button>
-                        <button type="submit" class="btn btn-success mt-2 d-none" id="saveButton">Save</button>
-                    </form>
+                        <fieldset class="phone-number">
+                            <div class="body-title mb-10">Phone Number <span class="tf-color-1">*</span></div>
+                            <input class="mb-10" type="text" name="phone_number"
+                                value="{{ auth()->user()->phone_number }}">
+                        </fieldset>
+
+
+                        <!-- Giới tính -->
+                        <fieldset class="gender">
+                            <div class="body-title mb-10">Gender <span class="tf-color-1">*</span></div>
+                            <select name="gender" class="mb-10">
+                                <option value="male" {{ auth()->user()->gender == 'male' ? 'selected' : '' }}>Male
+                                </option>
+                                <option value="female" {{ auth()->user()->gender == 'female' ? 'selected' : '' }}>Female
+                                </option>
+                                <option value="other" {{ auth()->user()->gender == 'other' ? 'selected' : '' }}>Other
+                                </option>
+                            </select>
+                        </fieldset>
+
+                    </div>
+                </div>
+
+
+                <!-- Email người dùng -->
+                <fieldset class="email">
+                    <div class="body-title mb-10">Email <span class="tf-color-1">*</span></div>
+                    <input class="mb-10" type="email" name="email" value="{{ auth()->user()->email }}" required>
+                </fieldset>
+
+                <!-- Địa chỉ -->
+                <fieldset class="address">
+                    <div class="body-title mb-10">Address <span class="tf-color-1">*</span></div>
+                    <input class="mb-10" type="text" name="address" value="{{ auth()->user()->address }}">
+                </fieldset>
+
+                <div class="cols gap10">
+                    <button class="tf-button w-full tf-button style-1 " type="submit">Update Profile</button>
                 </div>
             </div>
-        </div>
+        </form>
+
+    </div>
+    <div class="wg-box mt-5">
+        <h3>Change Password</h3>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                {{-- alert alert-warning alert-dismissible fade show --}}
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+        <form action="{{ route('user.change_password') }}" method="POST">
+            @csrf
+            @method('PUT')
+            <fieldset class="form-group">
+                <div class="body-title mb-10">Current Password <span class="tf-color-1">*</span></div>
+                <input class="form-control mb-10" type="password" placeholder="Enter current password"
+                    name="current_password" required>
+            </fieldset>
+
+            <fieldset class="form-group mt-3">
+                <div class="body-title mb-10">New Password <span class="tf-color-1">*</span></div>
+                <input class="form-control mb-10" type="password" placeholder="Enter new password" name="new_password"
+                    required>
+            </fieldset>
+
+            <fieldset class="form-group mt-3">
+                <div class="body-title mb-10">Confirm New Password <span class="tf-color-1">*</span></div>
+                <input class="form-control mb-10" type="password" placeholder="Confirm new password" name="confirm_password"
+                    required>
+            </fieldset>
+
+            <div class="form-group mt-5 d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary tf-button style-1 w208">Update Password</button>
+            </div>
+
+        </form>
     </div>
 
     <script>
-        function enableEditMode() {
-            // Enable all input fields
-            document.getElementById('name').disabled = false;
-            document.getElementById('email').disabled = false;
-            document.getElementById('phone').disabled = false;
-            document.getElementById('address').disabled = false;
-
-            // Enable gender radio buttons
-            document.getElementById('male').disabled = false;
-            document.getElementById('female').disabled = false;
-            document.getElementById('other').disabled = false;
-
-            // Show the image upload button
-            document.getElementById('chooseImageButton').classList.remove('d-none');
-
-            // Hide edit button and show save button
-            document.getElementById('editButton').classList.add('d-none');
-            document.getElementById('saveButton').classList.remove('d-none');
-        }
-
-        function previewImage(event) {
-            const reader = new FileReader();
-            reader.onload = function() {
-                document.getElementById('previewImage').src = reader.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
+        function previewFile() {
+            const file = document.getElementById('myFile').files[0];
+            if (file) {
+                console.log('File đã chọn:', file.name);
+            }
         }
     </script>
 @endsection

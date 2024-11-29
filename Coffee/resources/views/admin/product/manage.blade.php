@@ -40,10 +40,10 @@
             <table class="table table-striped table-bordered" style="text-align: center; width: 100%;">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th style="width: 100px;">#</th>
                         <th style="width: 100px;">Img</th>
                         <th>Name</th>
-                        <th>Attributes</th>
+                        <th style="width: 100px;">Attributes</th>
                         <th>Regular_price</th>
                         <th>Discounted_price</th>
                         <th>Stock_quantity</th>
@@ -54,7 +54,7 @@
                 <tbody>
                     @foreach ($products as $product)
                         <tr>
-                            <td>{{ $product->id }}</td>
+                            <td style="width: 50px;">{{ $product->id }}</td>
                             <td style="width: 50px;">
                                 <div class="image"
                                     style="display: flex; justify-content: center; align-items: center; margin: 0 auto; overflow: hidden;">
@@ -67,7 +67,8 @@
                                 </div>
                             </td>
                             <td>{{ $product->product_name }}</td>
-                            <td>{{ $product->attribute ? $product->attribute->attribute_value : 'No Attribute' }}</td>
+                            <td style="width: 50px;">
+                                {{ $product->attribute ? $product->attribute->attribute_value : 'No Attribute' }}</td>
                             <td>{{ $product->regular_price }}</td>
                             <td>
                                 @if ($product->discounted_price)

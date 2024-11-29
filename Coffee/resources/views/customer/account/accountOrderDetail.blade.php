@@ -138,8 +138,16 @@
                                     </tr>
                                     <tr>
                                         <th>Trạng thái đơn hàng</th>
-                                        <td colspan="5">
-                                            <span class="badge bg-danger">Đã hủy</span>
+                                        <td class="text-center" colspan="5">
+                                            @if ($order->status == 'canceled')
+                                                <span class="badge bg-danger">Đã Hủy</span>
+                                            @elseif($order->status == 'delivered')
+                                                <span class="badge bg-success">Đã giao hàng</span>
+                                            @elseif($order->status == 'shipping')
+                                                <span class="badge bg-success">Đang giao hàng</span>
+                                            @else
+                                                <span class="badge bg-warning">Đang Xử Lý</span>
+                                            @endif
                                         </td>
                                     </tr>
                                 </tbody>
@@ -264,12 +272,15 @@
                     </div>
 
                     <div class="wg-box mt-5 text-end">
-                        <form action="{{ route('account.orders.cancel', $order->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <button type="submit" class="btn btn-danger">Hủy Đơn Hàng</button>
-                        </form>
+                        @if ($order->status == 'pending')
+                            <form action="{{ route('account.orders.cancel', $order->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-danger">Hủy Đơn Hàng</button>
+                            </form>
+                        @endif
                     </div>
+
                 </div>
             </div>
         </section>

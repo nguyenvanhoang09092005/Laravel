@@ -26,13 +26,20 @@
         text-align: center;
         margin-bottom: 0px;
         overflow: hidden;
+        /* background: url("../../images/floor-1256804_1280.jpg") top left no-repeat;
+        background-size: cover;
+        position: relative; */
+        border-radius: 5px;
+        padding: 10px;
     }
 
     .card-img .img {
+        width: 100%;
         max-width: 100%;
         max-height: 150px;
         height: auto;
         border-radius: 5px;
+        /* object-fit: cover; */
     }
 
     .card-title {
@@ -98,7 +105,11 @@
     }
 </style>
 @section('customer_content')
-    <section class="shop-main container d-flex pt-4 pt-xl-5" style="margin-top: 25px">
+    <div class="section-title" data-aos="fade-up">
+        <h2>Menu</h2>
+        <h3>Nơi mà bạn thỏa sức lựa chọn</h3>
+    </div>
+    <section class="shop-main container d-flex pt-4 pt-xl-5">
         <div class="shop-sidebar side-sticky bg-body" id="shopFilter">
             <div class="aside-header d-flex d-lg-none align-items-center">
                 <h3 class="text-uppercase fs-6 mb-0">Filter By</h3>
@@ -217,6 +228,8 @@
                 </div>
             </div>
         </div>
+
+
 
         {{-- <div class="d-flex justify-content-between mb-4 pb-md-2">
 

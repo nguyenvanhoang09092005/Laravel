@@ -18,6 +18,8 @@ class AdminController extends Controller
         $orderCount = Order::count();
 
         $pendingOrdersCount = Order::where('status', 'pending')->count();
+        $shippingOrdersCount = Order::where('status', 'shipping')->count();
+        $pendingOrdersCount = Order::where('status', 'pending')->count();
 
         $adminCount = (int) User::where('role', 1)->count();
         $customerCount = (int) User::where('role', 2)->count();
@@ -51,7 +53,7 @@ class AdminController extends Controller
         }
 
 
-        return view('admin.admin', compact('usersCount', 'productsCount', 'orderCount', 'adminCount', 'customerCount', 'personnelCount', 'trafficData', 'pendingOrdersCount'));
+        return view('admin.admin', compact('usersCount', 'productsCount', 'orderCount', 'adminCount', 'customerCount', 'personnelCount', 'trafficData', 'pendingOrdersCount', 'shippingOrdersCount'));
     }
 
     public function settings()

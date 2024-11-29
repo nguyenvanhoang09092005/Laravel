@@ -2,6 +2,39 @@
     @section('admin_page_title')
         Order History-Admin
     @endsection
+    <style>
+        .status-label {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .status-label.approved {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .status-label.shipping {
+            background-color: #FFD700;
+            color: black;
+        }
+
+        .status-label.delivered {
+            background-color: #1E90FF;
+            color: white;
+        }
+
+        .status-label.canceled {
+            background-color: #FF4500;
+            color: white;
+        }
+
+        .status-label.pending {
+            background-color: #B0C4DE;
+            color: black;
+        }
+    </style>
     @section('admin_layout')
         <div class="wg-box">
             <div class="flex items-center justify-between gap10 flex-wrap">
@@ -61,10 +94,14 @@
                                 <td>{{ $order->id }}</td>
                                 <td>{{ $order->user->name ?? 'N/A' }}</td>
                                 <td>{{ $order->shippingAddress->phone ?? 'N/A' }}</td>
-                                <td>{{ number_format($order->total_price_without_discount, 2) }}</td>
-                                <td>{{ number_format($order->total_discount, 2) }}</td>
-                                <td>{{ number_format($order->total_price, 2) }}</td>
-                                <td>{{ ucfirst($order->status) }}</td>
+                                <td>{{ number_format($order->total_price_without_discount, 0, ',', '.') }}</td>
+                                <td>{{ number_format($order->total_discount, 0, ',', '.') }}</td>
+                                <td>{{ number_format($order->total_price, 0, ',', '.') }}</td>
+                                <td>
+                                    <span class="status-label {{ strtolower($order->status) }}">
+                                        {{ ucfirst($order->status) }}
+                                    </span>
+                                </td>
                                 <td>{{ $order->created_at->format('Y-m-d') }}</td>
                                 <td>{{ $order->items_count ?? '0' }}</td>
                                 <td>

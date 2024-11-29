@@ -18,7 +18,7 @@ class OrderMainController extends Controller
 
 
 
-        $orders = Order::with(['user', 'shippingAddress', 'promotion'])
+        $orders = Order::with(['user', 'shippingAddress', 'promotion'])->orderBy('created_at', 'desc')
             ->paginate($perPage);
 
 
@@ -32,5 +32,21 @@ class OrderMainController extends Controller
         $shippingAddress = ShippingAddress::find($order->shipping_address_id);
 
         return view('admin.order.detail', compact('order', 'orderItems', 'shippingAddress'));
+    }
+
+    public function updateOrderStatus(Request $request, $order_id)
+    {
+        $order = Order::findOrFail($order_id);
+
+        $status = $request->input('status');
+
+        $validStatuses = ['pending', 'shipping', 'delivered', 'canceled'];
+        if (!in_array($status, $validStatuses)) {
+            return redirect()->back()->with('error', 'Invalid status.');
+        }
+
+        $order->update(['status' => $status]);
+
+        return redirect()->route('Admin.Order.History')->with('success', 'Order status updated successfully.');
     }
 }

@@ -33,6 +33,7 @@ use App\Http\Controllers\Admin\ProductAttributesController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Customer\CustomerPromotionController;
 use App\Http\Controllers\Customer\CustomerUserController;
+use App\Http\Controllers\Seller\SellerOrderController;
 
 // Định nghĩa route với tên 'welcome'
 Route::get('/', function () {
@@ -146,6 +147,7 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
         Route::controller(OrderMainController::class)->group(function () {
             Route::get('/admin/order/history', 'index')->name('Admin.Order.History');
             Route::get('/admin/orders/{order_id}/detail', 'detail')->name('Admin.Order.Detail');
+            Route::put('/admin/orders/{order_id}/update', 'updateOrderStatus')->name('Admin.Order.Update');
         });
 
         //promotions
@@ -219,12 +221,20 @@ Route::middleware(['auth', 'verified', 'rolemanager:personnel'])->group(function
     Route::prefix('personnel')->group(function () {
         Route::controller(SellerController::class)->group(function () {
             Route::get('/dashboard', 'index')->name('personnel');
-            Route::get('/order/history', 'orderhistory')->name('personnel.order.history');
+            Route::get('/personnel/manage/user/', 'user')->name('Personnel.Manage.User');
+            Route::get('/personnel/manage/user/{id}', 'showUser')->name('Personnel.Manage.User.Show');
+            Route::get('/personnel/manage/promotions/', 'promotions')->name('Personnel.Manage.Promotions');
+            Route::get('/personnel/manage/promotions/{id}', 'showPromotions')->name('Personnel.Manage.Promotions.Show');
         });
 
         Route::controller(SellerProductController::class)->group(function () {
-            Route::get('/product/create', 'index')->name('personnel.product');
-            Route::get('/product/manage', 'manage')->name('personnel.product.manage');
+            Route::get('/personnel/product/manage', 'index')->name('personnel.product.manage');
+            Route::get('/personnel/product/{id}', 'showProduct')->name('personnel.product.show');
+        });
+
+        Route::controller(SellerOrderController::class)->group(function () {
+            Route::get('/personnel/orders/history/', 'index')->name('Personnel.Order.History');
+            Route::get('/personnel/orders/{orders_id}/detail', 'orderDetail')->name('Personnel.Order.Detail');
         });
     });
 });
@@ -236,6 +246,7 @@ Route::middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->g
         Route::controller(CustomerController::class)->group(function () {
             Route::get('/customer/dashboard', [CustomerController::class, 'dashboard'])->name('dashboard');
             Route::get('/customer/about', 'about')->name('Customer.About');
+            Route::get('/customer/contact', 'contact')->name('Customer.Contact');
 
             Route::get('/customer/product', 'showProduct')->name('Customer.Product');
             Route::post('/add-to-cart', [CustomerController::class, 'addToCart'])->name('cart.add');

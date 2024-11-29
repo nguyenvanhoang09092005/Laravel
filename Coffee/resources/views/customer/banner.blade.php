@@ -3,14 +3,15 @@
 @section('customer_content')
     <section id="hero">
         <div id="banner" class="d-flex align-items-center">
-            <div class="container" data-aos="zoom-out" data-aos-delay="100">
-                <h1>Welcome to <span>Da Cuoi</span></h1>
+            <div class="container " data-aos="zoom-out" data-aos-delay="100">
+                <h1>Chào mừng đến với <span>Da Cuoi</span></h1>
                 <div class="d-flex">
-                    <a href="#about" class="btn-get-started scrollto">Get Started</a>
-                    <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox btn-watch-video">
-                        <i class="bi bi-play-circle"></i><span>Watch Video</span>
-                    </a>
+                    <p style="font-size: 1.5rem;">
+                        Coffee Đá Cuội nơi bạn thưởng thức ly cà phê đậm
+                        đà.
+                    </p>
                 </div>
+
             </div>
         </div>
     </section>
@@ -18,6 +19,7 @@
     <!-- ======= About Section ======= -->
     <div id="about" class="about section-bg">
         <div class="container" data-aos="fade-up">
+
             <div class="section-title">
                 <h2>About</h2>
                 <h3>Find Out More <span>About Us</span></h3>
@@ -34,7 +36,8 @@
                     <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
                     <p class="fst-italic">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.
+                        et dolore
+                        magna aliqua.
                     </p>
                     <ul>
                         <li>
@@ -55,10 +58,14 @@
                     </ul>
                     <p>
                         Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        voluptate
+                        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                        sunt in
+                        culpa qui officia deserunt mollit anim id est laborum
                     </p>
                 </div>
             </div>
+
         </div>
-    </div>
+    </div><!-- End About Section -->
 @endsection

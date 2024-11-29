@@ -1,43 +1,11 @@
-@extends('admin.layouts.layout')
-@section('admin_page_title', 'Order Details - Admin')
-
-@section('admin_layout')
+@extends('seller.layouts.layout');
+@section('seller_page_title')
+    Order detail
+@endsection
+@section('seller_layout')
     <style>
         .table-transaction>tbody>tr:nth-of-type(odd) {
             --bs-table-accent-bg: #fff !important;
-        }
-
-        .status-label {
-            margin-top: 2px;
-            padding: 4px 30px;
-            border-radius: 6px;
-            font-weight: bold;
-            display: inline-block;
-        }
-
-        .status-label.approved {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .status-label.shipping {
-            background-color: #FFD700;
-            color: black;
-        }
-
-        .status-label.delivered {
-            background-color: #1E90FF;
-            color: white;
-        }
-
-        .status-label.canceled {
-            background-color: #FF4500;
-            color: white;
-        }
-
-        .status-label.pending {
-            background-color: #B0C4DE;
-            color: black;
         }
     </style>
     <div class="main-content-wrap">
@@ -72,9 +40,7 @@
                     <tr>
                         <th colspan="2">Order Status</th>
                         <td colspan="4">
-                            <span class="status-label {{ strtolower($order->status) }}">
-                                {{ ucfirst($order->status) }}
-                            </span>
+                            <span class="badge bg-danger">Canceled</span>
                         </td>
                     </tr>
                 </tbody>
@@ -206,32 +172,6 @@
             </table>
         </div>
 
-        <div class="wg-box mt-5">
 
-            <div class="flex items-end justify-between gap10 flex-wrap text-end">
-
-                <form action="{{ route('Admin.Order.Update', $order->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class="wg-filter flex-grow">
-                        <h5>Status</h5>
-                        <select name="status" id="status" class="" style="width: 100%; display: inline-block;"
-                            required>
-                            <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                            <option value="shipping" {{ $order->status == 'shipping' ? 'selected' : '' }}>Shipping</option>
-                            <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Delivered
-                            </option>
-                            <option value="canceled" {{ $order->status == 'canceled' ? 'selected' : '' }}>Canceled</option>
-                        </select>
-
-                        <button type="submit" class="tf-button style-1 w208">Update</button>
-                    </div>
-                </form>
-
-
-            </div>
-
-        </div>
     </div>
-
 @endsection

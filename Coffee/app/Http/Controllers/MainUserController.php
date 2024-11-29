@@ -2,80 +2,95 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class MainUserController extends Controller
 {
-    /**
-     * Display a listing of the users.
-     */
+
     public function index()
     {
-        $users = User::all();
-        $user = auth()->user(); // Fetch the currently authenticated user
-        return view('admin.user', compact('users', 'user'));
+        $user = Auth::user();
+        return view('admin.user', compact('user'));
     }
 
-    /**
-     * Update the specified user in storage.
-     */
     public function update(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'gender' => 'required|in:Male,Female,Other',
-            'email' => 'required|email|unique:users,email,' . $request->user()->id,
-            'phone_number' => 'nullable|string|min:10',
+            'email' => 'required|email|max:255',
+            'phone_number' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
+            'gender' => 'nullable|in:male,female,other',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $user = $request->user();
-        $user->name = $request->name;
-        $user->gender = $request->gender;
-        $user->email = $request->email;
-        $user->phone_number = $request->phone_number;
-        $user->address = $request->address;
-
-        if ($request->hasFile('image')) {
-            // Xóa ảnh cũ nếu tồn tại
-            if ($user->profile_image) {
-                Storage::disk('public')->delete($user->profile_image);
-            }
-
-            // Lưu ảnh mới và cập nhật thuộc tính profile_image
-            $path = $request->file('image')->store('profile_images', 'public');
-            $user->profile_image = $path;
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $user = Auth::user();
+
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->phone_number = $request->input('phone_number');
+        $user->address = $request->input('address');
+        $user->gender = $request->input('gender');
+
+        if ($request->hasFile('image')) {
+            if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
+                Storage::disk('public')->delete($user->profile_image);
+            }
+            $user->profile_image = $request->file('image')->store('users', 'public');
+        }
+
+
+        // Lưu thông tin người dùng
         $user->save();
 
-        return redirect()->route('admin.user')->with('success', 'User updated successfully.');
+        return redirect()->back()->with('message', 'Update user information successfully.');
     }
 
 
-    /**
-     * Change the password of the authenticated user.
-     */
     public function changePassword(Request $request)
     {
+        // Xác thực dữ liệu đầu vào
         $request->validate([
             'current_password' => 'required',
-            'new_password' => 'required|min:6|confirmed',
+            'new_password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/',
+                'different:current_password',
+            ],
+            'confirm_password' => 'required|same:new_password',
+        ], [
+            'new_password.required' => 'New password is required.',
+            'new_password.min' => 'The new password must be at least 8 characters long.',
+            'new_password.regex' => 'The new password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.',
+            'new_password.different' => 'The new password must be different from the current password.',
+            'confirm_password.same' => 'The confirmation password must match the new password.',
         ]);
 
-        $user = $request->user();
-
-        if (!Hash::check($request->current_password, $user->password)) {
-            return redirect()->back()->withErrors(['current_password' => 'Current password does not match']);
+        if (!Hash::check($request->current_password, Auth::user()->password)) {
+            throw ValidationException::withMessages([
+                'current_password' => 'The current password is incorrect.',
+            ]);
         }
 
+        $user = Auth::user();
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        return redirect()->route('admin.user')->with('success', 'Password changed successfully.');
+        return redirect()->back()->with('message', 'The password has been successfully updated.');
     }
 }

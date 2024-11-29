@@ -2,10 +2,13 @@
 
 @section('customer_content')
     <section class="shop-checkout container my-5">
-        <h2 class="page-title text-center">Giỏ hàng</h2>
+        <div class="section-title" data-aos="fade-up">
+            <h2>Giỏ hàng</h2>
+            <h3>Đơn hàng của bạn</h3>
+        </div>
 
         <!-- Các bước thanh toán -->
-        <div class="checkout-steps d-flex justify-content-between my-4">
+        <div class="checkout-steps d-flex justify-content-between my-4" data-aos="fade-right" data-aos-delay="100">
             <a href="{{ route('Customer.Cart.View') }}" class="checkout-steps__item active">
                 <span class="checkout-steps__item-number">01</span>
                 <span class="checkout-steps__item-title">

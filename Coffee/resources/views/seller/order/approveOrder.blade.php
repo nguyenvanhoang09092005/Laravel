@@ -1,7 +1,6 @@
 @extends('seller.layouts.layout');
 @section('seller_page_title')
-    Order history
+    Approve an order
 @endsection
 @section('seller_layout')
-    Order history
 @endsection

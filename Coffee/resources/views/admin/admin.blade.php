@@ -31,8 +31,8 @@
                                     <i class="bi bi-truck"></i>
                                 </div>
                                 <div>
-                                    <div class="body-text mb-2">Delivered Orders</div>
-                                    <h4>0</h4>
+                                    <div class="body-text mb-2">Order being delivered</div>
+                                    <h4>{{ $shippingOrdersCount }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
                                 </div>
                                 <div>
                                     <div class="body-text mb-2">Expense</div>
-                                    <h4>0.00</h4>
+                                    <h4>43.12</h4>
                                 </div>
                             </div>
                         </div>
