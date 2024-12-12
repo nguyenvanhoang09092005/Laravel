@@ -4,11 +4,17 @@
         margin-bottom: 20px;
     }
 
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Playfair+Display:wght@700&display=swap');
+
     .form-title {
         text-align: center;
-        font-size: 24px;
-        margin-bottom: 20px;
-        color: #333;
+        font-size: 36px;
+        color: #3e2723;
+        /* Màu cà phê đậm */
+        font-family: 'Cinzel', serif;
+        /* Font Cinzel sang trọng */
+        font-weight: bold;
+        letter-spacing: 2px;
     }
 </style>
 <x-guest-layout>

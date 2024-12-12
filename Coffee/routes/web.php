@@ -9,7 +9,7 @@ use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\MasterUserController;
 use App\Http\Controllers\Admin\AdminController;
-
+use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\BrandController;
 
 use App\Http\Controllers\Admin\OrderController;
@@ -30,6 +30,8 @@ use App\Http\Controllers\Seller\SellerProductController;
 use App\Http\Controllers\Customer\ConfirmationController;
 use App\Http\Controllers\Customer\CustomerCartController;
 use App\Http\Controllers\Admin\ProductAttributesController;
+use App\Http\Controllers\Admin\SalaryController;
+use App\Http\Controllers\Admin\ShiftController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Customer\CustomerPromotionController;
 use App\Http\Controllers\Customer\CustomerUserController;
@@ -225,6 +227,10 @@ Route::middleware(['auth', 'verified', 'rolemanager:personnel'])->group(function
             Route::get('/personnel/manage/user/{id}', 'showUser')->name('Personnel.Manage.User.Show');
             Route::get('/personnel/manage/promotions/', 'promotions')->name('Personnel.Manage.Promotions');
             Route::get('/personnel/manage/promotions/{id}', 'showPromotions')->name('Personnel.Manage.Promotions.Show');
+
+            Route::get('/users/seller/',  'sellerUser')->name('seller.user');
+            Route::put('/users/update/seller', 'sellerUpdate')->name('seller.user.update');
+            Route::put('/users/change-password/seller',  'sellerChangePassword')->name('seller.user.change_password');
         });
 
         Route::controller(SellerProductController::class)->group(function () {
@@ -273,18 +279,21 @@ Route::middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->g
             Route::get('/customer/customer/confirmation', 'index')->name('Customer.Confirmation');
         });
 
-
         Route::controller(ShopController::class)->group(function () {
             Route::get('/customer/shop', 'index')->name('Customer.Shop');
             Route::get('/customer/product/{product_slug}', 'product_details')->name('Customer.Details');
         });
 
+
         Route::controller(CustomerUserController::class)->group(function () {
             Route::get('/customer/account/detail', 'index')->name('Customer.Account.Detail');
+            Route::put('/customer/update/account', 'update')->name('Customer.user.update');
+            Route::put('/customer/change-password/account',  'changePassword')->name('Customer.user.change_password');
             Route::get('/customer/account/address/create', 'createAddress')->name('Customer.Account.Address.Create');
             Route::get('/customer/account/address', 'manageAddress')->name('Customer.Account.Address.Manage');
             Route::get('/customer/account/order/', 'order')->name('Customer.Account.Order');
             Route::get('/customer/account/order/{order}',  'orderDetail')->name('account.orders.details');
+            Route::get('/customer/product/{id}', 'show')->name('Customer.product.show');
             Route::put('/orders/{order}/cancel', 'cancel')->name('account.orders.cancel');
             Route::get('/customer/account/review', 'review')->name('Customer.Account.Review');
         });

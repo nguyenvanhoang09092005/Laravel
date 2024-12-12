@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_asset/css/animation.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_asset/css/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin_asset/css/bootstrap-select.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('admin_asset/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_asset/css/style1.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_asset/font/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_asset/icon/style.css') }}">
     <link rel="stylesheet" href="{{ asset('admin_asset/css/bootstrap-icons.min.css') }}">
@@ -37,19 +37,13 @@
 
 
     @livewireStyles
-    <title>@yield('seller_page_title')</title>
+    <title>@yield('admin_page_title')</title>
 </head>
 
 <body class="body">
     <div id="wrapper">
         <div id="page" class="">
             <div class="layout-wrap">
-
-                <!-- <div id="preload" class="preload-container">
-    <div class="preloading">
-        <span></span>
-    </div>
-</div> -->
 
                 <div class="section-menu-left">
                     <div class="box-logo">
@@ -113,12 +107,12 @@
                                                 <div class="text">History</div>
                                             </a>
                                         </li>
-                                        <li class="sub-menu-item"
+                                        {{-- <li class="sub-menu-item"
                                             {{ request()->routeIs('Personnel.Order.ApproveOrder') ? 'active' : '' }}>
                                             <a href="{{ Route('Personnel.Order.ApproveOrder') }}" class="">
                                                 <div class="text">Approve An Order</div>
                                             </a>
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                 </li>
 
@@ -137,8 +131,8 @@
                                     </a>
                                 </li>
 
-                                <li class="menu-item" {{ request()->routeIs('admin.user') ? 'active' : '' }}>
-                                    <a href="{{ route('admin.user') }}" class="">
+                                <li class="menu-item" {{ request()->routeIs('seller.user') ? 'active' : '' }}>
+                                    <a href="{{ route('seller.user') }}" class="">
                                         <div class="icon"><i class="icon-user"></i></div>
                                         <div class="text">Account Information</div>
                                     </a>
@@ -152,6 +146,7 @@
                                 </li>
                             </ul>
                         </div>
+
                     </div>
                 </div>
                 <div class="section-content-right">
@@ -250,14 +245,14 @@
                                             id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
                                             <span class="header-user wg-user" style="margin-right: 2em">
                                                 <span class="image">
-                                                    <img src="{{ asset('storage/users/' . Auth::user()->profile_image) }}"
+                                                    <img src="{{ asset('storage/' . Auth::user()->profile_image) }}"
                                                         alt="User Profile Image">
 
 
                                                 </span>
                                                 <span class="flex flex-column">
                                                     <span class="body-title mb-2">{{ Auth::user()->name }}</span>
-                                                    <span class="text-tiny">Personnel</span>
+                                                    <span class="text-tiny">Seller</span>
                                                 </span>
                                             </span>
                                         </button>
@@ -348,7 +343,7 @@
 
     <script src="{{ asset('admin_asset/js/main.js') }}"></script>
     <script src="{{ asset('admin_asset/js/script.js') }}"></script>
-    {{-- <script>
+    <script>
         (function($) {
 
             var tfLineChart = (function() {
@@ -456,7 +451,7 @@
 
             jQuery(window).on("resize", function() {});
         })(jQuery);
-    </script> --}}
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

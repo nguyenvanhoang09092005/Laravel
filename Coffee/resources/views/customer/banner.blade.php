@@ -21,51 +21,47 @@
         <div class="container" data-aos="fade-up">
 
             <div class="section-title">
-                <h2>About</h2>
-                <h3>Find Out More <span>About Us</span></h3>
-                <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque
-                    vitae autem.</p>
+                <h2>Giới Thiệu</h2>
+                <h3>Tìm Hiểu Thêm <span>Về Chúng Tôi</span></h3>
             </div>
 
-            <div class="row">
+            <div class="row mt-3">
                 <div class="col-lg-6" data-aos="fade-right" data-aos-delay="100">
-                    <img src="assets/img/about.jpg" class="img-fluid" alt="">
+                    <img src="{{ asset('images/tải xuống (1).jpg') }}" class="img-fluid" style="overflow: hidden"
+                        width="100%" height="auto" alt="Quán cà phê">
                 </div>
                 <div class="col-lg-6 pt-4 pt-lg-0 content d-flex flex-column justify-content-center" data-aos="fade-up"
                     data-aos-delay="100">
-                    <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
+                    <h3>Chất lượng cà phê tuyệt vời, không gian thư giãn, dịch vụ tận tâm.</h3>
                     <p class="fst-italic">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore
-                        magna aliqua.
+                        Chúng tôi cung cấp những ly cà phê ngon nhất, được pha chế từ những hạt cà phê nguyên chất, mang đến
+                        cho bạn một trải nghiệm thú vị và thư giãn.
                     </p>
                     <ul>
                         <li>
                             <i class="bx bx-store-alt"></i>
                             <div>
-                                <h5>Ullamco laboris nisi ut aliquip consequat</h5>
-                                <p>Magni facilis facilis repellendus cum excepturi quaerat praesentium libre trade</p>
+                                <h5>Không gian ấm cúng, thoải mái</h5>
+                                <p>Chúng tôi tạo ra không gian lý tưởng để bạn thư giãn và tận hưởng cà phê cùng bạn bè hoặc
+                                    đồng nghiệp.</p>
                             </div>
                         </li>
                         <li>
                             <i class="bx bx-images"></i>
                             <div>
-                                <h5>Magnam soluta odio exercitationem reprehenderi</h5>
-                                <p>Quo totam dolorum at pariatur aut distinctio dolorum laudantium illo direna pasata redi
-                                </p>
+                                <h5>Menu đa dạng, phục vụ tận tình</h5>
+                                <p>Chúng tôi cung cấp một thực đơn phong phú, từ cà phê đến các món ăn nhẹ, phục vụ nhanh
+                                    chóng và chu đáo.</p>
                             </div>
                         </li>
                     </ul>
                     <p>
-                        Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate
-                        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                        sunt in
-                        culpa qui officia deserunt mollit anim id est laborum
+                        Với cam kết chất lượng và sự hài lòng của khách hàng, chúng tôi luôn nỗ lực mang đến những sản phẩm
+                        và dịch vụ tốt nhất. Hãy đến và thưởng thức những ly cà phê tuyệt vời cùng chúng tôi!
                     </p>
                 </div>
             </div>
 
         </div>
-    </div><!-- End About Section -->
+    </div>
 @endsection

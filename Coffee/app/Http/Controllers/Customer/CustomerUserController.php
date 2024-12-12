@@ -2,18 +2,31 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\ShippingAddress;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class CustomerUserController extends Controller
 {
-    public function index() {}
+    public function index()
+    {
+        return view('customer.account.accountDetail');
+    }
 
-    public function createAddress() {}
+    public function createAddress()
+    {
+        return view('customer.account.accountAddressAdd');
+    }
 
-    public function manageAddress() {}
+    public function manageAddress()
+    {
+        $addresses = ShippingAddress::where('user_id', auth()->id())->get();
+
+        return view('customer.account.accountAddress', compact('addresses'));
+    }
 
     public function order()
     {
@@ -32,6 +45,24 @@ class CustomerUserController extends Controller
 
 
         return view('customer.account.accountOrderDetail', compact('order'));
+    }
+
+    public function show($id)
+    {
+        $product = Product::with('product_reviews')->findOrFail($id);
+
+        $totalReviews = $product->product_reviews->count();
+
+        $ratings = [];
+        for ($i = 1; $i <= 5; $i++) {
+            $count = $product->product_reviews->where('rating', $i)->count();
+            $ratings[$i] = [
+                'count' => $count,
+                'percentage' => $totalReviews > 0 ? round(($count / $totalReviews) * 100, 2) : 0
+            ];
+        }
+
+        return view('customer.shop.detail', compact('product', 'ratings', 'totalReviews'));
     }
 
     public function cancel($orderId)

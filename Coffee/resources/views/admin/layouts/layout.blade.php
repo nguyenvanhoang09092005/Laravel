@@ -216,26 +216,35 @@
                                             <div class="text">Manager User</div>
                                         </a>
                                     </li>
-                                    {{-- <li class="menu-item has-children">
+                                    <li class="menu-item has-children">
                                         <a href="javascript:void(0);" class="menu-item-button">
                                             <div class="icon"><i class="bi bi-credit-card"></i></div>
-                                            <div class="text">Payment</div>
+                                            <div class="text">Staff</div>
                                         </a>
                                         <ul class="sub-menu">
                                             <li
-                                                class="sub-menu-item {{ request()->routeIs('payment.add') ? 'active' : '' }}">
-                                                <a href="{{ route('payment.add') }}" class="">
-                                                    <div class="text">Add</div>
+                                                class="sub-menu-item {{ request()->routeIs('Admin.Staff.WorkShiftManage.Manage') ? 'active' : '' }}">
+                                                <a href="{{ route('Admin.Staff.WorkShiftManage.Manage') }}"
+                                                    class="">
+                                                    <div class="text">Shift</div>
                                                 </a>
                                             </li>
                                             <li
-                                                class="sub-menu-item {{ request()->routeIs('payment.manager') ? 'active' : '' }}">
-                                                <a href="{{ route('payment.manage') }}" class="">
-                                                    <div class="text">Manager</div>
+                                                class="sub-menu-item {{ request()->routeIs('Admin.Staff.Attendances.Store') ? 'active' : '' }}">
+                                                <a href="{{ route('Admin.Staff.Attendances.Store') }}"
+                                                    class="">
+                                                    <div class="text">Attendance</div>
+                                                </a>
+                                            </li>
+                                            <li
+                                                class="sub-menu-item {{ request()->routeIs('Admin.Staff.Salaries.Calculate') ? 'active' : '' }}">
+                                                <a href="{{ route('Admin.Staff.Salaries.Calculate') }}"
+                                                    class="">
+                                                    <div class="text">Salary</div>
                                                 </a>
                                             </li>
                                         </ul>
-                                    </li> --}}
+                                    </li>
                                     <li class="menu-item has-children">
                                         <a href="javascript:void(0);" class="menu-item-button">
                                             <div class="icon"><i class="icon-file-plus"></i></div>

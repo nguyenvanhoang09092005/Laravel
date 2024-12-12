@@ -29,20 +29,86 @@
         gap: 24px;
         border-radius: 12px;
         background: var(--White);
+        box-shadow: 0px 4px 24px 2px rgba(107, 108, 110, 0.237);
+    }
+
+    .wg-box {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        padding: 24px;
+        flex-direction: column;
+        gap: 24px;
+        border-radius: 12px;
+        background: var(--White);
         box-shadow: 0px 4px 24px 2px rgba(20, 25, 38, 0.05);
+        /* Độ bóng */
+        transition: all 0.3s ease;
+        /* Mượt khi di chuyển */
+        background: linear-gradient(145deg, #ffffff, #f7f7f7);
+        /* Độ sáng mịn màng */
     }
 
-    .bg-success {
-        background-color: #40c710 !important;
+    .wg-box:hover {
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+        /* Bóng mạnh hơn khi hover */
+        transform: translateY(-5px);
+        /* Tạo hiệu ứng mượt */
     }
 
-    .bg-danger {
-        background-color: #f44032 !important;
+    .wg-box .text-center {
+        transition: transform 0.3s ease-in-out;
+        /* Mượt khi text xuất hiện */
     }
 
-    .bg-warning {
-        background-color: #f5d700 !important;
-        color: #000;
+    .wg-box .text-center:hover {
+        transform: scale(1.05);
+        /* Mượt khi hover */
+    }
+
+
+    .status {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .status.canceled {
+        background-color: #f44336;
+        /* Đỏ */
+        color: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .status.delivered {
+        background-color: #4caf50;
+        /* Xanh lá */
+        color: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .status.shipping {
+        background-color: #ff9800;
+        /* Cam */
+        color: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .status.processing {
+        background-color: #2196f3;
+        /* Xanh dương */
+        color: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Thêm hiệu ứng khi hover */
+    .status:hover {
+        transform: translateY(-2px);
+        box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
     }
 
 
@@ -59,7 +125,7 @@
 
     .table> :not(caption)>tr>th {
         padding: 0.625rem 1.5rem .25rem !important;
-        background-color: #6a6e51 !important;
+        background-color: #098cff !important;
     }
 
     .table-bordered>:not(caption)>*>* {
@@ -91,13 +157,15 @@
     .table-bordered> :not(caption)>tr>th,
     .table-bordered> :not(caption)>tr>td {
         border-width: 1px 1px;
-        border-color: #6a6e51;
+        border-color: #0b70f4;
     }
 </style>
 @section('customer_content')
     <main class="pt-90" style="padding-top: 0px;">
         <section class="my-account container">
-            <h2 class="page-title">Chi Tiết Đơn Hàng</h2>
+            <div class="text-center">
+                <h2>Chi tiết đơn hàng</h2>
+            </div>
             <div class="row">
                 <div class="col-lg-2">
                     @include('customer.account.account-nav')
@@ -107,7 +175,7 @@
 
                 <div class="col-lg-10">
 
-                    <div class="wg-box mt-5 mb-5">
+                    <div class="wg-box  mb-5">
                         <div class="row">
                             <div class="col-6">
                                 <h5>Chi tiết đơn hàng</h5>
@@ -138,15 +206,15 @@
                                     </tr>
                                     <tr>
                                         <th>Trạng thái đơn hàng</th>
-                                        <td class="text-center" colspan="5">
+                                        <td colspan="5" class="text-center">
                                             @if ($order->status == 'canceled')
-                                                <span class="badge bg-danger">Đã Hủy</span>
+                                                <span class="status canceled">Đã Hủy</span>
                                             @elseif($order->status == 'delivered')
-                                                <span class="badge bg-success">Đã giao hàng</span>
+                                                <span class="status delivered">Đã giao hàng</span>
                                             @elseif($order->status == 'shipping')
-                                                <span class="badge bg-success">Đang giao hàng</span>
+                                                <span class="status shipping">Đang giao hàng</span>
                                             @else
-                                                <span class="badge bg-warning">Đang Xử Lý</span>
+                                                <span class="status processing">Đang Xử Lý</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -250,17 +318,19 @@
                                     <tr>
                                         <td class="text-start"><strong>Tổng tiền</strong></td>
                                         <td class="text-start">
-                                            {{ number_format($order->total_price_without_discount, 0, ',', '.') }}</td>
+                                            {{ number_format($order->total_price_without_discount, 0, ',', '.') }}
+                                            <sup>đ</sup>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="text-start"><strong>Mã giảm giá</strong></td>
                                         <td class="text-start">
-                                            {{ number_format($order->total_discount, 0, ',', '.') }}</td>
+                                            {{ number_format($order->total_discount, 0, ',', '.') }} <sup>đ</sup></td>
                                     </tr>
                                     <tr>
                                         <td class="text-start"><strong>Tổng cộng</strong></td>
                                         <td class="text-start">
-                                            {{ number_format($order->total_price, 0, ',', '.') }}</td>
+                                            {{ number_format($order->total_price, 0, ',', '.') }} <sup>đ</sup></td>
                                     </tr>
                                     <tr>
                                         <td class="text-start"><strong>Phương thức thanh toán</strong></td>

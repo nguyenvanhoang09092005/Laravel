@@ -2,7 +2,9 @@
 
 @section('customer_content')
     <section class="shop-checkout container">
-        <h2 class="page-title">Vận chuyển và Thanh toán</h2>
+        <div class="section-title" data-aos="fade-up">
+            <h2>Vận chuyển và thanh toán</h2>
+        </div>
         <div class="checkout-steps d-flex justify-content-between my-4">
             <a href="{{ route('Customer.Cart.View') }}" class="checkout-steps__item active">
                 <span class="checkout-steps__item-number">01</span>
