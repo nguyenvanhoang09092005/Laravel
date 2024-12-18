@@ -2,18 +2,17 @@
     <link href="{{ asset('admin_asset/css/cart.css') }}" rel="stylesheet">
     <style>
         .card {
-            --font-color: #0967d2;
-            --font-color-sub: #000000;
-            --bg-color: #fff;
-            --main-color: #0894ff;
-            --main-focus: #2d8cf0;
+            --font-color: #ffffff;
+            --font-color-sub: #dddddd;
+            --bg-color: #fcfcfe;
+            --main-color: #226fff;
+            --main-focus: #1582ef;
             max-width: 330px;
             width: 100%;
             max-height: 380px;
             background: var(--bg-color);
             border: 2px solid var(--main-color);
             border-radius: 12px;
-            /* Tăng độ bo tròn cho góc */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -21,19 +20,15 @@
             padding: 16px;
             gap: 12px;
             transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
-            /* Thêm transition cho hiệu ứng mượt mà */
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            /* Đặt bóng mờ nhẹ cho card */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             filter: brightness(1.05);
-            /* Làm sáng nhẹ */
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-            /* Bóng đổ sâu hơn khi hover */
-            filter: brightness(1.1) saturate(1.1);
-            /* Tăng độ sáng và bão hòa màu khi hover */
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            filter: brightness(1.2);
+            border-color: var(--main-focus);
         }
 
         .card-img {
@@ -174,70 +169,102 @@
             /* Set color for selected stars */
         }
 
-        /* Container Styles */
-        .shop-sidebar {
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #fff;
-        }
+        /* Giao diện của sidebar */
 
         .sidebar-title {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             margin-bottom: 20px;
             text-align: center;
+            color: #333;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.388);
         }
 
-        /* Filter Card Styles */
+        /* Các card lọc */
         .filter-card {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #f9f9f9;
+            border-radius: 12px;
+            background-color: #fafafa;
             overflow: hidden;
-            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.53);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
         }
 
+        .filter-card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.452);
+
+        }
+
+        /* Header của các card lọc */
         .filter-header {
-            padding: 10px 15px;
-            font-size: 16px;
+            padding: 12px 20px;
+            font-size: 18px;
             font-weight: bold;
             background-color: #f1f1f1;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
 
         .filter-header:hover {
-            background-color: #e6e6e6;
+            background-color: #e0e0e0;
         }
 
+
+        /* Biểu tượng toggle */
         .toggle-icon {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             color: #555;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, color 0.3s ease;
         }
 
+        .filter-header:hover .toggle-icon {
+            color: #333;
+            transform: rotate(180deg);
+        }
+
+        /* Nội dung của các filter */
         .filter-content {
             padding: 15px;
             display: none;
             animation: fadeIn 0.3s ease;
         }
 
+        /* Danh sách thương hiệu */
         .brand-list {
             max-height: 150px;
             overflow-y: auto;
             border: 1px solid #ddd;
             padding: 10px;
-            border-radius: 4px;
+            border-radius: 6px;
             background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
+        .category-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 6px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Checkbox */
         .form-check {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-check:hover {
+            background-color: #f9f9f9;
+            border-radius: 6px;
         }
 
         /* Range Slider */
@@ -246,6 +273,8 @@
             margin-top: 10px;
             display: block;
             text-align: center;
+            color: #333;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         /* Animations */
@@ -258,6 +287,59 @@
                 opacity: 1;
             }
         }
+
+        /* Cải thiện giao diện cho Range Slider */
+        input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            background: linear-gradient(to right, #00bfff 0%, #00bfff 0%, #ddd 0%, #ddd 100%);
+            border-radius: 5px;
+            outline: none;
+            transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        input[type="range"]:focus {
+            background: linear-gradient(to right, #00bfff 0%, #00bfff 100%, #ddd 100%);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+            transform: scale(1.05);
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #00d4ff;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+
+        input[type="range"]:active::-webkit-slider-thumb {
+            background: #00a3cc;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+            transform: scale(1.1);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #00d4ff;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+
+        input[type="range"]:active::-moz-range-thumb {
+            background: #00a3cc;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+            transform: scale(1.1);
+        }
     </style>
     @section('customer_content')
         <div class="section-title" data-aos="fade-up">
@@ -267,7 +349,9 @@
         <section class="shop-main container d-flex pt-4 pt-xl-5">
             <div class="shop-sidebar side-sticky bg-body" id="shopFilter">
                 <h3 class="sidebar-title">Tìm kiếm nâng cao</h3>
-                <form id="advancedSearchForm" method="GET" action="{{ route('Customer.Shop') }}">
+                <form id="advancedSearchForm" method="POST" action="{{ route('Customer.Filter') }}">
+                    @csrf
+                    @method('POST')
                     <!-- Danh mục -->
                     <div class="filter-card">
                         <div class="filter-header" onclick="toggleFilter('categoryFilter')">
@@ -275,12 +359,20 @@
                             <span class="toggle-icon">+</span>
                         </div>
                         <div class="filter-content" id="categoryFilter">
-                            <select id="category" name="category" class="form-control">
-                                <option value="">Chọn danh mục</option>
+                            <div class="category-list">
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input category-checkbox"
+                                            id="category_{{ $category->id }}" name="category[]" value="{{ $category->id }}"
+                                            {{ in_array($category->id, request('category', [])) ? 'checked' : '' }}
+                                            onchange="filterProducts()">
+                                        <label class="form-check-label" for="category_{{ $category->id }}">
+                                            {{ $category->category_name }}
+                                        </label>
+                                        <span class="text-right float-end">{{ $category->products->count() }}</span>
+                                    </div>
                                 @endforeach
-                            </select>
+                            </div>
                         </div>
                     </div>
 
@@ -295,10 +387,12 @@
                                 @foreach ($brands as $brand)
                                     <div class="form-check">
                                         <input type="checkbox" class="form-check-input brand-checkbox"
-                                            id="brand_{{ $brand->id }}" name="brand[]" value="{{ $brand->id }}">
-
-                                        <label class="form-check-label"
-                                            for="brand_{{ $brand->id }}">{{ $brand->brand_name }}</label>
+                                            id="brand_{{ $brand->id }}" name="brand[]" value="{{ $brand->id }}"
+                                            {{ in_array($brand->id, request('brand', [])) ? 'checked' : '' }}
+                                            onchange="filterProducts()">
+                                        <label class="form-check-label" for="brand_{{ $brand->id }}">
+                                            {{ $brand->brand_name }}
+                                        </label>
                                         <span class="text-right float-end">{{ $brand->products->count() }}</span>
                                     </div>
                                 @endforeach
@@ -314,20 +408,20 @@
                         </div>
                         <div class="filter-content" id="priceFilter">
                             <input type="range" id="priceRange" name="price" min="0" max="1000"
-                                step="50" class="form-range">
-                            <span id="priceValue">0 VND</span>
+                                step="50" class="form-range" value="{{ request('price', 0) }}"
+                                oninput="updatePriceValue()">
+                            <span id="priceValue">{{ request('price', 0) }} VND</span>
                         </div>
                     </div>
 
                 </form>
-
             </div>
 
             <div id="searchResults">
-                <div class="products-grid row row-cols-2 row-cols-md-3" id="products-grid">
+                <div class="products-grid  row row-cols-2 row-cols-md-3" id="searchResults">
                     @foreach ($products as $product)
                         <div class="col mb-4 d-flex justify-content-center">
-                            <div class="card">
+                            <div class="card ">
                                 <div class="card-img">
                                     <div class="img">
                                         <img src="{{ asset('storage/') }}/{{ $product->product_img }}"
@@ -342,7 +436,6 @@
                                 <hr class="card-divider">
 
                                 <div class="card-footer">
-
                                     <div class="card-price">
                                         @if ($product->discounted_price)
                                             <span>{{ number_format($product->discounted_price, 0, ',', '.') }}
@@ -351,11 +444,7 @@
                                             <span>{{ number_format($product->regular_price, 0, ',', '.') }}
                                                 <sup>đ</sup></span>
                                         @endif
-
-
-
                                     </div>
-                                    <!-- Add to Cart Button -->
                                     <button class="card-btn">
                                         <a href="{{ route('Customer.Details', ['product_slug' => $product->slug]) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -368,22 +457,14 @@
                             </div>
                         </div>
                     @endforeach
+
                 </div>
-
-            </div>
-
-
-
-            <div class="divider"></div>
-            <div class="flex items-center justify-between flex-wrap gap10 wgp-pagination">
-                {{ $products->links('pagination::bootstrap-5') }}
-            </div>
+                <div class="divider"></div>
+                <div class="flex items-center justify-between flex-wrap gap10 wgp-pagination">
+                    {{ $products->appends(request()->except('page'))->links('pagination::bootstrap-5') }}
+                </div>
             </div>
         </section>
-
-        <div id="frmfilter" method="GET" action="{{ route('Customer.Shop') }}">
-            <input type="hidden" name="brands" id="hdnBrands">
-        </div>
     @endsection
     <script>
         function toggleFilter(filterId) {
@@ -397,5 +478,41 @@
                 filterContent.style.display = 'block';
                 toggleIcon.textContent = '−';
             }
+        }
+
+        function filterProducts() {
+            let selectedBrands = [];
+            document.querySelectorAll('.brand-checkbox:checked').forEach((checkbox) => {
+                selectedBrands.push(checkbox.value);
+            });
+
+            let selectedCategories = [];
+            document.querySelectorAll('.category-checkbox:checked').forEach((checkbox) => {
+                selectedCategories.push(checkbox.value);
+            });
+
+            let selectedPrice = document.getElementById('priceRange').value;
+
+            // Hiển thị loader
+            const searchResults = document.getElementById('searchResults');
+            searchResults.innerHTML = '<div>Loading...</div>';
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('Customer.Filter') }}',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    brand: selectedBrands,
+                    category: selectedCategories,
+                    price: selectedPrice,
+                },
+                success: function(data) {
+                    $('#searchResults').html(data);
+                },
+                error: function(xhr) {
+                    console.error('Error:', xhr.responseText);
+                }
+            });
+
         }
     </script>

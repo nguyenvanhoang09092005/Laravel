@@ -105,7 +105,12 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false, // Đảm bảo tỷ lệ khung hình không bị cố định
+            maintainAspectRatio: false,
+            interaction: {
+                mode: "nearest",
+                axis: "x",
+                intersect: false,
+            },
             scales: {
                 x: { beginAtZero: true },
                 y: { beginAtZero: true },
@@ -113,6 +118,10 @@ document.addEventListener("DOMContentLoaded", function () {
             plugins: {
                 legend: { position: "top" },
                 tooltip: {
+                    enabled: true,
+                    animation: {
+                        duration: 0, // Tắt hoạt ảnh
+                    },
                     callbacks: {
                         label: function (tooltipItem) {
                             return (
@@ -129,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Tự động cập nhật lại kích thước biểu đồ khi cửa sổ thay đổi
     window.addEventListener("resize", function () {
-        trafficChart.update(); // Sử dụng update thay vì resize
+        trafficChart.update();
     });
 });
 

@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\DefaultAttribute;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
 class ShopController extends Controller
@@ -15,7 +16,7 @@ class ShopController extends Controller
     {
         $categories = Category::all();
         $brands = Brand::orderBy('brand_name', 'ASC')->get();
-        $products = Product::orderBy('created_at', 'DESC')->paginate(12);
+        $products = Product::orderBy('created_at', 'DESC')->paginate(6);
 
         return view('customer.shop.shop', compact('products', 'categories', 'brands'));
     }
@@ -30,28 +31,40 @@ class ShopController extends Controller
         return view('customer.shop.detail', compact('product', 'categories', 'brands', 'rproducts', 'attributes'));
     }
 
-    // public function filter(Request $request)
-    // {
-    //     $query = Product::query();
+    public function filter(Request $request)
+    {
+        $query = Product::query();
 
-    //     if ($request->has('category') && $request->category) {
-    //         $query->where('category_id', $request->category);
-    //     }
+        // Filter by categories
+        if ($categories = $request->input('category', [])) {
+            $query->whereIn('category_id', $categories);
+        }
 
-    //     if ($request->has('brand') && count($request->brand)) {
-    //         $query->whereIn('brand_id', $request->brand);
-    //     }
+        // Filter by brands
+        if ($brandIds = $request->input('brand', [])) {
+            $query->whereIn('brand_id', $brandIds);
+        }
 
-    //     if ($request->has('price') && $request->price) {
-    //         $query->where('regular_price', '<=', $request->price);
-    //     }
+        // Filter by price
+        if ($price = $request->input('price')) {
+            $query->where('regular_price', '<=', $price);
+        }
 
-    //     // Paginate results for smoother handling of large datasets
-    //     $products = $query->paginate(12);
+        if ($price = $request->input('price')) {
+            $query->where('regular_price', '<=', $price)
+                ->orWhere('discounted_price', '<=', $price);
+        }
+        // Fetch filtered products
+        $products = $query->paginate();
 
-    //     // Return the view (rendered products) as part of the response
-    //     $html = view('customer.shop.shop', compact('products'))->render();
+        if ($request->ajax()) {
+            return view('customer.shop.partials.products', compact('products'));
+        }
 
-    //     return response()->json(['html' => $html]);
-    // }
+        return view('customer.shop.shop', [
+            'products' => $products,
+            'categories' => Category::all(),
+            'brands' => Brand::orderBy('brand_name', 'ASC')->get(),
+        ]);
+    }
 }
