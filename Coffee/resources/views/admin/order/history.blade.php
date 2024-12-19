@@ -16,22 +16,27 @@
         }
 
         .status-label.shipping {
-            background-color: #FFD700;
+            background-color: #007BFF;
             color: black;
         }
 
         .status-label.delivered {
-            background-color: #1E90FF;
+            background-color: #20C997;
             color: white;
         }
 
         .status-label.canceled {
-            background-color: #FF4500;
+            background-color: #DC3545;
             color: white;
         }
 
         .status-label.pending {
-            background-color: #B0C4DE;
+            background-color: #FFC107;
+            color: black;
+        }
+
+        .status-label.confirmed {
+            background-color: #17A2B8;
             color: black;
         }
     </style>

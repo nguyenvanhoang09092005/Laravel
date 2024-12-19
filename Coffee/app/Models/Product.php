@@ -18,6 +18,8 @@ class Product extends Model
         'sku',
         'stock_quantity',
         'stock_status',
+        'average_rating',
+        'review_count',
         'admin_id',
         'category_id',
         'brand_id',

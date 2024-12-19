@@ -3,6 +3,7 @@
         position: relative;
     }
 
+
     #cart-count {
         position: absolute;
 
@@ -13,6 +14,12 @@
         color: white;
         font-size: 12px;
         font-weight: bold;
+    }
+
+    @media (max-width: 991px) {
+        .icon_account {
+            display: none !important;
+        }
     }
 </style>
 
@@ -41,8 +48,9 @@
                             d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
                     </svg>
                     <span id="cart-count" class="cart-amount d-block position-absolute js-cart-items-count">
-                        2
+                        {{-- {{ $cartCount }} --}}
                     </span>
+
                 </a>
             </div>
 
@@ -51,7 +59,11 @@
             <!-- Right-side Menu -->
             <div class="icon_account d-flex align-items-center ms-5">
                 <!-- Search Input -->
-                <input type="text" class="form-control search me-5" placeholder="Search" style="max-width: 200px;">
+                <form action="{{ route('Customer.products.search') }}" method="GET">
+                    <input type="text" class="form-control search mt-3 me-5" placeholder="Search" name="query"
+                        style="max-width: 200px;">
+                    <button type="submit" style="display: none;"></button>
+                </form>
 
                 <!-- User Dropdown -->
                 <div class="nav-item dropdown">
@@ -100,3 +112,26 @@
         </nav>
     </div>
 </header>
+<script>
+    function updateCartCount() {
+        $.ajax({
+            url: '/customer/cart/update',
+            method: 'GET',
+            success: function(response) {
+                $('#cart-count').text(response.cartCount);
+            },
+            error: function() {
+                alert('Có lỗi xảy ra khi cập nhật giỏ hàng.');
+            }
+        });
+    }
+
+
+    $(document).on('click', '.add-to-cart-button', function() {
+        updateCartCount();
+    });
+
+    $(document).on('click', '.update-quantity-button', function() {
+        updateCartCount();
+    });
+</script>

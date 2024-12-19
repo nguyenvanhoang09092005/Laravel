@@ -78,32 +78,40 @@
     }
 
     .status.canceled {
-        background-color: #f44336;
-        /* Đỏ */
+        background-color: #DC3545;
+        /* Đỏ nhạt */
         color: white;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .status.delivered {
-        background-color: #4caf50;
-        /* Xanh lá */
+        background-color: #20C997;
+        /* Xanh lá tươi */
         color: white;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .status.shipping {
-        background-color: #ff9800;
-        /* Cam */
+        background-color: #007BFF;
+        /* Cam nhạt */
         color: white;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .status.processing {
-        background-color: #2196f3;
-        /* Xanh dương */
+        background-color: #FFC107;
+        /* Xanh dương nhạt */
         color: white;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
+
+    .status.confirmed {
+        background-color: #17A2B8;
+        /* Tím nhẹ */
+        color: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
 
     /* Thêm hiệu ứng khi hover */
     .status:hover {
@@ -171,7 +179,17 @@
                     @include('customer.account.account-nav')
                 </div>
 
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
 
                 <div class="col-lg-10">
 
@@ -181,7 +199,7 @@
                                 <h5>Chi tiết đơn hàng</h5>
                             </div>
                             <div class="col-6 text-end">
-                                <a class="btn btn-sm btn-danger" href="http://localhost:8000/account-orders">Quay lại</a>
+                                <a class="btn btn-sm btn-danger" href="{{ route('Customer.Account.Order') }}">Quay lại</a>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -207,15 +225,30 @@
                                     <tr>
                                         <th>Trạng thái đơn hàng</th>
                                         <td colspan="5" class="text-center">
-                                            @if ($order->status == 'canceled')
-                                                <span class="status canceled">Đã Hủy</span>
-                                            @elseif($order->status == 'delivered')
-                                                <span class="status delivered">Đã giao hàng</span>
-                                            @elseif($order->status == 'shipping')
-                                                <span class="status shipping">Đang giao hàng</span>
-                                            @else
-                                                <span class="status processing">Đang Xử Lý</span>
-                                            @endif
+                                            @switch($order->status)
+                                                @case('canceled')
+                                                    <span class="status canceled">Đã Hủy</span>
+                                                @break
+
+                                                @case('delivered')
+                                                    <span class="status delivered">Đã giao hàng</span>
+                                                @break
+
+                                                @case('shipping')
+                                                    <span class="status shipping">Đang giao hàng</span>
+                                                @break
+
+                                                @case('confirmed')
+                                                    <span class="status confirmed">Nhận hàng thành công</span>
+                                                @break
+
+                                                @case('pending')
+                                                    <span class="status processing">Đang chờ xử lý</span>
+                                                @break
+
+                                                @default
+                                                    <span class="status unknown">Không xác định</span>
+                                            @endswitch
                                         </td>
                                     </tr>
                                 </tbody>
@@ -348,8 +381,18 @@
                                 @method('PUT')
                                 <button type="submit" class="btn btn-danger">Hủy Đơn Hàng</button>
                             </form>
+                        @elseif ($order->status == 'delivered')
+                            <form action="{{ route('account.orders.confirm', $order->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-success">Đã nhận được hàng</button>
+                            </form>
+                        @elseif ($order->status == 'confirmed')
+                            <a href="{{ route('customer.shop.comment', $order->id) }}" class="btn btn-primary">Đánh giá sản
+                                phẩm</a>
                         @endif
                     </div>
+
 
                 </div>
             </div>

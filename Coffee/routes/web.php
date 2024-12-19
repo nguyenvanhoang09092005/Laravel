@@ -268,6 +268,7 @@ Route::middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->g
             Route::get('/customer/cart', 'index')->name('Customer.Cart.View');
             Route::put('/customer/cart/update/{id}', 'updateQuantity')->name('Customer.Cart.Update');
             Route::post('/apply-coupon', 'applyCoupon')->name('applyCoupon');
+            Route::get('/customer/cart/update', 'updateCartCount')->name('Customer.cart.update');
         });
 
         Route::controller(CheckoutController::class)->group(function () {
@@ -282,6 +283,7 @@ Route::middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->g
         Route::controller(ShopController::class)->group(function () {
             Route::get('/customer/shop', 'index')->name('Customer.Shop');
             Route::get('/customer/product/{product_slug}', 'product_details')->name('Customer.Details');
+
             Route::post('/shop/filter', [ShopController::class, 'filter'])->name('Customer.Filter');
             Route::get('/search-products', 'search')->name('Customer.products.search');
         });
@@ -295,9 +297,11 @@ Route::middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->g
             Route::get('/customer/account/address', 'manageAddress')->name('Customer.Account.Address.Manage');
             Route::get('/customer/account/order/', 'order')->name('Customer.Account.Order');
             Route::get('/customer/account/order/{order}',  'orderDetail')->name('account.orders.details');
+            Route::put('account/orders/confirm/{order}', 'confirm')->name('account.orders.confirm');
+            Route::get('/customer/shop/comment/{order}', 'comment')->name('customer.shop.comment');
+            Route::post('/customer/product/{id}/review', 'saveReview')->name('Customer.product.review');
             Route::get('/customer/product/{id}', 'show')->name('Customer.product.show');
             Route::put('/orders/{order}/cancel', 'cancel')->name('account.orders.cancel');
-            Route::get('/customer/account/review', 'review')->name('Customer.Account.Review');
         });
     });
 })->name('dashboard');

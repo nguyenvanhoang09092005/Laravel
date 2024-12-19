@@ -49,6 +49,8 @@ class CustomerCartController extends Controller
             ]);
         }
 
+        $this->updateCartCount();
+
         return redirect()->route('Customer.Cart.View')->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
     }
 
@@ -156,7 +158,7 @@ class CustomerCartController extends Controller
         $cartItems = Cart::where('user_id', auth()->id())->with('product', 'promotion')->get();
         $totalPrice = 0;
         $totalDiscount = 0;
-
+        $cartCount = 0;
         foreach ($cartItems as $item) {
             $productPrice = $item->price * $item->quantity;
 
@@ -167,8 +169,19 @@ class CustomerCartController extends Controller
             }
 
             $totalPrice += $productPrice;
+            $cartCount += $item->quantity;
         }
 
-        return view('customer.pay.cart', compact('cartItems', 'totalPrice', 'totalDiscount'));
+        return view('customer.pay.cart', compact('cartItems', 'totalPrice', 'totalDiscount', 'cartCount'));
+    }
+
+    public function updateCartCount()
+    {
+        $userId = Auth::id();
+        $cartCount = Cart::where('user_id', $userId)->sum('quantity');
+
+        return response()->json([
+            'cartCount' => $cartCount
+        ]);
     }
 }

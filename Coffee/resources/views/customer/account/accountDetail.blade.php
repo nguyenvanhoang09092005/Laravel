@@ -38,9 +38,8 @@
             color: white;
             border: none;
             box-shadow: 0 8px 15px rgba(0, 119, 255, 0.8), 0 4px 10px rgba(255, 255, 255, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.5);
-
             transition: all 0.3s ease;
-            padding: 10px 20px;
+            padding: 10px 15px;
             font-size: 16px;
             border-radius: 8px;
         }
@@ -59,31 +58,59 @@
             transform: translateY(2px);
         }
 
-        /* Định dạng cho các input */
-        .form-control {
-            background: #f8f9fa;
-            /* Màu nền nhẹ nhàng */
+
+        .inputGroup {
+            position: relative;
+            margin: 10px 0;
+        }
+
+        .inputGroup input {
+            width: 100%;
+            padding: 12px 15px;
             border: 1px solid #ccc;
             border-radius: 8px;
-            padding: 10px 15px;
-            font-size: 16px;
-            color: #333;
-            box-shadow: 0 6px 20px rgba(1, 107, 255, 0.1), 0 3px 10px rgba(3, 61, 235, 0.03);
-            transition: all 0.3s ease-in-out;
-        }
-
-        /* Khi input focus (được chọn) */
-        .form-control:focus {
-            background: #fff;
-            border-color: #5b9bd5;
-            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.5), 0 5px 15px rgba(255, 255, 255, 0.3);
+            font-size: 14px;
             outline: none;
+            background-color: white;
+            transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(240, 248, 255, 0.9);
         }
 
-        /* Thêm hiệu ứng cho các input khi hover */
-        .form-control:hover {
-            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3), 0 5px 15px rgba(255, 255, 255, 0.2);
-            border-color: #007bff;
+        .inputGroup input:focus {
+            border: 1px solid #028af9;
+            box-shadow: 0 4px 8px rgba(3, 146, 248, 0.3);
+            transform: scale(1.03);
+            background-color: rgba(240, 248, 255, 0.9);
+        }
+
+        .inputGroup label {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            color: #888;
+            font-size: 14px;
+            pointer-events: none;
+            transition: 0.2s all ease-in-out;
+
+        }
+
+        .inputGroup input:focus~label,
+        .inputGroup input:valid~label {
+            top: 0;
+            font-size: 12px;
+            color: #0048ff;
+            background-color: white;
+            padding: 0 5px;
+            left: 5px;
+            box-shadow: 0 2px 4px rgba(104, 152, 236, 0.385);
+            background-color: white;
+        }
+
+        .inputGroup input:hover {
+            border-color: #00a2ff;
+            box-shadow: 0 4px 10px rgba(3, 146, 248, 0.2);
+            transform: scale(1.01);
         }
     </style>
 
@@ -119,19 +146,16 @@
                                     </div>
                                 </div>
                                 <div class="col-md-10">
-                                    <div class="form-floating my-0">
-                                        <input type="text" class="form-control" placeholder="Họ và tên" name="name"
-                                            value="" required="">
-                                        <label for="name">Họ và tên</label>
+                                    <div class="inputGroup my-0">
+                                        <input type="text" name="name" required="">
+                                        <label for="name">Họ tên *</label>
                                     </div>
-                                    <div class="form-floating my-3">
-                                        <input type="text" class="form-control" placeholder="Số điện thoại"
-                                            name="mobile" value="" required="">
+                                    <div class="inputGroup my-3">
+                                        <input type="text" name="mobile" value="" required="">
                                         <label for="mobile">Số điện thoại</label>
                                     </div>
-                                    <div class="form-floating my-3">
-                                        <input type="email" class="form-control" placeholder="Địa chỉ email"
-                                            name="email" value="" required="">
+                                    <div class="inputGroup my-3">
+                                        <input type="email" name="email" value="" required="">
                                         <label for="account_email">Địa chỉ email</label>
                                     </div>
                                 </div>
@@ -144,19 +168,17 @@
                                 <div class="section-title text-center" style="margin-top: -5%">
                                     <h2>Đổi mật khẩu</h2>
                                 </div>
-                                <div class="form-floating my-3">
-                                    <input type="password" class="form-control" id="old_password" name="old_password"
-                                        placeholder="Mật khẩu cũ" required="">
+                                <div class="inputGroup my-3">
+                                    <input type="password" id="old_password" name="old_password" required="">
                                     <label for="old_password">Mật khẩu cũ</label>
                                 </div>
-                                <div class="form-floating my-3">
-                                    <input type="password" class="form-control" id="new_password" name="new_password"
-                                        placeholder="Mật khẩu mới" required="">
+                                <div class="inputGroup my-3">
+                                    <input type="password" id="new_password" name="new_password" required="">
                                     <label for="new_password">Mật khẩu mới</label>
                                 </div>
-                                <div class="form-floating my-3">
-                                    <input type="password" class="form-control" id="new_password_confirmation"
-                                        name="new_password_confirmation" placeholder="Xác nhận mật khẩu mới" required="">
+                                <div class="inputGroup my-3">
+                                    <input type="password" id="new_password_confirmation" name="new_password_confirmation"
+                                        required="">
                                     <label for="new_password_confirmation">Xác nhận mật khẩu mới</label>
                                     <div class="invalid-feedback">Mật khẩu không khớp!</div>
                                 </div>

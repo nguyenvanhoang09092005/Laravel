@@ -26,29 +26,36 @@
     }
 
     .status.canceled {
-        background-color: #f44336;
-        /* Đỏ */
+        background-color: #DC3545;
+        /* Đỏ nhạt */
         color: white;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .status.delivered {
-        background-color: #4caf50;
-        /* Xanh lá */
+        background-color: #20C997;
+        /* Xanh lá tươi */
         color: white;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .status.shipping {
-        background-color: #ff9800;
-        /* Cam */
+        background-color: #007BFF;
+        /* Cam nhạt */
         color: white;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .status.processing {
-        background-color: #2196f3;
-        /* Xanh dương */
+        background-color: #FFC107;
+        /* Xanh dương nhạt */
+        color: white;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .status.confirmed {
+        background-color: #17A2B8;
+        /* Tím nhẹ */
         color: white;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
@@ -99,16 +106,32 @@
                                         </td>
 
                                         <td class="text-center">
-                                            @if ($order->status == 'canceled')
-                                                <span class="status canceled">Đã Hủy</span>
-                                            @elseif($order->status == 'delivered')
-                                                <span class="status delivered">Đã giao hàng</span>
-                                            @elseif($order->status == 'shipping')
-                                                <span class="status shipping">Đang giao hàng</span>
-                                            @else
-                                                <span class="status processing">Đang Xử Lý</span>
-                                            @endif
+                                            @switch($order->status)
+                                                @case('canceled')
+                                                    <span class="status canceled">Đã Hủy</span>
+                                                @break
+
+                                                @case('delivered')
+                                                    <span class="status delivered">Đã giao hàng</span>
+                                                @break
+
+                                                @case('shipping')
+                                                    <span class="status shipping">Đang giao hàng</span>
+                                                @break
+
+                                                @case('confirmed')
+                                                    <span class="status confirmed">Hoàn tất</span>
+                                                @break
+
+                                                @case('pending')
+                                                    <span class="status processing">Đang chờ xử lý</span>
+                                                @break
+
+                                                @default
+                                                    <span class="status unknown">Không xác định</span>
+                                            @endswitch
                                         </td>
+
 
                                         <td class="text-center">{{ $order->created_at->format('Y-m-d H:i:s') }}</td>
                                         <td class="text-center">{{ $order->items_count }}</td>

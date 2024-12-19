@@ -479,11 +479,13 @@ header.sticky {
   * Mobile Navigation 
   */
 .mobile-nav-toggle {
+    margin-left: 50px;
     color: #222222;
     font-size: 28px;
     cursor: pointer;
     display: none;
     line-height: 0;
+
     transition: 0.5s;
 }
 

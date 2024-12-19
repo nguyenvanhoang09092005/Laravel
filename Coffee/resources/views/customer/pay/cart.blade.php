@@ -61,7 +61,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="shopping-cart__product-price">{{ number_format($item->price, 2) }}
+                                        <span class="shopping-cart__product-price">{{ number_format($item->price, 0, 0) }}
                                             <sup>đ</sup>
                                         </span>
                                     </td>
@@ -84,7 +84,7 @@
 
                                     <td>
                                         <span class="shopping-cart__subtotal" id="subtotal-{{ $item->id }}">
-                                            {{ number_format($item->price * $item->quantity, 2) }} <sup>đ</sup>
+                                            {{ number_format($item->price * $item->quantity, 0, 0) }} <sup>đ</sup>
                                         </span>
                                     </td>
                                     <td>
@@ -132,7 +132,7 @@
                                 <tbody>
                                     <tr>
                                         <th>Tạm tính</th>
-                                        <td id="total-price">{{ number_format($totalPrice + $totalDiscount, 0, ',', '.') }}
+                                        <td id="total-price">{{ number_format($totalPrice + $totalDiscount, 0, ',', ',') }}
                                             <sup>đ</sup>
                                         </td>
                                     </tr>
@@ -140,36 +140,20 @@
                                         <th>Phí vận chuyển</th>
                                         <td>
                                             <div class="form-check">
-                                                {{-- <input class="form-check-input form-check-input_fill" type="checkbox"
-                                                    value="" id="free_shipping"> --}}
+
                                                 <label class="form-check-label" for="free_shipping">Miễn phí vận
                                                     chuyển</label>
                                             </div>
-                                            {{-- <div class="form-check">
-                                                <input class="form-check-input form-check-input_fill" type="checkbox"
-                                                    value="" id="flat_rate">
-                                                <label class="form-check-label" for="flat_rate">Phí cố định: 49.000
-                                                    đ</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input form-check-input_fill" type="checkbox"
-                                                    value="" id="local_pickup">
-                                                <label class="form-check-label" for="local_pickup">Nhận hàng tại cửa hàng:
-                                                    8.000 đ</label>
-                                            </div>
-                                            <div>Vận chuyển đến Hà Nội.</div>
-                                            <div>
-                                                <a href="#" class="menu-link menu-link_us-s">THAY ĐỔI ĐỊA CHỈ</a>
-                                            </div> --}}
+
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>MÃ GIẢM GIÁ</th>
-                                        <td>{{ number_format($totalDiscount, 0, ',', '.') }} <sup>đ</sup></td>
+                                        <td>{{ number_format($totalDiscount, 0, ',', ',') }} <sup>đ</sup></td>
                                     </tr>
                                     <tr>
                                         <th>Tổng cộng</th>
-                                        <td>{{ number_format($totalPrice, 0, ',', '.') }} <sup>đ</sup></td>
+                                        <td>{{ number_format($totalPrice, 0, ',', ',') }} <sup>đ</sup></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -189,25 +173,24 @@
     </section>
 @endsection
 
-<script>
+{{-- <script>
     $(document).ready(function() {
-        // Xử lý sự kiện tăng và giảm
         $('.qty-control__reduce, .qty-control__increase').on('click', function() {
-            let action = $(this).data('action'); // Loại hành động
-            let input = $(this).siblings('.qty-control__number'); // Input liên quan
-            let quantity = parseInt(input.val()); // Lấy số lượng hiện tại
-            let productId = input.data('id'); // ID sản phẩm
+            let action = $(this).data('action'); // Action type (increase/decrease)
+            let input = $(this).siblings('.qty-control__number'); // The quantity input field
+            let quantity = parseInt(input.val()); // Get the current quantity
+            let productId = input.data('id'); // Product ID
             let token = $('meta[name="csrf-token"]').attr('content'); // CSRF token
 
-            // Tăng hoặc giảm số lượng
+            // Increase or decrease the quantity
             if (action === 'increase') {
                 quantity++;
             } else if (action === 'decrease' && quantity > 1) {
                 quantity--;
             }
-            input.val(quantity); // Cập nhật giá trị input
+            input.val(quantity); // Update the quantity input field
 
-            // Gửi AJAX để lưu dữ liệu
+            // Send AJAX request to update the quantity in the cart
             $.ajax({
                 url: `/customer/cart/update/${productId}`,
                 type: 'PUT',
@@ -216,14 +199,19 @@
                     quantity: quantity
                 },
                 success: function(response) {
-                    // Cập nhật subtotal và tổng giá
+                    // Update subtotal for the individual product
                     $(`#subtotal-${productId}`).html(`${response.subtotal} <sup>đ</sup>`);
+
+                    // Update the total price in the cart summary
                     $('#total-price').html(`${response.totalPrice} <sup>đ</sup>`);
+
+                    // If there is a discount, update the discount amount as well
+                    $('#total-discount').html(`${response.totalDiscount} <sup>đ</sup>`);
                 },
                 error: function(xhr) {
-                    console.error('Lỗi khi cập nhật:', xhr.responseText);
+                    console.error('Error updating the cart:', xhr.responseText);
                 }
             });
         });
     });
-</script>
+</script> --}}
