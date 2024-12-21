@@ -16,7 +16,7 @@ class Product extends Model
         'regular_price',
         'discounted_price',
         'sku',
-        'stock_quantity',
+        // 'stock_quantity',
         'stock_status',
         'average_rating',
         'review_count',
@@ -60,7 +60,7 @@ class Product extends Model
     }
 
 
-    public function product_reviews()
+    public function reviews()
     {
         return $this->hasMany(Product_review::class);
     }

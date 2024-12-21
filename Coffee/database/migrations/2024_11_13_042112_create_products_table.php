@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('regular_price', 10, 2);
             $table->decimal('discounted_price', 10, 2)->nullable();
             $table->string('sku')->unique();
-            $table->integer('stock_quantity')->default(0);
+            // $table->integer('stock_quantity')->default(0);
             $table->enum('stock_status', ['In Stock', 'Out of Stock'])->default('In Stock');
             $table->decimal('average_rating', 3, 2)->default(0)->comment('Trung bình số sao đánh giá');
             $table->unsignedInteger('review_count')->default(0)->comment('Số lượng đánh giá');

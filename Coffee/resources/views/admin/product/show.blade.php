@@ -217,7 +217,7 @@
                                         </span>
                                     </div>
                                     <div class="item">
-                                        <label class="h6">Stock Quantity</label>
+                                        <label class="h6">Stock Status</label>
                                         <span
                                             class="badge {{ $product->stock_status == 'In Stock' ? 'bg-success' : 'bg-danger' }}">
                                             {{ $product->stock_status }}

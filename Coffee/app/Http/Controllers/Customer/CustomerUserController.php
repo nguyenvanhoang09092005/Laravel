@@ -43,8 +43,11 @@ class CustomerUserController extends Controller
             ->where('id', $orderId)
             ->firstOrFail();
 
+        $hasReviewed = $order->items->every(function ($item) {
+            return $item->product->reviews()->where('user_id', auth()->id())->exists();
+        });
 
-        return view('customer.account.accountOrderDetail', compact('order'));
+        return view('customer.account.accountOrderDetail', compact('order', 'hasReviewed'));
     }
 
     public function show($id)
@@ -104,17 +107,23 @@ class CustomerUserController extends Controller
         $request->validate([
             'rating' => 'required|integer|min:1|max:5',
             'review' => 'nullable|string',
+            'order_id' => 'required|exists:orders,id',
         ]);
 
         $product = Product::findOrFail($productId);
 
-        $existingReview = $product->reviews()->where('user_id', auth()->id())->first();
+        $existingReview = $product->reviews()
+            ->where('user_id', auth()->id())
+            ->where('order_id', $request->order_id)
+            ->first();
+
         if ($existingReview) {
-            return redirect()->back()->with('error', 'Bạn đã đánh giá sản phẩm này rồi!');
+            return redirect()->back()->with('error', 'Bạn đã đánh giá sản phẩm này trong đơn hàng này rồi!');
         }
 
         $product->reviews()->create([
             'user_id' => auth()->id(),
+            'order_id' => $request->order_id,
             'rating' => $request->rating,
             'review' => $request->review,
         ]);
@@ -124,6 +133,6 @@ class CustomerUserController extends Controller
             'review_count' => $product->reviews()->count(),
         ]);
 
-        return redirect()->route('Customer.product.show', $productId)->with('success', 'Đánh giá đã được gửi.');
+        return redirect()->route('Customer.Account.Order', $productId)->with('success', 'Đánh giá đã được gửi.');
     }
 }

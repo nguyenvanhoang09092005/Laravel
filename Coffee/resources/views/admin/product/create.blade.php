@@ -151,12 +151,12 @@
                             <input class="mb-10" type="text" placeholder="Enter SKU" name="sku" tabindex="0"
                                 value="" aria-required="true" required="">
                         </fieldset>
-                        <fieldset class="name">
+                        {{-- <fieldset class="name">
                             <div class="body-title mb-10">Quantity <span class="tf-color-1">*</span>
                             </div>
                             <input class="mb-10" type="text" placeholder="Enter quantity" name="stock_quantity"
                                 tabindex="0" value="" aria-required="true" required="">
-                        </fieldset>
+                        </fieldset> --}}
                     </div>
 
                     <div class="cols gap22">

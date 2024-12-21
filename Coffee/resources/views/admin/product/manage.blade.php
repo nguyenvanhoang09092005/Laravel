@@ -44,10 +44,10 @@
                         <th style="width: 100px;">Img</th>
                         <th>Name</th>
                         <th style="width: 100px;">Attributes</th>
-                        <th>Regular_price</th>
-                        <th>Discounted_price</th>
-                        <th>Stock_quantity</th>
-                        <th>stock_status</th>
+                        <th>Regular Price</th>
+                        <th>Discounted Price</th>
+                        {{-- <th>Stock_quantity</th> --}}
+                        <th>Stock Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -78,7 +78,7 @@
                                 @endif
                             </td>
 
-                            <td>{{ $product->stock_quantity }}</td>
+                            {{-- <td>{{ $product->stock_quantity }}</td> --}}
                             <td>{{ $product->stock_status }}</td>
                             <td>
                                 <div class="list-icon-function"

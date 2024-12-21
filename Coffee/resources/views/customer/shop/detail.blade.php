@@ -1,6 +1,50 @@
 @extends('customer.dashboard')
 
 @section('customer_content')
+    <style>
+        /* Đánh giá sao */
+        .rating {
+            display: inline-flex;
+            gap: 2px;
+            margin-left: auto;
+        }
+
+        .rating .star {
+            font-size: 16px;
+            color: #ddd;
+            margin-right: 2px;
+        }
+
+        .rating .star.active {
+            color: #ffa723;
+        }
+
+        .product-single__reviews-item {
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 15px;
+        }
+
+        .customer-avatar img {
+            transition: transform 0.3s;
+        }
+
+        .customer-avatar img:hover {
+            transform: scale(1.1);
+        }
+
+        .customer-name h4 {
+            font-size: 2020px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .review-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+        }
+    </style>
     <section class="product-single container " style="margin-top: 85px">
         <div class="row">
             <div class="col-lg-7">
@@ -24,24 +68,15 @@
                 <h1 class="product-single__name">{{ $product->product_name }}</h1>
                 <div class="product-single__rating">
                     <div class="reviews-group d-flex">
-                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                            <use href="#icon_star" />
-                        </svg>
-                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                            <use href="#icon_star" />
-                        </svg>
-                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                            <use href="#icon_star" />
-                        </svg>
-                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                            <use href="#icon_star" />
-                        </svg>
-                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                            <use href="#icon_star" />
-                        </svg>
+                        <div class="rating">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <span class="star {{ $i <= round($product->average_rating) ? 'active' : '' }}">★</span>
+                            @endfor
+                        </div>
                     </div>
-                    <span class="reviews-note text-lowercase text-secondary ms-1">8k+ reviews</span>
+                    <div class="reviews-note text-lowercase text-secondary ms-1">{{ $product->review_count }} đánh giá</div>
                 </div>
+
                 <div class="product-single__price">
                     <span class="current-price">
                         @if ($product->discounted_price)
@@ -86,7 +121,7 @@
                 <li class="nav-item" role="presentation">
                     <a class="nav-link nav-link_underscore" id="tab-reviews-tab" data-bs-toggle="tab" href="#tab-reviews"
                         role="tab" aria-controls="tab-reviews" aria-selected="false">Đánh giá
-                        (2)</a>
+                        ({{ $reviewsCount }})</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -153,76 +188,44 @@
 
                 </div>
                 <div class="tab-pane fade" id="tab-reviews" role="tabpanel" aria-labelledby="tab-reviews-tab">
-
                     <div class="product-single__reviews-list">
-                        <div class="product-single__reviews-item">
-                            <div class="customer-avatar">
-                                <img loading="lazy" src="assets/images/avatar.jpg" alt="" />
-                            </div>
-                            <div class="customer-review">
-                                <div class="customer-name">
-                                    <h6>Janice Miller</h6>
-                                    <div class="reviews-group d-flex">
-                                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                            <use href="#icon_star" />
-                                        </svg>
-                                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                            <use href="#icon_star" />
-                                        </svg>
-                                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                            <use href="#icon_star" />
-                                        </svg>
-                                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                            <use href="#icon_star" />
-                                        </svg>
-                                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                            <use href="#icon_star" />
-                                        </svg>
+                        @forelse($reviews as $review)
+                            <div class="product-single__reviews-item d-flex align-items-start mb-4 border-bottom pb-3"
+                                style="width: 100%">
+                                <!-- Ảnh đại diện -->
+                                <div class="customer-avatar me-3">
+                                    <img loading="lazy"
+                                        src="{{ $review->user->profile_image ? asset('storage/' . $review->user->profile_image) : asset('path/to/default/avatar.jpg') }}"
+                                        alt="{{ $review->user->name }}"
+                                        style="width: 50px; height: 50px; border-radius: 50%;" />
+                                </div>
+
+                                <!-- Nội dung đánh giá -->
+                                <div class="customer-review" style="width: 100%">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <div class="customer-name">
+                                            <h44 class="mb-0">{{ $review->user->name }}</h44>
+                                        </div>
+                                        <!-- Hiển thị sao -->
+                                        <div class="rating d-flex ms-auto" style="pointer-events: none;">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <span class="star {{ $i <= $review->rating ? 'active' : '' }}">★</span>
+                                            @endfor
+                                        </div>
+                                    </div>
+                                    <small
+                                        class="text-muted d-block mb-2">{{ $review->created_at->format('d-m-Y') }}</small>
+                                    <div class="review-text mt-2">
+                                        <p class="mb-0 text-secondary">{{ $review->review }}</p>
                                     </div>
                                 </div>
-                                <div class="review-date">Ngày 06 tháng 4, 2023</div>
-                                <div class="review-text">
-                                    <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo
-                                        minus id quod
-                                        maxime placeat facere possimus, omnis voluptas assumenda est…</p>
-                                </div>
                             </div>
-                        </div>
-                        <div class="product-single__reviews-item">
-                            <div class="customer-avatar">
-                                <img loading="lazy" src="assets/images/avatar.jpg" alt="" />
-                            </div>
-                            <div class="customer-review">
-                                <div class="customer-name">
-                                    <h6>Benjam Porter</h6>
-                                    <div class="reviews-group d-flex">
-                                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                            <use href="#icon_star" />
-                                        </svg>
-                                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                            <use href="#icon_star" />
-                                        </svg>
-                                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                            <use href="#icon_star" />
-                                        </svg>
-                                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                            <use href="#icon_star" />
-                                        </svg>
-                                        <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                            <use href="#icon_star" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="review-date">Ngày 06 tháng 4, 2023</div>
-                                <div class="review-text">
-                                    <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo
-                                        minus id quod
-                                        maxime placeat facere possimus, omnis voluptas assumenda est…</p>
-                                </div>
-                            </div>
-                        </div>
+                        @empty
+                            <p class="text-center text-muted">Chưa có đánh giá nào cho sản phẩm này.</p>
+                        @endforelse
                     </div>
                 </div>
+
             </div>
         </div>
 

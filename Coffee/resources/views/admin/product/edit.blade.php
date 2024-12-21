@@ -110,11 +110,11 @@
                             <input class="mb-10" type="text" placeholder="Enter SKU" name="sku"
                                 value="{{ old('sku', $product->sku) }}" required>
                         </fieldset>
-                        <fieldset class="name">
+                        {{-- <fieldset class="name">
                             <div class="body-title mb-10">Quantity <span class="tf-color-1">*</span></div>
                             <input class="mb-10" type="text" placeholder="Enter quantity" name="stock_quantity"
                                 value="{{ old('stock_quantity', $product->stock_quantity) }}" required>
-                        </fieldset>
+                        </fieldset> --}}
                     </div>
 
                     <div class="cols gap22">

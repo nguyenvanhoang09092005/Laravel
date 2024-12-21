@@ -32,8 +32,15 @@ class ShopController extends Controller
         $category = $product->category;
         $brand = $product->brand;
         $rproducts = Product::where('slug', '<>', $product_slug)->get()->take(8);
-        return view('customer.shop.detail', compact('product', 'categories', 'brands',  'category', 'brand', 'rproducts', 'attributes'));
+
+        $reviews = $product->reviews()->with('user')->latest()->get();
+
+        $reviewsCount = $product->reviews()->count();
+
+
+        return view('customer.shop.detail', compact('product', 'categories', 'brands', 'category', 'brand', 'rproducts', 'attributes', 'reviews', 'reviewsCount'));
     }
+
 
 
 

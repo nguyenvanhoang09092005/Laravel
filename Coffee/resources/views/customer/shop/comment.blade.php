@@ -35,8 +35,6 @@
             margin-top: 20px;
         }
 
-
-
         .rating:not(:checked)>input {
             position: absolute;
             appearance: none;
@@ -50,7 +48,7 @@
         }
 
         .rating:not(:checked)>label:before {
-            content: '★';
+            content: "★";
         }
 
         .rating>input:checked+label:hover,
@@ -69,6 +67,7 @@
         .rating>input:checked~label {
             color: #ffa723;
         }
+
 
 
         .review-text {
@@ -120,30 +119,35 @@
                         <div class="product-quantity">Số lượng: {{ $item->quantity }}</div>
                     </div>
                 </div>
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
 
                 <!-- Form đánh giá sản phẩm -->
                 <div class="product-reviews">
                     <form action="{{ route('Customer.product.review', $item->product->id) }}" method="POST">
                         @csrf
+                        <input type="hidden" name="order_id" value="{{ $order->id }}" />
                         <div class="rating">
-                            <label for="star5_{{ $item->product->id }}"></label>
-                            <input type="radio" id="star5_{{ $item->product->id }}" name="rating" value="5">
-                            <label for="star4_{{ $item->product->id }}"></label>
-                            <input type="radio" id="star4_{{ $item->product->id }}" name="rating" value="4">
-                            <label for="star3_{{ $item->product->id }}"></label>
-                            <input type="radio" id="star3_{{ $item->product->id }}" name="rating" value="3"
-                                checked>
-                            <label for="star2_{{ $item->product->id }}"></label>
-                            <input type="radio" id="star2_{{ $item->product->id }}" name="rating" value="2">
-                            <label for="star1_{{ $item->product->id }}"></label>
-                            <input type="radio" id="star1_{{ $item->product->id }}" name="rating" value="1">
+                            <input type="radio" id="star5" name="rating" value="5" />
+                            <label for="star5" title="Rất tốt"></label>
+                            <input type="radio" id="star4" name="rating" value="4" />
+                            <label for="star4" title="Tốt"></label>
+                            <input type="radio" id="star3" name="rating" value="3" />
+                            <label for="star3" title="Bình thường"></label>
+                            <input type="radio" id="star2" name="rating" value="2" />
+                            <label for="star2" title="Kém"></label>
+                            <input type="radio" id="star1" name="rating" value="1" checked />
+                            <label for="star1" title="Rất kém"></label>
                         </div>
-
                         <div class="review-text">
                             <textarea name="review" rows="4" placeholder="Viết đánh giá..." required></textarea>
                         </div>
                         <button type="submit" class="submit-review-button">Gửi đánh giá</button>
                     </form>
+
                 </div>
             @endforeach
         </div>

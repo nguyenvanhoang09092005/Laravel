@@ -388,9 +388,14 @@
                                 <button type="submit" class="btn btn-success">Đã nhận được hàng</button>
                             </form>
                         @elseif ($order->status == 'confirmed')
-                            <a href="{{ route('customer.shop.comment', $order->id) }}" class="btn btn-primary">Đánh giá sản
-                                phẩm</a>
+                            @if ($hasReviewed)
+                                <p>Bạn đã đánh giá đơn hàng này rồi.</p>
+                            @else
+                                <a href="{{ route('customer.shop.comment', $order->id) }}" class="btn btn-primary">Đánh giá
+                                    sản phẩm</a>
+                            @endif
                         @endif
+
                     </div>
 
 
