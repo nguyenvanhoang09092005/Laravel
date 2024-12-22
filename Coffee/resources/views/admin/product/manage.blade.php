@@ -69,10 +69,10 @@
                             <td>{{ $product->product_name }}</td>
                             <td style="width: 50px;">
                                 {{ $product->attribute ? $product->attribute->attribute_value : 'No Attribute' }}</td>
-                            <td>{{ $product->regular_price }}</td>
+                            <td>{{ number_format($product->regular_price, 0, ',', ',') }} <sup>vnđ</sup></td>
                             <td>
                                 @if ($product->discounted_price)
-                                    {{ number_format($product->discounted_price, 0, ',', '.') }} đ
+                                    {{ number_format($product->discounted_price, 0, ',', ',') }} <sup>vnđ</sup>
                                 @else
                                     N/A
                                 @endif
@@ -128,48 +128,3 @@
         </div>
     </div>
 @endsection
-<script>
-    document.getElementById('search-products').addEventListener('keyup', function(event) {
-        let query = this.value;
-
-        if (query.length > 2) { // Trigger search after 3 characters
-            fetch("{{ route('search.products') }}", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                    },
-                    body: JSON.stringify({
-                        query: query
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    let results = '';
-
-                    // Show suggestions
-                    if (data.length > 0) {
-                        data.forEach(product => {
-                            results += `
-                        <div class="suggestion-item">
-                            <p>
-                                <strong>${product.product_name}</strong> - ${product.regular_price} USD
-                            </p>
-                        </div>
-                    `;
-                        });
-                    } else {
-                        results = '<p>No products found.</p>';
-                    }
-
-                    // Display the suggestions in the container
-                    document.getElementById('product-results').innerHTML = results;
-                    document.getElementById('product-results').style.display = 'block'; // Show results
-                });
-        } else {
-            document.getElementById('product-results').innerHTML =
-                ''; // Clear suggestions if less than 3 characters
-            document.getElementById('product-results').style.display = 'none'; // Hide results
-        }
-    });
-</script>

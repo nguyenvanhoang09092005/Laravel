@@ -2,59 +2,26 @@
     @section('admin_page_title')
         Order History-Admin
     @endsection
-    <style>
-        .status-label {
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-weight: bold;
-            display: inline-block;
-        }
 
-        .status-label.approved {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .status-label.shipping {
-            background-color: #007BFF;
-            color: black;
-        }
-
-        .status-label.delivered {
-            background-color: #20C997;
-            color: white;
-        }
-
-        .status-label.canceled {
-            background-color: #DC3545;
-            color: white;
-        }
-
-        .status-label.pending {
-            background-color: #FFC107;
-            color: black;
-        }
-
-        .status-label.confirmed {
-            background-color: #17A2B8;
-            color: black;
-        }
-    </style>
     @section('admin_layout')
         <div class="wg-box">
             <div class="flex items-center justify-between gap10 flex-wrap">
                 <div class="wg-filter flex-grow">
-                    <form class="form-search">
+                    <form class="form-search" id="search-form" action="{{ route('Admin.Order.History') }}" method="GET">
                         <fieldset class="name">
-                            <input type="text" placeholder="Search here..." class="" name="name" tabindex="2"
-                                value="" aria-required="true" required="">
+                            <input type="text" id="search-orders" placeholder="Search orders..." name="name"
+                                value="{{ request('name') }}" required>
                         </fieldset>
                         <div class="button-submit">
-                            <button class="" type="submit"><i class="icon-search"></i></button>
+                            <button type="submit"><i class="icon-search"></i></button>
                         </div>
                     </form>
+
                 </div>
 
+                <div id="product-results"
+                    style="position: absolute; max-height: 200px; overflow-y: auto; background-color: white; border: 1px solid #ccc; display: none;">
+                </div>
             </div>
             @if (session('message'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">

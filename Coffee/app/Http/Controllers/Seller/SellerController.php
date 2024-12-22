@@ -24,7 +24,9 @@ class SellerController extends Controller
         $productsCount = Product::count();
         $orderCount = Order::count();
 
+        $shippingOrdersCount = Order::where('status', 'shipping')->count();
         $pendingOrdersCount = Order::where('status', 'pending')->count();
+        $confirmedOrdersCount = Order::where('status', 'confirmed')->count();
 
         $adminCount = (int) User::where('role', 1)->count();
         $customerCount = (int) User::where('role', 2)->count();
@@ -34,15 +36,40 @@ class SellerController extends Controller
 
 
 
-        return view('seller.dashboard', compact('usersCount', 'productsCount', 'orderCount', 'adminCount', 'customerCount', 'personnelCount',  'pendingOrdersCount', 'workingHours'));
+        return view('seller.dashboard', compact('usersCount', 'productsCount', 'orderCount', 'adminCount', 'customerCount', 'personnelCount',  'pendingOrdersCount', 'workingHours', 'confirmedOrdersCount', 'shippingOrdersCount'));
     }
 
 
     public function user(Request $request)
     {
         $perPage = $request->input('per_page', 10);
+        $searchQuery = $request->input('name');
+        $role = $request->input('role');
 
-        $users = User::paginate($perPage);
+        $query = User::query();
+
+        if ($searchQuery) {
+            $query->where('name', 'like', '%' . $searchQuery . '%')
+                ->orWhere('email', 'like', '%' . $searchQuery . '%')
+                ->orWhere('address', 'like', '%' . $searchQuery . '%')
+                ->orWhere('phone_number', 'like', '%' . $searchQuery . '%')
+                ->orWhere('gender', 'like', '%' . $searchQuery . '%')
+                ->orWhere('role', 'like', '%' . $searchQuery . '%');
+        }
+
+        if ($role) {
+            $roleMap = [
+                'admin' => 1,
+                'customer' => 2,
+                'seller' => 3
+            ];
+            $roleId = $roleMap[strtolower($role)] ?? null;
+            if ($roleId) {
+                $query->where('role', $roleId);
+            }
+        }
+
+        $users = $query->paginate($perPage);
 
         return view('seller.manage.user', compact('users', 'perPage'));
     }
@@ -170,5 +197,19 @@ class SellerController extends Controller
         $user->save();
 
         return redirect()->back()->with('message', 'The password has been successfully updated.');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $users = User::where('name', 'like', '%' . $query . '%')
+            ->orWhere('email', 'like', '%' . $query . '%')
+            ->orWhere('address', 'like', '%' . $query . '%')
+            ->orWhere('phone_number', 'like', '%' . $query . '%')
+            ->orWhere('gender', 'like', '%' . $query . '%')
+            ->orWhere('role', 'like', '%' . $query . '%')
+            ->get();
+
+        return response()->json($users);
     }
 }

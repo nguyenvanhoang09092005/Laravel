@@ -105,6 +105,7 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
         Route::controller(UserController::class)->group(function () {
             Route::get('/manage/user', 'index')->name('admin.manage.user');
             Route::get('/manage/create', 'create')->name('admin.manage.create');
+            Route::post('/update-role', 'updateRole')->name('admin.update.role');
         });
 
         //product
@@ -152,11 +153,11 @@ Route::middleware(['auth', 'verified', 'rolemanager:admin'])->group(function () 
             Route::put('/admin/orders/{order_id}/update', 'updateOrderStatus')->name('Admin.Order.Update');
         });
 
-        //promotions
-        Route::controller(PromotionsController::class)->group(function () {
-            Route::get('/promotions/create', 'index')->name('promotions.create');
-            Route::get('/promotions/manage', 'manage')->name('promotions.manage');
-        });
+        // //promotions
+        // Route::controller(PromotionsController::class)->group(function () {
+        //     Route::get('/promotions/create', 'index')->name('promotions.create');
+        //     Route::get('/promotions/manage', 'manage')->name('promotions.manage');
+        // });
         //Master CategoryController
         Route::controller(MasterCategoryController::class)->group(function () {
             Route::get('/store/category', 'storecate')->name('store.cate');
@@ -241,6 +242,7 @@ Route::middleware(['auth', 'verified', 'rolemanager:personnel'])->group(function
         Route::controller(SellerOrderController::class)->group(function () {
             Route::get('/personnel/orders/history/', 'index')->name('Personnel.Order.History');
             Route::get('/personnel/orders/{orders_id}/detail', 'orderDetail')->name('Personnel.Order.Detail');
+            Route::put('/personnel/orders/{order_id}/update', 'updateOrderStatus')->name('Personnel.Order.Update');
         });
     });
 });
@@ -308,14 +310,15 @@ Route::middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->g
 })->name('dashboard');
 
 
-
-// Tìm kiếm toàn bộ dữ liệu
-// Route::post('/search-all', [SearchController::class, 'searchAll'])->name('search.all');
-
 // Tìm kiếm cụ thể cho từng bảng
 Route::post('/search/products', [ProductController::class, 'search'])->name('search.products');
+Route::post('/seller/search/products', [SellerProductController::class, 'search'])->name('seller.search.products');
 Route::post('/search/brands', [BrandController::class, 'search'])->name('search.brands');
-Route::post('/search/users', [MasterUserController::class, 'search'])->name('search.user');
+Route::post('/search/categories', [CategoryController::class, 'search'])->name('search.categories');
+Route::post('/search/order', [OrderMainController::class, 'search'])->name('search.orders');
+Route::post('/seller/search/order', [SellerOrderController::class, 'search'])->name('seller.search.orders');
+Route::post('/search/users', [UserController::class, 'search'])->name('search.users');
+Route::post('/seller/search/users', [SellerController::class, 'search'])->name('seller.search.users');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

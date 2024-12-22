@@ -71,8 +71,8 @@
                                             <sup>đ</sup>
                                         </span>
                                     </td>
-                                    <td>
-                                        <form class="update-cart-form" method="POST"
+                                    <td style="justify-items: center">
+                                        {{-- <form class="update-cart-form" method="POST"
                                             action="{{ route('Customer.Cart.Update', $item->id) }}">
                                             @csrf
                                             @method('PUT')
@@ -85,7 +85,12 @@
                                                 <div class="qty-control__increase" data-action="increase"
                                                     data-id="{{ $item->id }}">+</div>
                                             </div>
-                                        </form>
+                                        </form> --}}
+                                        <div class="qty-control position-relative ">
+                                            <input type="number" name="quantity" value="{{ $item->quantity }}"
+                                                min="1" class="qty-control__number text-center"
+                                                data-id="{{ $item->id }}" readonly>
+                                        </div>
                                     </td>
 
                                     <td>
@@ -121,7 +126,7 @@
                                 value="ÁP DỤNG MÃ">
                         </form>
 
-                        <button class="btn btn-light">CẬP NHẬT GIỎ HÀNG</button>
+                        {{-- <button class="btn btn-light">CẬP NHẬT GIỎ HÀNG</button> --}}
                     </div>
                 </div>
                 <div class="shopping-cart__totals-wrapper">

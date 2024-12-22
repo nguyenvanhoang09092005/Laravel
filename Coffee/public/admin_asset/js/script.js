@@ -775,3 +775,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+//promotions admin
+function confirmDeletePromotions() {
+    return confirm(
+        "Are you sure you want to delete this Promotions? This action cannot be undone."
+    );
+}

@@ -8,15 +8,20 @@
     <div class="wg-box">
         <div class="flex items-center justify-between gap10 flex-wrap">
             <div class="wg-filter flex-grow">
-                <form class="form-search">
+                <form class="form-search" id="search-form" action="{{ route('admin.manage.user') }}" method="GET">
                     <fieldset class="name">
-                        <input type="text" placeholder="Search here..." class="" name="name" tabindex="2"
-                            value="" aria-required="true" required="">
+                        <input type="text" id="search-users" placeholder="Search users..." name="name"
+                            value="{{ request('name') }}" required>
                     </fieldset>
                     <div class="button-submit">
-                        <button class="" type="submit"><i class="icon-search"></i></button>
+                        <button type="submit"><i class="icon-search"></i></button>
                     </div>
                 </form>
+
+            </div>
+
+            <div id="user-results"
+                style="position: absolute; max-height: 200px; overflow-y: auto; background-color: white; border: 1px solid #ccc; display: none;">
             </div>
             <a class="tf-button style-1 w208" href="{{ route('admin.manage.create') }}">
                 <i class="icon-plus"></i>Add new
@@ -76,7 +81,18 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone_number }}</td>
                             <td>{{ $user->gender }}</td>
-                            <td>{{ $user->role }}</td>
+                            <td>
+                                @if ($user->role == 1)
+                                    Admin
+                                @elseif ($user->role == 2)
+                                    Customer
+                                @elseif ($user->role == 3)
+                                    Seller
+                                @else
+                                    Unknown
+                                @endif
+                            </td>
+
                             <td>
                                 <div class="list-icon-function"
                                     style="align-items: center;text-align: center; justify-items: center;justify-content: center">
@@ -85,11 +101,11 @@
                                             <i class="icon-eye"></i>
                                         </div>
                                     </a>
-                                    <a href="{{ route('admin.manage.edit', $user->id) }}">
+                                    {{-- <a href="{{ route('admin.manage.edit', $user->id) }}">
                                         <div class="item edit">
                                             <i class="icon-edit-3"></i>
                                         </div>
-                                    </a>
+                                    </a> --}}
                                     <form action="{{ route('manage.destroy', $user->id) }}" method="POST"
                                         onsubmit="return confirmDeleteUser()">
                                         @csrf

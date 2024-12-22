@@ -30,11 +30,24 @@ class SellerProductController extends Controller
         return view('seller.product.manage', compact('products', 'perPage', 'searchQuery'));
     }
 
+
+
     public function showProduct($id)
     {
         try {
             $product = Product::with('attribute')->findOrFail($id);
-            return view('seller.product.show', compact('product'));
+
+            $reviews = $product->reviews()->with('user')->latest()->get();
+            $reviewsCount = $product->reviews()->count();
+
+            $totalRating = $reviews->sum('rating');
+            $averageRating = $reviewsCount > 0 ? $totalRating / $reviewsCount : 0;
+
+            $product->update([
+                'average_rating' => $averageRating,
+            ]);
+
+            return view('seller.product.show', compact('product', 'reviews', 'reviewsCount'));
         } catch (Exception $e) {
             return redirect()->route('personnel.product.manage')->withErrors('Product not found.');
         }
@@ -45,13 +58,11 @@ class SellerProductController extends Controller
     {
         $query = $request->input('query');
 
-        // Search for products based on product_name or description
         $products = Product::where('product_name', 'like', '%' . $query . '%')
             ->orWhere('description', 'like', '%' . $query . '%')
-            ->limit(5) // Limit the number of suggestions
+            ->limit(5)
             ->get();
 
-        // Return the products as a JSON response
         return response()->json($products);
     }
 }

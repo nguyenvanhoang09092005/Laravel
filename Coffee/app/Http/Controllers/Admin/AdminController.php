@@ -17,7 +17,6 @@ class AdminController extends Controller
         $productsCount = Product::count();
         $orderCount = Order::count();
 
-        $pendingOrdersCount = Order::where('status', 'pending')->count();
         $shippingOrdersCount = Order::where('status', 'shipping')->count();
         $pendingOrdersCount = Order::where('status', 'pending')->count();
         $confirmedOrdersCount = Order::where('status', 'confirmed')->count();

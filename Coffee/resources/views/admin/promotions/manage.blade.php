@@ -142,8 +142,3 @@
         </div>
     </div>
 @endsection
-<script>
-    function confirmDeletePromotions() {
-        return confirm('Are you sure you want to delete this Promotions? This action cannot be undone.');
-    }
-</script>

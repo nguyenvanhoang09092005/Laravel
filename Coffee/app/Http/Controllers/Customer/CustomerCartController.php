@@ -66,22 +66,29 @@ class CustomerCartController extends Controller
         return redirect()->route('Customer.Cart.View');
     }
 
-    public function updateQuantity(Request $request, $id)
+    public function updateQuantity(Request $request, $itemId)
     {
-        $cartItem = Cart::findOrFail($id);
+        $item = Cart::where('id', $itemId)->first();
 
-        $cartItem->quantity = $request->input('quantity');
-        $cartItem->save();
+        if (!$item) {
+            return response()->json(['success' => false, 'message' => 'Sản phẩm không tồn tại trong giỏ hàng.']);
+        }
 
-        $subtotal = $cartItem->quantity * $cartItem->price;
-        $totalPrice = Cart::where('user_id', auth()->id())
-            ->sum(DB::raw('quantity * price'));
+        // Cập nhật số lượng
+        $item->quantity = $request->input('quantity');
+        $item->save();
+
+        // Tính lại tổng giá trị (subtotal)
+        $subtotal = $item->price * $item->quantity;
 
         return response()->json([
-            'subtotal' => number_format($subtotal, 2),
-            'totalPrice' => number_format($totalPrice, 2),
+            'success' => true,
+            'message' => 'Giỏ hàng đã được cập nhật',
+            'subtotal' => $subtotal
         ]);
     }
+
+
 
     public function applyCoupon(Request $request)
     {

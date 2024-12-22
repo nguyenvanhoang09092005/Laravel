@@ -255,7 +255,7 @@
                             </div>
                         </div> --}}
 
-                        <button type="submit" class="btn btn-lg btn-primary mt-4">Đặt hàng</button>
+                        <button type="submit" class="btn btn-lg btn-primary btn-checkout mt-1">Đặt hàng</button>
 
 
                     </div>

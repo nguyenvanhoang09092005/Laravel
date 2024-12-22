@@ -1434,3 +1434,41 @@ header.sticky {
     }
 }
 /* style/cart */
+/* //order-admin */
+
+.status-label {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.status-label.approved {
+    background-color: #4caf50;
+    color: white;
+}
+
+.status-label.shipping {
+    background-color: #007bff;
+    color: black;
+}
+
+.status-label.delivered {
+    background-color: #20c997;
+    color: white;
+}
+
+.status-label.canceled {
+    background-color: #dc3545;
+    color: white;
+}
+
+.status-label.pending {
+    background-color: #ffc107;
+    color: black;
+}
+
+.status-label.confirmed {
+    background-color: #17a2b8;
+    color: black;
+}

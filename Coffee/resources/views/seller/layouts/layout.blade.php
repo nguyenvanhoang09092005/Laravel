@@ -84,13 +84,13 @@
                                                 <div class="text">Manager</div>
                                             </a>
                                         </li>
-                                        <li
+                                        {{-- <li
                                             class="sub-menu-item {{ request()->routeIs('product.review.manage_product_review') ? 'active' : '' }}">
                                             <a href="{{ route('product.review.manage_product_review') }}"
                                                 class="">
                                                 <div class="text">Product Review</div>
                                             </a>
-                                        </li>
+                                        </li> --}}
                                     </ul>
                                 </li>
 

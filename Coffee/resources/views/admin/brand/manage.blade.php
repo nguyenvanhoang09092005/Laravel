@@ -2,22 +2,29 @@
 @section('admin_page_title')
     Manager Category - Admin
 @endsection
+
 @section('admin_layout')
     <div class="wg-box">
         <div class="flex items-center justify-between gap10 flex-wrap">
             <div class="wg-filter flex-grow">
-                <form class="form-search">
+                <form class="form-search" id="search-form" action="{{ route('brand.manage') }}" method="GET">
                     <fieldset class="name">
-                        <input type="text" placeholder="Search here..." class="" name="name" id="search-input"
-                            tabindex="2" value="" aria-required="true" required="">
+                        <input type="text" id="search-brands" placeholder="Search here..." name="name"
+                            value="{{ request('name') }}" aria-required="true" required="">
                     </fieldset>
                     <div class="button-submit">
                         <button class="" type="submit"><i class="icon-search"></i></button>
                     </div>
                 </form>
             </div>
+
+            <div id="brand-results"
+                style="position: absolute; max-height: 200px; overflow-y: auto; background-color: white; border: 1px solid #ccc; display: none;">
+            </div>
+
             <a class="tf-button style-1 w208" href="{{ route('brand.create') }}"><i class="icon-plus"></i>Add new</a>
         </div>
+
         <div class="wg-table table-all-user">
             <table class="table table-striped table-bordered">
                 <thead>
@@ -45,7 +52,6 @@
                                 </div>
                             </td>
 
-
                             <td>{{ $brand->brand_name }}</td>
                             <td>{{ $brand->describe }}</td>
                             <td>
@@ -72,14 +78,12 @@
                                     return confirm('Are you sure you want to delete this brand? This action cannot be undone.');
                                 }
                             </script>
-
-
-
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
+
         <div class="divider"></div>
         <div class="flex items-center justify-between flex-wrap gap10 wgp-pagination">
             {{-- Pagination if needed --}}

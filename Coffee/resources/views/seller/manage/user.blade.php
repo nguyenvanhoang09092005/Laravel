@@ -7,17 +7,21 @@
     <div class="wg-box">
         <div class="flex items-center justify-between gap10 flex-wrap">
             <div class="wg-filter flex-grow">
-                <form class="form-search">
+                <form class="form-search" id="search-form" action="{{ route('Personnel.Manage.User') }}" method="GET">
                     <fieldset class="name">
-                        <input type="text" placeholder="Search here..." class="" name="name" tabindex="2"
-                            value="" aria-required="true" required="">
+                        <input type="text" id="search-users" placeholder="Search users..." name="name"
+                            value="{{ request('name') }}" required>
                     </fieldset>
                     <div class="button-submit">
-                        <button class="" type="submit"><i class="icon-search"></i></button>
+                        <button type="submit"><i class="icon-search"></i></button>
                     </div>
                 </form>
-            </div>
 
+            </div>
+            {{-- 
+            <div id="user-results"
+                style="position: absolute; max-height: 200px; overflow-y: auto; background-color: white; border: 1px solid #ccc; display: none;">
+            </div> --}}
         </div>
         @if (session('message'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -73,7 +77,17 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone_number }}</td>
                             <td>{{ $user->gender }}</td>
-                            <td>{{ $user->role }}</td>
+                            <td>
+                                @if ($user->role == 1)
+                                    Admin
+                                @elseif ($user->role == 2)
+                                    Customer
+                                @elseif ($user->role == 3)
+                                    Seller
+                                @else
+                                    Unknown
+                                @endif
+                            </td>
                             <td>
                                 <div class="list-icon-function"
                                     style="align-items: center;text-align: center; justify-items: center;justify-content: center">
@@ -107,4 +121,53 @@
         </div>
 
     </div>
+    <script>
+        document
+            .getElementById("search-users")
+            .addEventListener("keyup", function(event) {
+                let query = this.value;
+
+                if (query.length > 2) {
+                    // Trigger search after 3 characters
+                    fetch("{{ route('seller.search.users') }}", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                            },
+                            body: JSON.stringify({
+                                query: query,
+                            }),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            let results = "";
+
+                            // Show suggestions
+                            if (data.length > 0) {
+                                data.forEach((user) => {
+                                    results += `
+                                <div class="suggestion-item">
+                                    <p>
+                                        <strong>${user.name}</strong> - ${user.email} - ${user.phone_number}
+                                    </p>
+                                </div>
+                            `;
+                                });
+                            } else {
+                                results = "<p>No users found.</p>";
+                            }
+
+                            // Display the suggestions in the container
+                            document.getElementById("user-results").innerHTML = results;
+                            document.getElementById("user-results").style.display =
+                                "block"; // Show results
+                        });
+                } else {
+                    document.getElementById("user-results").innerHTML =
+                        ""; // Clear suggestions if less than 3 characters
+                    document.getElementById("user-results").style.display = "none"; // Hide results
+                }
+            });
+    </script>
 @endsection

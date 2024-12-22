@@ -45,8 +45,6 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-
-
         <!-- Remember Me -->
         <div class="block mt-4 flex justify-between items-center">
             <label for="remember_me" class="inline-flex items-center">
@@ -61,6 +59,7 @@
                 </a>
             @endif
         </div>
+
 
 
         <div class="flex items-center justify-end mt-4">
