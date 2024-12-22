@@ -62,8 +62,9 @@
                                 </div>
                                 <div>
                                     <div class="body-text mb-2">Revenue</div>
-                                    <h4>481.34</h4>
+                                    <h4>{{ number_format($revenueMonth, 0, ',', '.') }} <sup>vnđ</sup></h4>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -95,7 +96,7 @@
                                 </div>
                                 <div>
                                     <div class="body-text mb-2">Completed Orders</div>
-                                    <h4>0</h4>
+                                    <h4>{{ $confirmedOrdersCount }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -123,7 +124,7 @@
                                 </div>
                                 <div>
                                     <div class="body-text mb-2">Expense</div>
-                                    <h4>43.12</h4>
+                                    <h4>420.000 <sup>vnđ</sup> </h4>
                                 </div>
                             </div>
                         </div>

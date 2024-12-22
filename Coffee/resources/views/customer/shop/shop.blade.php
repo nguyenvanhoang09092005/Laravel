@@ -131,42 +131,20 @@
         }
 
 
-        /* From Uiverse.io by amikambs */
-        .rating:not(:checked)>input {
-            position: absolute;
-            appearance: none;
+        .rating {
+            display: inline-flex;
+            gap: 2px;
+            margin-left: auto;
         }
 
-        .rating:not(:checked)>label {
-            float: right;
-            cursor: pointer;
-            font-size: 30px;
-            fill: #666;
+        .rating .star {
+            font-size: 16px;
+            color: #ddd;
+            margin-right: 2px;
         }
 
-        .rating:not(:checked)>label>svg {
-            fill: #666;
-            /* Set default color for SVG */
-            transition: fill 0.3s ease;
-            /* Add a transition effect */
-        }
-
-        .rating>input:checked+label:hover,
-        .rating>input:checked+label:hover~label,
-        .rating>input:checked~label:hover,
-        .rating>input:checked~label:hover~label,
-        .rating>label:hover~input:checked~label {
-            fill: #e58e09;
-        }
-
-        .rating:not(:checked)>label:hover,
-        .rating:not(:checked)>label:hover~label {
-            fill: #ff9e0b;
-        }
-
-        .rating>input:checked~label>svg {
-            fill: #ffa723;
-            /* Set color for selected stars */
+        .rating .star.active {
+            color: #ffa723;
         }
 
         /* Giao diện của sidebar */
@@ -432,7 +410,16 @@
 
                                 <div class="card-title">{{ $product->product_name }}</div>
 
-                                <div class="card-description">{{ $product->description }}</div>
+                                <div class="card-description">
+                                    <div class="rating">
+                                        {{-- {{ number_format($product->average_rating, 1) }} --}}
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <span
+                                                class="star {{ $i <= round($product->average_rating) ? 'active' : '' }}">★</span>
+                                        @endfor
+
+                                    </div>
+                                </div>
                                 <hr class="card-divider">
 
                                 <div class="card-footer">

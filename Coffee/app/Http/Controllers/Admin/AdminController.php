@@ -20,11 +20,17 @@ class AdminController extends Controller
         $pendingOrdersCount = Order::where('status', 'pending')->count();
         $shippingOrdersCount = Order::where('status', 'shipping')->count();
         $pendingOrdersCount = Order::where('status', 'pending')->count();
+        $confirmedOrdersCount = Order::where('status', 'confirmed')->count();
 
         $adminCount = (int) User::where('role', 1)->count();
         $customerCount = (int) User::where('role', 2)->count();
         $personnelCount = (int) User::where('role', 3)->count();
 
+        $monthStart = Carbon::now()->startOfMonth();
+        $monthEnd = Carbon::now()->endOfMonth();
+
+        $revenueMonth = Order::whereBetween('created_at', [$monthStart, $monthEnd])
+            ->sum('total_price');
 
         $trafficData = [
             'dates' => [],
@@ -53,7 +59,7 @@ class AdminController extends Controller
         }
 
 
-        return view('admin.admin', compact('usersCount', 'productsCount', 'orderCount', 'adminCount', 'customerCount', 'personnelCount', 'trafficData', 'pendingOrdersCount', 'shippingOrdersCount'));
+        return view('admin.admin', compact('usersCount', 'productsCount', 'orderCount', 'adminCount', 'customerCount', 'personnelCount', 'trafficData', 'pendingOrdersCount', 'shippingOrdersCount', 'confirmedOrdersCount', 'revenueMonth'));
     }
 
     public function settings()

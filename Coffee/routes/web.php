@@ -269,6 +269,7 @@ Route::middleware(['auth', 'verified', 'two_factor', 'rolemanager:customer'])->g
             Route::put('/customer/cart/update/{id}', 'updateQuantity')->name('Customer.Cart.Update');
             Route::post('/apply-coupon', 'applyCoupon')->name('applyCoupon');
             Route::get('/customer/cart/update', 'updateCartCount')->name('Customer.cart.update');
+            Route::get('/cart/count', 'getCartItemCount')->name('Customer.cart.count');
         });
 
         Route::controller(CheckoutController::class)->group(function () {

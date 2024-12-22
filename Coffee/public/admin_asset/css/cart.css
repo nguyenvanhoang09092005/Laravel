@@ -1129,7 +1129,7 @@ progress {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
-
+/* 
 .navbar {
     position: relative;
     display: flex;
@@ -1421,7 +1421,7 @@ progress {
 .navbar-dark .navbar-text a:hover,
 .navbar-dark .navbar-text a:focus {
     color: #fff;
-}
+} */
 
 .card {
     position: relative;
@@ -20257,3 +20257,5 @@ body.coming-soon-page .header {
 .btn-video-player.playing svg.btn-pause {
     display: block;
 }
+
+

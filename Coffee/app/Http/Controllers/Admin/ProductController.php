@@ -72,7 +72,18 @@ class ProductController extends Controller
     {
         try {
             $product = Product::with('attribute')->findOrFail($id);
-            return view('admin.product.show', compact('product'));
+
+            $reviews = $product->reviews()->with('user')->latest()->get();
+            $reviewsCount = $product->reviews()->count();
+
+            $totalRating = $reviews->sum('rating');
+            $averageRating = $reviewsCount > 0 ? $totalRating / $reviewsCount : 0;
+
+            $product->update([
+                'average_rating' => $averageRating,
+            ]);
+
+            return view('admin.product.show', compact('product', 'reviews', 'reviewsCount'));
         } catch (Exception $e) {
             return redirect()->route('product.manage')->withErrors('Product not found.');
         }

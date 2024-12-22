@@ -44,6 +44,29 @@
             font-size: 12px;
             font-weight: bold;
         }
+
+        .cart-items-header {
+            position: relative;
+        }
+
+
+        #cart-count {
+            position: absolute;
+
+            right: 0px;
+            padding: 5px;
+            border-radius: 50%;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 991px) {
+            .icon_account {
+                display: none !important;
+            }
+        }
     </style>
 
     <header class="d-flex align-items-center">
@@ -61,28 +84,20 @@
                     <li><a class="nav-link scrollto" href="{{ route('Customer.Shop') }}">Menu</a></li>
                     <li><a class="nav-link scrollto" href="{{ route('Customer.Cart.View') }}">Pay</a></li>
                     <li><a class="nav-link scrollto" href="{{ route('Customer.Promotions') }}">Promotions</a></li>
-                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                    <li><a class="nav-link scrollto" href="{{ route('Customer.Contact') }}">Contact</a></li>
                 </ul>
-                <div class="d-flex align-items-center ms-3 cart-items-header">
-                    <a href="{{ route('Customer.Cart.View') }}" class="header-tools__item header-tools__cart">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
-                            class="bi bi-cart3" viewBox="0 0 16 16">
-                            <path
-                                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
-                        </svg>
-                        <span id="cart-count" class="cart-amount d-block position-absolute js-cart-items-count">
 
-                        </span>
-                    </a>
-                </div>
 
                 <i class="bi bi-list mobile-nav-toggle"></i>
 
                 <!-- Right-side Menu -->
                 <div class="icon_account d-flex align-items-center ms-5">
                     <!-- Search Input -->
-                    <input type="text" class="form-control search me-5" placeholder="Search"
-                        style="max-width: 200px;">
+                    <form action="{{ route('Customer.products.search') }}" method="GET">
+                        <input type="text" class="form-control search mt-3 me-5" placeholder="Search" name="query"
+                            style="max-width: 200px;">
+                        <button type="submit" style="display: none;"></button>
+                    </form>
 
                     <!-- User Dropdown -->
                     <div class="nav-item dropdown">
@@ -95,28 +110,36 @@
                             </svg>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-start mt-4 custom-center" aria-labelledby="userDropdown">
-                            @if (Route::has('login'))
-                                <nav class="-mx-3 flex flex-1 justify-end">
-                                    @auth
-                                        <a href="{{ route('dashboard') }}"
-                                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                                            Dashboard
-                                        </a>
-                                    @else
-                                        <a href="{{ route('login') }}"
-                                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                                            Log in
-                                        </a>
+                            @auth
+                                <li><span class="dropdown-item-text px-4 py-2"
+                                        style="font-size: 12px; font-weight: bold; color: #333;"><b>Welcome,
+                                            {{ Auth::user()->name }}</b></span>
+                                </li>
 
-                                        @if (Route::has('register'))
-                                            <a href="{{ route('register') }}"
-                                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                                                Register
-                                            </a>
-                                        @endif
-                                    @endauth
-                                </nav>
-                            @endif
+
+                                <li><a class="dropdown-item px-4 py-2 hover:bg-gray-100"
+                                        href="{{ route('Customer.Account.Order') }}">Trang
+                                        cá nhân</a></li>
+
+
+                                <li>
+                                    <a class="dropdown-item px-4 py-2 hover:bg-gray-100" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Logout
+                                    </a>
+                                </li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            @else
+                                <li><a class="dropdown-item px-4 py-2 hover:bg-gray-100"
+                                        href="{{ route('login') }}">Login</a>
+                                </li>
+                                @if (Route::has('register'))
+                                    <li><a class="dropdown-item px-4 py-2 hover:bg-gray-100"
+                                            href="{{ route('register') }}">Register</a></li>
+                                @endif
+                            @endauth
                         </ul>
                     </div>
                 </div>
@@ -124,7 +147,6 @@
             </nav>
         </div>
     </header>
-
 
     <section id="hero">
         <div id="banner" class="d-flex align-items-center">

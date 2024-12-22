@@ -74,7 +74,10 @@
                             @endfor
                         </div>
                     </div>
-                    <div class="reviews-note text-lowercase text-secondary ms-1">{{ $product->review_count }} đánh giá</div>
+                    <div class="reviews-note text-lowercase text-secondary ms-1">
+                        {{ number_format($product->average_rating, 1) }}
+                    </div>
+
                 </div>
 
                 <div class="product-single__price">
@@ -90,9 +93,20 @@
 
                     </span>
                 </div>
+                <div class="product-single__status">
+                    <h3 class="badge {{ $product->stock_status == 'In Stock' ? 'bg-success' : 'bg-danger' }}">
+                        {{ $product->stock_status }}
+                    </h3>
+                </div>
                 <div class="product-single__short-desc">
                     <p>{{ $product->description }}</p>
                 </div>
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 <form name="addtocart-form" method="POST" action="{{ route('Customer.Cart', $product->id) }}">
                     @csrf
                     <div class="product-single__addtocart">
@@ -102,12 +116,14 @@
                             <div class="qty-control__reduce">-</div>
                             <div class="qty-control__increase">+</div>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-addtocart" data-aside="cartDrawer">
+                        <button type="submit" id="addToCartButton" class="btn btn-primary btn-addtocart"
+                            data-aside="cartDrawer">
                             Thêm vào giỏ hàng
                         </button>
+
+
                     </div>
                 </form>
-
 
             </div>
         </div>

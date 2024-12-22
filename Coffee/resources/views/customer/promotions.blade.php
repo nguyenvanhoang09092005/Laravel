@@ -4,18 +4,18 @@
     <section id="promotions" class="promotions">
         <div class="container" data-aos="fade-up">
             <div class="section-title">
-                <h2>Promotions</h2>
-                <h3>Check our <span>Promotions</span></h3>
-                <p>Explore our latest promotions and special offers.</p>
+                <h2>Khuyến mãi</h2>
+                <h3>Kiểm tra chương trình <span>Khuyến mãi</span></h3>
             </div>
 
             <div class="row" data-aos="fade-up" data-aos-delay="100">
                 <div class="col-lg-12 d-flex justify-content-center">
                     <ul id="promotions-flters">
-                        <li data-filter="*" class="filter-active">All</li>
-                        <li data-filter=".filter-in-stock">In Stock</li>
-                        <li data-filter=".filter-out-stock">Out of Stock</li>
+                        <li data-filter="*" class="filter-active">Tất cả</li>
+                        <li data-filter=".filter-in-stock">Đang còn</li>
+                        <li data-filter=".filter-out-stock">Đã hết</li>
                     </ul>
+
                 </div>
             </div>
 

@@ -682,30 +682,62 @@ $(document).ready(function () {
 });
 
 //promotions
-document.querySelectorAll("#promotions-filters li").forEach((filter) => {
-    filter.addEventListener("click", function () {
-        // Remove the 'filter-active' class from all filters
-        document
-            .querySelectorAll("#promotions-filters li")
-            .forEach((f) => f.classList.remove("filter-active"));
-
-        // Add 'filter-active' to the clicked filter
-        this.classList.add("filter-active");
-
-        // Filter promotions based on the selected category
-        const filterValue = this.getAttribute("data-filter");
-        const promotions = document.querySelectorAll(".promotions-item");
-        promotions.forEach((promotion) => {
-            if (
-                filterValue === "*" ||
-                promotion.classList.contains(filterValue.substring(1))
-            ) {
-                promotion.style.display = "block";
-            } else {
-                promotion.style.display = "none";
-            }
+/**
+ * Portfolio isotope and filter for Promotions
+ */
+window.addEventListener("load", () => {
+    let promotionsContainer = document.querySelector(".promotions-container");
+    if (promotionsContainer) {
+        let promotionsIsotope = new Isotope(promotionsContainer, {
+            itemSelector: ".promotions-item",
         });
-    });
+
+        let promotionsFilters = document.querySelectorAll(
+            "#promotions-flters li"
+        );
+
+        promotionsFilters.forEach(function (filterItem) {
+            filterItem.addEventListener("click", function (e) {
+                e.preventDefault();
+                promotionsFilters.forEach(function (el) {
+                    el.classList.remove("filter-active");
+                });
+                this.classList.add("filter-active");
+
+                // Sử dụng data-filter để áp dụng bộ lọc
+                promotionsIsotope.arrange({
+                    filter: this.getAttribute("data-filter"),
+                });
+                promotionsIsotope.on("arrangeComplete", function () {
+                    AOS.refresh();
+                });
+            });
+        });
+    }
+});
+
+/**
+ * Initiate portfolio lightbox for Promotions
+ */
+const promotionsLightbox = GLightbox({
+    selector: ".promotions-lightbox",
+});
+
+/**
+ * Portfolio details slider for Promotions
+ */
+new Swiper(".promotions-details-slider", {
+    speed: 400,
+    loop: true,
+    autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+    },
+    pagination: {
+        el: ".swiper-pagination",
+        type: "bullets",
+        clickable: true,
+    },
 });
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -21,6 +21,10 @@ class CustomerCartController extends Controller
         $product = Product::findOrFail($id);
         $user = Auth::user();
 
+        if (!$product || $product->stock_status === 'Out of Stock') {
+            return redirect()->back()->with('error', 'Sản phẩm này hiện tại đã hết hàng.');
+        }
+
         $promotion = null;
         if ($product->promotion_id) {
             $promotion = DB::table('promotions')->find($product->promotion_id);
@@ -183,5 +187,15 @@ class CustomerCartController extends Controller
         return response()->json([
             'cartCount' => $cartCount
         ]);
+    }
+
+    public function getCartItemCount()
+    {
+        $userId = Auth::id();
+        $cartItemCount = \DB::table('carts')
+            ->where('user_id', $userId)
+            ->sum('quantity');
+
+        return response()->json(['count' => $cartItemCount]);
     }
 }

@@ -163,7 +163,7 @@
                                     @foreach ($cartItems as $item)
                                         <tr>
                                             <td>{{ $item->name }} x {{ $item->quantity }}</td>
-                                            <td>{{ number_format($item->price * $item->quantity, 2) }} đ</td>
+                                            <td>{{ number_format($item->price * $item->quantity, 0, 0) }} đ</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

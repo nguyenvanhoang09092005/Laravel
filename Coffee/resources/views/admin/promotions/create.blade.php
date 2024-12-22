@@ -40,9 +40,9 @@
                                 <option value="percentage"
                                     {{ old('type', $promotion->type ?? '') == 'percentage' ? 'selected' : '' }}>Percentage
                                 </option>
-                                <option value="fixed"
+                                {{-- <option value="fixed"
                                     {{ old('type', $promotion->type ?? '') == 'fixed' ? 'selected' : '' }}>Fixed Amount
-                                </option>
+                                </option> --}}
                             </select>
 
 

@@ -31,7 +31,13 @@
                 </span>
             </a>
         </div>
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
         <!-- Bảng giỏ hàng -->
         <div class="shopping-cart">
             @if ($cartItems->count() > 0)
@@ -107,13 +113,7 @@
                         </tbody>
                     </table>
                     <div class="cart-table-footer">
-                        @if (session('success'))
-                            <div class="alert alert-success">{{ session('success') }}</div>
-                        @endif
 
-                        @if (session('error'))
-                            <div class="alert alert-danger">{{ session('error') }}</div>
-                        @endif
                         <form action="{{ route('applyCoupon') }}" method="POST" class="position-relative bg-body">
                             @csrf
                             <input class="form-control" type="text" name="coupon_code" placeholder="Nhập mã giảm giá">

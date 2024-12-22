@@ -1,6 +1,6 @@
 <ul class="account-nav">
     <li><a href="{{ route('Customer.Account.Detail') }}" class="menu-link">Trang cá nhân</a></li>
-    <li><a href="{{ route('Customer.Account.Address.Manage') }}" class="menu-link">Địa chỉ</a></li>
+    {{-- <li><a href="{{ route('Customer.Account.Address.Manage') }}" class="menu-link">Địa chỉ</a></li> --}}
     <li><a href="{{ route('Customer.Account.Order') }}" class="menu-link">Đơn hàng</a></li>
     <li>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

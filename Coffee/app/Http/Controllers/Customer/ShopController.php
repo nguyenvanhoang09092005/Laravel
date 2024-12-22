@@ -34,9 +34,14 @@ class ShopController extends Controller
         $rproducts = Product::where('slug', '<>', $product_slug)->get()->take(8);
 
         $reviews = $product->reviews()->with('user')->latest()->get();
-
         $reviewsCount = $product->reviews()->count();
 
+        $totalRating = $reviews->sum('rating');
+        $averageRating = $reviewsCount > 0 ? $totalRating / $reviewsCount : 0;
+
+        $product->update([
+            'average_rating' => $averageRating,
+        ]);
 
         return view('customer.shop.detail', compact('product', 'categories', 'brands', 'category', 'brand', 'rproducts', 'attributes', 'reviews', 'reviewsCount'));
     }
