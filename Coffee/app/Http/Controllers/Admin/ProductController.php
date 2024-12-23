@@ -171,13 +171,11 @@ class ProductController extends Controller
     {
         $query = $request->input('query');
 
-        // Search for products based on product_name or description
         $products = Product::where('product_name', 'like', '%' . $query . '%')
             ->orWhere('description', 'like', '%' . $query . '%')
-            ->limit(5) // Limit the number of suggestions
+            ->limit(5)
             ->get();
 
-        // Return the products as a JSON response
         return response()->json($products);
     }
 }

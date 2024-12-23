@@ -524,6 +524,7 @@ header.sticky {
 .navbar-mobile ul {
     display: block;
     position: absolute;
+
     top: 55px;
     right: 15px;
     bottom: 15px;
@@ -532,6 +533,24 @@ header.sticky {
     background-color: #fff;
     overflow-y: auto;
     transition: 0.3s;
+}
+
+.navbar-mobile ul li a {
+    padding: 10px 20px;
+    color: #222;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    display: block;
+    transition: 0.3s;
+}
+
+.navbar-mobile.open ul {
+    display: block;
+}
+
+.navbar-mobile ul li a:hover {
+    color: #106eea;
 }
 
 .navbar-mobile a,
@@ -567,6 +586,7 @@ header.sticky {
     display: none;
     margin: 10px 20px;
     padding: 10px 0;
+
     z-index: 99;
     opacity: 1;
     visibility: visible;

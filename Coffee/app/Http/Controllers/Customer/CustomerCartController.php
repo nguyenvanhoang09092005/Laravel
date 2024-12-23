@@ -74,11 +74,9 @@ class CustomerCartController extends Controller
             return response()->json(['success' => false, 'message' => 'Sản phẩm không tồn tại trong giỏ hàng.']);
         }
 
-        // Cập nhật số lượng
         $item->quantity = $request->input('quantity');
         $item->save();
 
-        // Tính lại tổng giá trị (subtotal)
         $subtotal = $item->price * $item->quantity;
 
         return response()->json([
@@ -95,7 +93,6 @@ class CustomerCartController extends Controller
         $couponCode = $request->input('coupon_code');
         $user = Auth::user();
 
-        // Kiểm tra xem người dùng đã nhập mã giảm giá hay chưa
         if (!$couponCode) {
             session()->forget('applied_coupon');
             return redirect()->route('Customer.Cart.View')->with('error', 'Bạn chưa nhập mã giảm giá.');
@@ -103,19 +100,16 @@ class CustomerCartController extends Controller
 
         $promotion = Promotions::where('code', $couponCode)->first();
 
-        // Kiểm tra mã giảm giá hợp lệ
         if (!$promotion) {
             session()->forget('applied_coupon');
             return redirect()->route('Customer.Cart.View')->with('error', 'Mã giảm giá không hợp lệ.');
         }
 
-        // Kiểm tra xem mã giảm giá đã hết hạn chưa
         if ($promotion->expiry_date && $promotion->expiry_date < now()) {
             session()->forget('applied_coupon');
             return redirect()->route('Customer.Cart.View')->with('error', 'Mã giảm giá đã hết hạn.');
         }
 
-        // Kiểm tra xem mã giảm giá có thể áp dụng cho sản phẩm trong giỏ hàng
         $cartItems = Cart::where('user_id', $user->id)->get();
         $isValidCoupon = false;
 

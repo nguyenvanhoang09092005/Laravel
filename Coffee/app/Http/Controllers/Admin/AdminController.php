@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\LoginHistory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -42,7 +43,7 @@ class AdminController extends Controller
         for ($day = 1; $day <= 31; $day++) {
             $date = Carbon::now()->month(Carbon::now()->month)->day($day)->format('Y-m-d');
 
-            $traffic = Order::whereDate('created_at', $date)->count();
+            $traffic = LoginHistory::whereDate('login_at', $date)->count();
 
             $users = User::whereDate('created_at', $date)->count();
 

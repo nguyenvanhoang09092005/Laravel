@@ -322,7 +322,7 @@
     @section('customer_content')
         <div class="section-title" data-aos="fade-up">
             <h2>Menu</h2>
-            <h3>Nơi mà bạn thỏa sức lựa chọn</h3>
+            <h3>Nơi bạn thỏa sức lựa chọn</h3>
         </div>
         <section class="shop-main container d-flex pt-4 pt-xl-5">
             <div class="shop-sidebar side-sticky bg-body" id="shopFilter">
@@ -378,7 +378,7 @@
                         </div>
                     </div>
 
-                    <!-- Giá -->
+                    {{-- <!-- Giá -->
                     <div class="filter-card">
                         <div class="filter-header" onclick="toggleFilter('priceFilter')">
                             <h4>Giá</h4>
@@ -390,7 +390,7 @@
                                 oninput="updatePriceValue()">
                             <span id="priceValue">{{ request('price', 0) }} VND</span>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </form>
             </div>
@@ -478,7 +478,7 @@
                 selectedCategories.push(checkbox.value);
             });
 
-            let selectedPrice = document.getElementById('priceRange').value;
+            // let selectedPrice = document.getElementById('priceRange').value;
 
             // Hiển thị loader
             const searchResults = document.getElementById('searchResults');
@@ -491,7 +491,7 @@
                     _token: $('meta[name="csrf-token"]').attr('content'),
                     brand: selectedBrands,
                     category: selectedCategories,
-                    price: selectedPrice,
+                    // price: selectedPrice,
                 },
                 success: function(data) {
                     $('#searchResults').html(data);

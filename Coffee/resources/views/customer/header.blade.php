@@ -20,6 +20,17 @@
         .icon_account {
             display: none !important;
         }
+
+    }
+
+    .mobile-only {
+        display: none;
+    }
+
+    @media (max-width: 991px) {
+        .mobile-only {
+            display: block;
+        }
     }
 </style>
 
@@ -39,6 +50,23 @@
                 <li><a class="nav-link scrollto" href="{{ route('Customer.Cart.View') }}">Pay</a></li>
                 <li><a class="nav-link scrollto" href="{{ route('Customer.Promotions') }}">Promotions</a></li>
                 <li><a class="nav-link scrollto" href="{{ route('Customer.Contact') }}">Contact</a></li>
+
+                @auth
+                    <li class="mobile-only"><a href="{{ route('Customer.Account.Order') }}">Trang cá nhân</a></li>
+                    <li class="mobile-only">
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </li>
+                @else
+                    <li class="mobile-only"><a href="{{ route('login') }}">Login</a></li>
+                    @if (Route::has('register'))
+                        <li class="mobile-only"><a href="{{ route('register') }}">Register</a></li>
+                    @endif
+                @endauth
+
             </ul>
             <div class="d-flex align-items-center ms-3 cart-items-header">
                 <a href="{{ route('Customer.Cart.View') }}" class="header-tools__item header-tools__cart">
@@ -60,7 +88,7 @@
             <div class="icon_account d-flex align-items-center ms-5">
                 <!-- Search Input -->
                 <form action="{{ route('Customer.products.search') }}" method="GET">
-                    <input type="text" class="form-control search mt-3 me-5" placeholder="Search" name="query"
+                    <input type="text" class="form-control search mt-2 me-5" placeholder="Search" name="query"
                         style="max-width: 200px;">
                     <button type="submit" style="display: none;"></button>
                 </form>
@@ -120,5 +148,10 @@
                 document.getElementById("cart-count").textContent = data.count;
             })
             .catch(error => console.error('Error fetching cart count:', error));
+    });
+
+    document.querySelector('.mobile-nav-toggle').addEventListener('click', function() {
+        const navbar = document.querySelector('.navbar-mobile');
+        navbar.classList.toggle('open');
     });
 </script>
